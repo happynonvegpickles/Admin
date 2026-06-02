@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Happy NonVeg Pickles – Create Combo Offer</title>
+    <title>Happy NonVeg Pickles – Combo Offer</title>
 
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -722,7 +722,7 @@
         </aside>
 
         <div class="d-main-wrapper">
-            <header class="d-topbar">Create Combo Offer</header>
+            <header class="d-topbar">Combo Offer</header>
             <main class="d-content">
                 <!-- ========== PAGE CONTENT ========== -->
                 <div class="content-inner">
@@ -735,7 +735,7 @@
                                 <span class="divider">/</span>
                                 <span style="color: var(--brand-primary); font-weight: 600;">Combo Offer</span>
                             </div>
-                            <h2 class="page-title">Create Combo Offer</h2>
+                            <h2 class="page-title" id="page-heading">Create Combo Offer</h2>
                         </div>
                         <div class="toggle-wrapper">
                             <span style="font-weight: 600; color: var(--text-color);">Offer Status</span>
@@ -827,13 +827,10 @@
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, getDocs, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCZbCr-Zt5KQblRQ8Pk58KuinCVP-TlXGo",
-            authDomain: "happynonvegpickles-f2636.firebaseapp.com",
-            projectId: "happynonvegpickles-f2636",
-            storageBucket: "happynonvegpickles-f2636.firebasestorage.app",
-            messagingSenderId: "802823212924",
-            appId: "1:802823212924:web:d82c92737ffa950798def9"
+        const firebaseConfig = { 
+            apiKey: "AIzaSyCxjDuFS_ntaOF-K8hFBaxQ0_8CR9yvbkM", 
+            authDomain: "pickle-fdc54.firebaseapp.com", 
+            projectId: "pickle-fdc54" 
         };
         const firebaseApp = initializeApp(firebaseConfig);
         const auth = getAuth(firebaseApp);
@@ -960,6 +957,8 @@
         });
 
         // ========== COMBO OFFER LOGIC ==========
+        let existingComboId = null;
+
         window.app = {
             allProducts: [],
             filteredProducts: [],
@@ -967,11 +966,54 @@
 
             init: async () => {
                 try {
-                    const snapshot = await getDocs(collection(db, 'products'));
-                    window.app.allProducts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    // Load all products
+                    const prodSnap = await getDocs(collection(db, 'products'));
+                    window.app.allProducts = prodSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+                    // Check for existing combo (only one)
+                    const combosSnap = await getDocs(collection(db, 'combos'));
+                    if (!combosSnap.empty) {
+                        const comboDoc = combosSnap.docs[0];
+                        const combo = comboDoc.data();
+                        existingComboId = comboDoc.id;
+                        
+                        // Populate form
+                        document.getElementById('combo-name').value = combo.name || '';
+                        document.getElementById('combo-price').value = combo.price || '';
+                        document.getElementById('combo-active').checked = combo.isActive;
+                        document.getElementById('weight-filter').value = combo.weightVariant || '';
+                        document.getElementById('page-heading').innerText = 'Edit Combo Offer';
+
+                        // Load pickles for this weight variant
+                        window.app.filteredProducts = window.app.allProducts.filter(p => {
+                            if(!p.variants) return false;
+                            return p.variants.some(v => v.weight.toLowerCase() === combo.weightVariant.toLowerCase());
+                        });
+
+                        // Pre‑select the ones stored in the combo
+                        window.app.selectedPickles = [];
+                        if (combo.items) {
+                            combo.items.forEach(item => {
+                                const matchingProduct = window.app.filteredProducts.find(p => p.id === item.id);
+                                if (matchingProduct) {
+                                    const fallbackImg = matchingProduct.image || '';
+                                    window.app.selectedPickles.push({
+                                        id: item.id,
+                                        name: item.name,
+                                        fallbackImage: fallbackImg,
+                                        customImage: item.image !== fallbackImg ? item.image : ''
+                                    });
+                                }
+                            });
+                        }
+
+                        // Render the UI
+                        window.app.renderPickles();
+                        window.app.renderImageInputs();
+                    }
                 } catch (error) {
-                    console.error("Error loading products:", error);
-                    alert("Failed to load products from database.");
+                    console.error("Error initializing:", error);
+                    alert("Failed to load data. Please check your connection.");
                 }
             },
 
@@ -997,13 +1039,16 @@
                     return;
                 }
 
-                container.innerHTML = window.app.filteredProducts.map(p => `
-                    <label class="pickle-card" id="card-${p.id}">
-                        <input type="checkbox" value="${p.id}" onchange="app.togglePickle('${p.id}', '${p.name.replace(/'/g, "\\'")}', '${p.image}')">
-                        <img src="${p.image || 'https://placehold.co/40'}" alt="img">
-                        <span style="font-size: 13px; font-weight: 600;">${p.name}</span>
-                    </label>
-                `).join('');
+                container.innerHTML = window.app.filteredProducts.map(p => {
+                    const isSelected = window.app.selectedPickles.some(sp => sp.id === p.id);
+                    return `
+                        <label class="pickle-card ${isSelected ? 'selected' : ''}" id="card-${p.id}">
+                            <input type="checkbox" value="${p.id}" ${isSelected ? 'checked' : ''} onchange="app.togglePickle('${p.id}', '${p.name.replace(/'/g, "\\'")}', '${p.image}')">
+                            <img src="${p.image || 'https://placehold.co/40'}" alt="img">
+                            <span style="font-size: 13px; font-weight: 600;">${p.name}</span>
+                        </label>
+                    `;
+                }).join('');
                 
                 document.getElementById('selection-count').innerText = window.app.selectedPickles.length;
             },
@@ -1073,21 +1118,30 @@
                     image: p.customImage.trim() !== '' ? p.customImage : p.fallbackImage
                 }));
 
-                const newComboRef = doc(collection(db, 'combos'));
                 const comboData = {
-                    id: newComboRef.id,
-                    name: name,
+                    name,
                     price: parseFloat(price),
                     weightVariant: weight,
-                    isActive: isActive,
+                    isActive,
                     items: savedPickles,
-                    createdAt: Date.now()
+                    updatedAt: Date.now()
                 };
 
+                // If no combo exists yet, we still need an ID for a new document
+                const comboRef = existingComboId 
+                    ? doc(db, 'combos', existingComboId) 
+                    : doc(collection(db, 'combos'));
+
+                if (!existingComboId) {
+                    comboData.createdAt = Date.now();
+                }
+
                 try {
-                    await setDoc(newComboRef, comboData);
+                    await setDoc(comboRef, comboData, { merge: true });
                     alert("Combo offer saved successfully!");
-                    window.location.href = 'manage-combo.html';
+                    if (!existingComboId) {
+                        window.location.href = 'manage-combo.html'; // reload to edit mode
+                    }
                 } catch (error) {
                     console.error("Error saving combo:", error);
                     alert("Failed to save combo offer.");
