@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SyncSkill - Admin Dashboard</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!--
+        SVG PRELOAD: Forces browser to fetch & cache all icon SVGs immediately on page load.
+        Prevents flicker on first hover/active state.
+    -->
+    <link rel="preload" as="image" href="dashboard.svg">
+    <link rel="preload" as="image" href="hover_dashboard.svg">
+    <link rel="preload" as="image" href="fill_dashboard.svg">
+    <link rel="preload" as="image" href="inventory.svg">
+    <link rel="preload" as="image" href="hover_inventory.svg">
+    <link rel="preload" as="image" href="fill_inventory.svg">
+    <link rel="preload" as="image" href="coupons.svg">
+    <link rel="preload" as="image" href="hover_coupons.svg">
+    <link rel="preload" as="image" href="fill_coupons.svg">
+    <link rel="preload" as="image" href="site.svg">
+    <link rel="preload" as="image" href="hover_site.svg">
+    <link rel="preload" as="image" href="fill_site.svg">
+    <link rel="preload" as="image" href="panel_close.svg">
+    <link rel="preload" as="image" href="panel_open.svg">
+    <link rel="preload" as="image" href="herosection.svg">
+    <link rel="preload" as="image" href="hover_herosection.svg">
+    <link rel="preload" as="image" href="fill_herosection.svg">
+    <link rel="preload" as="image" href="sections.svg">
+    <link rel="preload" as="image" href="hover_sections.svg">
+    <link rel="preload" as="image" href="fill_sections.svg">
+    <link rel="preload" as="image" href="popup.svg">
+    <link rel="preload" as="image" href="hover_popup.svg">
+    <link rel="preload" as="image" href="fill_popup.svg">
+    <link rel="preload" as="image" href="combo.svg">
+    <link rel="preload" as="image" href="hover_combo.svg">
+    <link rel="preload" as="image" href="fill_combo.svg">
+    
+    <style>
+        :root {
+            --text-sub: #6b7280;
+            --header-height-desktop: 70px;
+            --sidebar-width: 260px;
+            --sidebar-collapsed-width: 90px;
+            --row-height: 52px;
+            --sidebar-bg: #ffffff;
+            --header-bg: #ffffff;
+            --page-bg: #f4f5f7;
+            --text-color: rgb(24, 24, 26);
+            --icon-color: #6b7280;
+            --brand-primary: #673DE6;
+            --active-bg: #f4f0fa;
+            --hover-bg: #f3f4f6;
+            --border-subtle: #e5e7eb;
+            --radius-md: 10px;
+            --shadow-premium: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            --tooltip-bg: #1f2937;
+            --danger-color: #ef4444;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body {
+            min-height: 100vh;
+            background: var(--page-bg);
+            font-family: "DM Sans", Roboto, sans-serif;
+            font-weight: 500;
+            color: var(--text-color);
+            overflow: hidden;
+        }
+
+        /* LOGO */
+        .brand-logo { display: flex; align-items: center; text-decoration: none; transition: all 0.3s; }
+        .brand-logo img { height: 45px; width: auto; display: block; }
+        .mini-logo { display: none; align-items: center; justify-content: center; }
+        .mini-logo img { height: 45px; width: auto; display: block; }
+
+        /* ICON SYSTEM */
+        .icon { display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; flex-shrink: 0; }
+        .icon-custom { position: relative; width: 24px; height: 24px; }
+        .icon-custom > span {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: contain; background-repeat: no-repeat; background-position: center;
+        }
+        .icon-custom .icon-normal { display: block; }
+        .icon-custom .icon-hover, .icon-custom .icon-active { display: none; }
+        .nav-item:hover:not(.active) .icon-custom .icon-normal { display: none; }
+        .nav-item:hover:not(.active) .icon-custom .icon-hover { display: block; }
+        .nav-item.active .icon-custom .icon-normal,
+        .nav-item.active .icon-custom .icon-hover { display: none; }
+        .nav-item.active .icon-custom .icon-active { display: block; }
+        /* Show active icon when dropdown is open AND a child is selected (toggle has .active) */
+        .nav-item.active.dropdown-open .icon-custom .icon-normal,
+        .nav-item.active.dropdown-open .icon-custom .icon-hover { display: none; }
+        .nav-item.active.dropdown-open .icon-custom .icon-active { display: block; }
+
+        /* ICON FILE MAPPINGS */
+        .icon-dashboard .icon-normal  { background-image: url('dashboard.svg'); }
+        .icon-dashboard .icon-hover   { background-image: url('hover_dashboard.svg'); }
+        .icon-dashboard .icon-active  { background-image: url('fill_dashboard.svg'); }
+        .icon-inventory .icon-normal  { background-image: url('inventory.svg'); }
+        .icon-inventory .icon-hover   { background-image: url('hover_inventory.svg'); }
+        .icon-inventory .icon-active  { background-image: url('fill_inventory.svg'); }
+        .icon-coupons .icon-normal    { background-image: url('coupons.svg'); }
+        .icon-coupons .icon-hover     { background-image: url('hover_coupons.svg'); }
+        .icon-coupons .icon-active    { background-image: url('fill_coupons.svg'); }
+        .icon-site .icon-normal       { background-image: url('site.svg'); }
+        .icon-site .icon-hover        { background-image: url('hover_site.svg'); }
+        .icon-site .icon-active       { background-image: url('fill_site.svg'); }
+
+        /* SUBMENU ICON MAPPINGS — same 3-state system */
+        .icon-herosection .icon-normal  { background-image: url('herosection.svg'); }
+        .icon-herosection .icon-hover   { background-image: url('hover_herosection.svg'); }
+        .icon-herosection .icon-active  { background-image: url('fill_herosection.svg'); }
+
+        .icon-sections .icon-normal     { background-image: url('sections.svg'); }
+        .icon-sections .icon-hover      { background-image: url('hover_sections.svg'); }
+        .icon-sections .icon-active     { background-image: url('fill_sections.svg'); }
+
+        .icon-popup .icon-normal        { background-image: url('popup.svg'); }
+        .icon-popup .icon-hover         { background-image: url('hover_popup.svg'); }
+        .icon-popup .icon-active        { background-image: url('fill_popup.svg'); }
+
+        .icon-combo .icon-normal        { background-image: url('combo.svg'); }
+        .icon-combo .icon-hover         { background-image: url('hover_combo.svg'); }
+        .icon-combo .icon-active        { background-image: url('fill_combo.svg'); }
+
+        /* Submenu item icon states */
+        .nav-submenu-item .icon-custom .icon-normal { display: block; }
+        .nav-submenu-item .icon-custom .icon-hover,
+        .nav-submenu-item .icon-custom .icon-active { display: none; }
+        .nav-submenu-item:hover .icon-custom .icon-normal { display: none; }
+        .nav-submenu-item:hover .icon-custom .icon-hover { display: block; }
+        .nav-submenu-item.active .icon-custom .icon-normal,
+        .nav-submenu-item.active .icon-custom .icon-hover { display: none; }
+        .nav-submenu-item.active .icon-custom .icon-active { display: block; }
+
+        /* DESKTOP LAYOUT */
+        .page-desktop { display: flex; height: 100vh; width: 100vw; }
+        .d-sidebar {
+            width: var(--sidebar-width); height: 100%; background: var(--sidebar-bg);
+            border-right: 1px solid var(--border-subtle); display: flex; flex-direction: column;
+            flex-shrink: 0; transition: width 0.3s cubic-bezier(0.4,0,0.2,1); z-index: 100;
+        }
+        .d-sidebar-header {
+            min-height: var(--header-height-desktop); display: flex; align-items: center;
+            justify-content: space-between; padding: 30px 24px; transition: all 0.3s;
+        }
+        .d-sidebar-inner {
+            flex: 1; padding: 10px 16px; display: flex; flex-direction: column;
+            overflow-y: auto; overflow-x: hidden;
+        }
+        .sidebar-toggle {
+            background: none; border: none; cursor: pointer; color: var(--icon-color);
+            display: flex; align-items: center; justify-content: center;
+            padding: 6px; border-radius: 8px; transition: 0.2s;
+        }
+        .sidebar-toggle:hover { background: var(--hover-bg); color: var(--text-color); }
+
+        /* NAV ITEMS */
+        .nav-item {
+            position: relative; display: flex; align-items: center; height: var(--row-height);
+            padding: 0 16px; margin: 2px 0; border-radius: var(--radius-md); gap: 14px;
+            cursor: pointer; color: var(--text-color); text-decoration: none;
+            transition: background 0.2s, color 0.2s; white-space: nowrap; user-select: none;
+        }
+        .nav-item:hover { background: var(--hover-bg); }
+        .nav-item.active { background: var(--active-bg); color: var(--brand-primary); font-weight: 700; }
+        /* dropdown-open alone = no highlight, just chevron rotation */
+
+        /* Chevron */
+        .nav-chevron {
+            margin-left: auto; width: 16px; height: 16px; stroke: currentColor;
+            flex-shrink: 0; transition: transform 0.25s ease;
+        }
+        .nav-item.dropdown-open .nav-chevron { transform: rotate(90deg); }
+
+        /* SUBMENU */
+        .nav-submenu {
+            display: none; margin: 2px 0 4px 20px; padding-left: 16px;
+            border-left: 2px solid var(--border-subtle); flex-direction: column;
+        }
+        .nav-submenu.open { display: flex; }
+        .nav-submenu-item {
+            display: flex; align-items: center; height: 50px; padding: 0 14px;
+            border-radius: 8px; margin: 1px 0; gap: 12px; cursor: pointer;
+            color: var(--text-color); font-size: 15px; font-weight: 600;
+            text-decoration: none; transition: background 0.15s, color 0.15s; white-space: nowrap;
+        }
+        .nav-submenu-item:hover { background: var(--hover-bg); color: var(--brand-primary); }
+        .nav-submenu-item.active { background: var(--active-bg); color: var(--brand-primary); font-weight: 700; }
+        .submenu-icon { width: 20px; height: 20px; stroke: currentColor; flex-shrink: 0; opacity: 0.8; }
+
+        /* ACCOUNT */
+        .d-account-section {
+            margin-top: auto; padding: 24px 16px; border-top: 1px solid var(--border-subtle); cursor: pointer;
+        }
+        .account-card { display: flex; align-items: center; gap: 12px; }
+        .account-avatar { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border-subtle); object-fit: cover; flex-shrink: 0; }
+        .account-text { display: flex; flex-direction: column; overflow: hidden; transition: opacity 0.2s; }
+        .account-name { font-size: 15px; font-weight: 700; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+        .account-email { font-size: 13px; color: var(--text-sub); white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+
+        .d-main-wrapper { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        .d-topbar {
+            height: 80px; background: var(--header-bg); border-bottom: 1px solid var(--border-subtle);
+            padding: 0 40px; display: flex; align-items: center; font-weight: 700; font-size: 20px;
+        }
+        .d-content { flex: 1; padding: 40px; overflow-y: auto; }
+
+        /* COLLAPSED SIDEBAR */
+        .d-sidebar.collapsed { width: var(--sidebar-collapsed-width); }
+        .d-sidebar.collapsed .brand-logo,
+        .d-sidebar.collapsed .account-text,
+        .d-sidebar.collapsed .btn-close-svg,
+        .d-sidebar.collapsed .nav-chevron,
+        .d-sidebar.collapsed .nav-submenu { display: none !important; }
+        /* nav-label hidden normally but NOT !important — hover tooltip rule below can override it */
+        .d-sidebar.collapsed .nav-label { display: none; }
+        .d-sidebar.collapsed .mini-logo,
+        .d-sidebar.collapsed .btn-open-svg { display: flex; }
+        .btn-open-svg { display: none; }
+        .d-sidebar.collapsed .d-sidebar-header { flex-direction: column; height: auto; padding: 30px 0 20px; gap: 30px; }
+        .d-sidebar.collapsed .nav-item { justify-content: center; padding: 0; }
+        .d-sidebar.collapsed .d-account-section { display: flex; justify-content: center; padding: 24px 0; }
+        .d-sidebar.collapsed .d-sidebar-inner { overflow: visible; }
+        .d-sidebar.collapsed .nav-item:hover .nav-label {
+            display: block; position: absolute; left: 100%; top: 50%; transform: translateY(-50%);
+            background-color: var(--tooltip-bg); color: #fff; padding: 8px 12px; border-radius: 6px;
+            font-size: 13px; font-weight: 500; white-space: nowrap; z-index: 1000; margin-left: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); pointer-events: none;
+        }
+        .d-sidebar.collapsed .nav-item:hover .nav-label::before {
+            content: ""; position: absolute; left: -6px; top: 50%; transform: translateY(-50%);
+            border-width: 6px 6px 6px 0; border-style: solid;
+            border-color: transparent var(--tooltip-bg) transparent transparent;
+        }
+
+        /* MOBILE LAYOUT */
+        .page-mobile { display: none; flex-direction: column; height: 100vh; }
+        .m-header {
+            height: 72px; background: #fff; border-bottom: 1px solid var(--border-subtle);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 16px; position: fixed; top: 0; width: 100%; z-index: 1000;
+        }
+        .m-menu-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid #e5e7eb; background: #f9fafb; display: flex; align-items: center; justify-content: center; }
+        .m-menu-lines { width: 18px; height: 14px; position: relative; }
+        .m-menu-lines::before, .m-menu-lines::after, .m-menu-lines span { content: ""; position: absolute; left: 0; right: 0; height: 2px; background: #111827; border-radius: 10px; }
+        .m-menu-lines::before { top: 0; }
+        .m-menu-lines span { top: 6px; }
+        .m-menu-lines::after { bottom: 0; }
+        .m-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.45); opacity: 0; pointer-events: none; transition: 0.25s; z-index: 2000; }
+        .m-overlay.open { opacity: 1; pointer-events: auto; }
+        .m-drawer {
+            position: absolute; left: 0; top: 0; width: 300px; max-width: 85vw; height: 100%;
+            background: #fff; transform: translateX(-100%); transition: 0.25s;
+            display: flex; flex-direction: column; overflow-y: auto;
+        }
+        .m-overlay.open .m-drawer { transform: translateX(0); }
+        .m-drawer-header { height: 80px; padding: 0 20px; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+        .m-drawer-close { width: 40px; height: 40px; border-radius: 10px; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: center; background: #f9fafb; }
+        .m-drawer-close-icon { width: 14px; height: 14px; position: relative; }
+        .m-drawer-close-icon::before, .m-drawer-close-icon::after { content: ""; position: absolute; inset: 0; margin: auto; width: 14px; height: 2px; background: #111827; }
+        .m-drawer-close-icon::before { transform: rotate(45deg); }
+        .m-drawer-close-icon::after { transform: rotate(-45deg); }
+        .m-drawer-nav { padding: 20px 12px; flex: 1; }
+        .m-account-section { padding: 20px; border-top: 1px solid var(--border-subtle); background: #fff; }
+
+        /* PROFILE POPUP */
+        .profile-popup {
+            position: fixed; background: #fff; border-radius: 12px; box-shadow: var(--shadow-premium);
+            border: 1px solid #e5e7eb; width: 260px; z-index: 3000; opacity: 0; pointer-events: none;
+            transition: 0.2s; overflow: hidden;
+        }
+        .profile-popup.active { opacity: 1; pointer-events: all; }
+        .popup-header { padding: 16px; border-bottom: 1px solid #e5e7eb; background: #f9fafb; display: flex; align-items: center; gap: 12px; }
+        .popup-list { list-style: none; padding: 8px; }
+        .popup-list a { display: flex; align-items: center; gap: 12px; padding: 12px; text-decoration: none; color: var(--text-color); border-radius: 8px; cursor: pointer; }
+        .popup-list a:hover { background: #f3f4f6; }
+
+        @media (max-width: 768px) {
+            .page-desktop { display: none; }
+            .page-mobile { display: flex; }
+            .profile-popup { bottom: 100px; left: 50%; transform: translateX(-50%); }
+            .brand-logo img { height: 45px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================= DESKTOP VIEW ================= -->
+    <div class="page-desktop">
+        <aside class="d-sidebar" id="sidebar">
+            <div class="d-sidebar-header">
+                <a href="#" class="brand-logo">
+                    <img src="./logo.png" alt="SyncSkill">
+                </a>
+                <span class="mini-logo">
+                    <img src="./logo-small.png" alt="S">
+                </span>
+                <button class="sidebar-toggle" id="sidebar-toggle-btn">
+                    <img class="btn-close-svg" src="panel_close.svg" alt="Close sidebar" width="24" height="24">
+                    <img class="btn-open-svg" src="panel_open.svg" alt="Open sidebar" width="24" height="24">
+                </button>
+            </div>
+
+            <div class="d-sidebar-inner">
+                <nav>
+                    <a href="dashboard.html" class="nav-item active">
+                        <span class="icon icon-custom icon-dashboard">
+                            <span class="icon-normal"></span>
+                            <span class="icon-hover"></span>
+                            <span class="icon-active"></span>
+                        </span>
+                        <span class="nav-label">Dashboard</span>
+                    </a>
+
+                    <a href="manage-categories.html" class="nav-item">
+                        <span class="icon icon-custom icon-inventory">
+                            <span class="icon-normal"></span>
+                            <span class="icon-hover"></span>
+                            <span class="icon-active"></span>
+                        </span>
+                        <span class="nav-label">Inventory</span>
+                    </a>
+
+                    <a href="coupons.html" class="nav-item">
+                        <span class="icon icon-custom icon-coupons">
+                            <span class="icon-normal"></span>
+                            <span class="icon-hover"></span>
+                            <span class="icon-active"></span>
+                        </span>
+                        <span class="nav-label">Manage Coupons</span>
+                    </a>
+
+                    <!-- CUSTOMIZE SITE — dropdown toggle -->
+                    <div class="nav-item" id="d-site-toggle">
+                        <span class="icon icon-custom icon-site">
+                            <span class="icon-normal"></span>
+                            <span class="icon-hover"></span>
+                            <span class="icon-active"></span>
+                        </span>
+                        <span class="nav-label">Customize Site</span>
+                        <svg class="nav-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 18 6-6-6-6"/>
+                        </svg>
+                    </div>
+
+                    <!-- Desktop submenu -->
+                    <div class="nav-submenu" id="d-site-submenu">
+                        <a href="manage_herosection.html" class="nav-submenu-item">
+                            <span class="icon icon-custom icon-herosection">
+                                <span class="icon-normal"></span>
+                                <span class="icon-hover"></span>
+                                <span class="icon-active"></span>
+                            </span>
+                            Hero Section
+                        </a>
+                        <a href="manage-sections.html" class="nav-submenu-item">
+                            <span class="icon icon-custom icon-sections">
+                                <span class="icon-normal"></span>
+                                <span class="icon-hover"></span>
+                                <span class="icon-active"></span>
+                            </span>
+                            Sections
+                        </a>
+                        <a href="manage-popup.html" class="nav-submenu-item">
+                            <span class="icon icon-custom icon-popup">
+                                <span class="icon-normal"></span>
+                                <span class="icon-hover"></span>
+                                <span class="icon-active"></span>
+                            </span>
+                            Popup
+                        </a>
+                        <a href="manage-combo.html" class="nav-submenu-item">
+                            <span class="icon icon-custom icon-combo">
+                                <span class="icon-normal"></span>
+                                <span class="icon-hover"></span>
+                                <span class="icon-active"></span>
+                            </span>
+                            Combo Offer
+                        </a>
+                    </div>
+                </nav>
+
+                <div class="d-account-section" id="profile-trigger-desktop">
+                    <div class="account-card">
+                        <img class="account-avatar" src="https://ui-avatars.com/api/?name=John+Doe&background=673DE6&color=fff" alt="User">
+                        <div class="account-text">
+                            <div class="account-name">John Doe</div>
+                            <div class="account-email">john@syncskill.com</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <div class="d-main-wrapper">
+            <header class="d-topbar">Overview</header>
+            <main class="d-content">
+                <h1>Welcome to Dashboard</h1>
+                <p style="margin-top:10px;color:#6b7280;">Customize Site now has a dropdown. All SVGs preloaded on page load — no flicker on first hover or active.</p>
+            </main>
+        </div>
+    </div>
+
+    <!-- ================= MOBILE VIEW ================= -->
+    <div class="page-mobile">
+        <header class="m-header">
+            <button class="m-menu-btn" id="m-open-drawer">
+                <div class="m-menu-lines"><span></span></div>
+            </button>
+            <a href="#" class="brand-logo">
+                <img src="./logo.png" alt="SyncSkill">
+            </a>
+            <div style="width:40px;"></div>
+        </header>
+
+        <div class="m-overlay" id="m-overlay">
+            <div class="m-drawer">
+                <div class="m-drawer-header">
+                    <span class="brand-logo">
+                        <img src="./logo.png" alt="SyncSkill">
+                    </span>
+                    <button class="m-drawer-close" id="m-close-drawer">
+                        <div class="m-drawer-close-icon"></div>
+                    </button>
+                </div>
+
+                <nav class="m-drawer-nav">
+                    <a href="#" class="nav-item active">
+                        <span class="icon icon-custom icon-dashboard">
+                            <span class="icon-normal"></span>
+                            <span class="icon-hover"></span>
+                            <span class="icon-active"></span>
+                        </span>
+                        <span class="nav-label">Dashboard</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <span class="icon icon-custom icon-inventory">
+                            <span class="icon-normal"></span>
+                            <span class="icon-hover"></span>
+                            <span class="icon-active"></span>
+                        </span>
+                        <span class="nav-label">Inventory</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <span class="icon icon-custom icon-coupons">
+                            <span class="icon-normal"></span>
+                            <span class="icon-hover"></span>
+                            <span class="icon-active"></span>
+                        </span>
+                        <span class="nav-label">Manage Coupons</span>
+                    </a>
+
+                    <!-- CUSTOMIZE SITE — mobile dropdown toggle -->
+                    <div class="nav-item" id="m-site-toggle">
+                        <span class="icon icon-custom icon-site">
+                            <span class="icon-normal"></span>
+                            <span class="icon-hover"></span>
+                            <span class="icon-active"></span>
+                        </span>
+                        <span class="nav-label">Customize Site</span>
+                        <svg class="nav-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 18 6-6-6-6"/>
+                        </svg>
+                    </div>
+
+                    <!-- Mobile submenu -->
+                    <div class="nav-submenu" id="m-site-submenu">
+                        <a href="#" class="nav-submenu-item">
+                            <span class="icon icon-custom icon-herosection">
+                                <span class="icon-normal"></span>
+                                <span class="icon-hover"></span>
+                                <span class="icon-active"></span>
+                            </span>
+                            Hero Section
+                        </a>
+                        <a href="#" class="nav-submenu-item">
+                            <span class="icon icon-custom icon-sections">
+                                <span class="icon-normal"></span>
+                                <span class="icon-hover"></span>
+                                <span class="icon-active"></span>
+                            </span>
+                            Sections
+                        </a>
+                        <a href="#" class="nav-submenu-item">
+                            <span class="icon icon-custom icon-popup">
+                                <span class="icon-normal"></span>
+                                <span class="icon-hover"></span>
+                                <span class="icon-active"></span>
+                            </span>
+                            Popup
+                        </a>
+                        <a href="#" class="nav-submenu-item">
+                            <span class="icon icon-custom icon-combo">
+                                <span class="icon-normal"></span>
+                                <span class="icon-hover"></span>
+                                <span class="icon-active"></span>
+                            </span>
+                            Combo Offer
+                        </a>
+                    </div>
+                </nav>
+
+                <div class="m-account-section" id="profile-trigger-mobile">
+                    <div class="account-card">
+                        <img class="account-avatar" src="https://ui-avatars.com/api/?name=John+Doe&background=673DE6&color=fff" alt="User">
+                        <div class="account-text">
+                            <div class="account-name">John Doe</div>
+                            <div class="account-email">john@syncskill.com</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROFILE POPUP -->
+    <div class="profile-popup" id="profile-popup">
+        <div class="popup-header">
+            <img class="account-avatar" src="https://ui-avatars.com/api/?name=John+Doe&background=673DE6&color=fff" alt="User">
+            <div class="account-text">
+                <div class="account-name">John Doe</div>
+                <div class="account-email">john@syncskill.com</div>
+            </div>
+        </div>
+        <ul class="popup-list">
+            <li><a><span>Profile</span></a></li>
+            <li><a><span>Settings</span></a></li>
+            <li><a style="color:var(--danger-color)"><span>Logout</span></a></li>
+        </ul>
+    </div>
+
+    <script>
+        // ============= SVG PRELOAD (JS safety net) =============
+        // <link rel="preload"> in <head> handles modern browsers.
+        // new Image() below covers any browser that skips CSS background-image preload.
+        [
+            'dashboard.svg','hover_dashboard.svg','fill_dashboard.svg',
+            'inventory.svg','hover_inventory.svg','fill_inventory.svg',
+            'coupons.svg','hover_coupons.svg','fill_coupons.svg',
+            'site.svg','hover_site.svg','fill_site.svg',
+            'herosection.svg','hover_herosection.svg','fill_herosection.svg',
+            'sections.svg','hover_sections.svg','fill_sections.svg',
+            'popup.svg','hover_popup.svg','fill_popup.svg',
+            'combo.svg','hover_combo.svg','fill_combo.svg',
+            'panel_close.svg','panel_open.svg'
+        ].forEach(src => { const i = new Image(); i.src = src; });
+
+        // ============= SIDEBAR COLLAPSE =============
+        const sidebar = document.getElementById('sidebar');
+        document.getElementById('sidebar-toggle-btn').addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+        });
+
+        // ============= HELPERS =============
+        // Clear all active/dropdown states within a given nav element
+        function clearNavActive(nav) {
+            nav.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+        }
+
+        // ============= CUSTOMIZE SITE DROPDOWN (toggle open/close) =============
+        function setupDropdown(toggleId, submenuId) {
+            const toggle  = document.getElementById(toggleId);
+            const submenu = document.getElementById(submenuId);
+            if (!toggle || !submenu) return;
+
+            toggle.addEventListener('click', () => {
+                // If sidebar is collapsed, expand it first then open the dropdown
+                if (sidebar && sidebar.classList.contains('collapsed')) {
+                    sidebar.classList.remove('collapsed');
+                    // Open dropdown after the CSS transition completes (300ms)
+                    setTimeout(() => {
+                        submenu.classList.add('open');
+                        toggle.classList.add('dropdown-open');
+                    }, 300);
+                    return;
+                }
+                const isOpen = submenu.classList.contains('open');
+                submenu.classList.toggle('open', !isOpen);
+                toggle.classList.toggle('dropdown-open', !isOpen);
+                // Never set active on the toggle itself — only dropdown-open
+            });
+
+            // ---- Submenu item clicks ----
+            submenu.querySelectorAll('.nav-submenu-item').forEach(item => {
+                item.addEventListener('click', function (e) {
+                    // Stop so the document click handler doesn't fire
+                    e.stopPropagation();
+
+                    // 1. Clear all main nav active items in the same nav
+                    const parentNav = toggle.closest('nav') || toggle.parentElement;
+                    clearNavActive(parentNav);
+
+                    // 2. Clear active on all other submenu items in this submenu
+                    submenu.querySelectorAll('.nav-submenu-item').forEach(i => i.classList.remove('active'));
+
+                    // 3. Mark the clicked submenu item active
+                    this.classList.add('active');
+
+                    // 4. Keep dropdown open and mark the toggle as active too
+                    toggle.classList.add('dropdown-open', 'active');
+                    submenu.classList.add('open');
+                });
+            });
+        }
+        setupDropdown('d-site-toggle', 'd-site-submenu'); // desktop
+        setupDropdown('m-site-toggle', 'm-site-submenu'); // mobile
+
+        // ============= MOBILE DRAWER =============
+        const mOverlay = document.getElementById('m-overlay');
+        document.getElementById('m-open-drawer').onclick = () => mOverlay.classList.add('open');
+        document.getElementById('m-close-drawer').onclick = () => mOverlay.classList.remove('open');
+        mOverlay.onclick = (e) => { if (e.target === mOverlay) mOverlay.classList.remove('open'); };
+
+        // ============= PROFILE POPUP =============
+        const pPopup = document.getElementById('profile-popup');
+        ['profile-trigger-desktop','profile-trigger-mobile'].forEach(id => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.onclick = (e) => {
+                e.stopPropagation();
+                if (window.innerWidth > 768) { pPopup.style.left = '16px'; pPopup.style.bottom = '80px'; }
+                pPopup.classList.toggle('active');
+            };
+        });
+        document.addEventListener('click', () => pPopup.classList.remove('active'));
+
+        // ============= REGULAR NAV ACTIVE STATE =============
+        // Clicking a top-level non-dropdown link makes it active and closes/clears the site dropdown
+        document.querySelectorAll('.nav-item:not(#d-site-toggle):not(#m-site-toggle)').forEach(item => {
+            item.addEventListener('click', function () {
+                const parentNav = this.closest('nav');
+                if (parentNav) clearNavActive(parentNav);
+
+                this.classList.add('active');
+
+                // Deactivate site toggle and close submenu; also clear any active submenu children
+                ['d-site-toggle', 'm-site-toggle'].forEach(id => {
+                    const t = document.getElementById(id);
+                    t?.classList.remove('active', 'dropdown-open');
+                });
+                ['d-site-submenu', 'm-site-submenu'].forEach(id => {
+                    const s = document.getElementById(id);
+                    if (s) {
+                        s.classList.remove('open');
+                        s.querySelectorAll('.nav-submenu-item').forEach(i => i.classList.remove('active'));
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
