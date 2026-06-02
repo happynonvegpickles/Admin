@@ -746,7 +746,6 @@
                         </div>
                     </div>
 
-
                     <div class="card">
                         <div class="card-header">
                             <h3 style="font-size: 16px; font-weight: 600;">Select Pickles (Max 8)</h3>
@@ -812,13 +811,10 @@
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, getDocs, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCZbCr-Zt5KQblRQ8Pk58KuinCVP-TlXGo",
-            authDomain: "happynonvegpickles-f2636.firebaseapp.com",
-            projectId: "happynonvegpickles-f2636",
-            storageBucket: "happynonvegpickles-f2636.firebasestorage.app",
-            messagingSenderId: "802823212924",
-            appId: "1:802823212924:web:d82c92737ffa950798def9"
+        const firebaseConfig = { 
+            apiKey: "AIzaSyCxjDuFS_ntaOF-K8hFBaxQ0_8CR9yvbkM", 
+            authDomain: "pickle-fdc54.firebaseapp.com", 
+            projectId: "pickle-fdc54" 
         };
         const firebaseApp = initializeApp(firebaseConfig);
         const auth = getAuth(firebaseApp);
@@ -965,9 +961,9 @@
                         const combo = comboDoc.data();
                         existingComboId = comboDoc.id;
                         
-                        // Populate form
-                        document.getElementById('combo-active').checked = combo.isActive;
+                        // Set the weight filter
                         document.getElementById('weight-filter').value = combo.weightVariant || '';
+                        document.getElementById('combo-active').checked = combo.isActive;
                         document.getElementById('page-heading').innerText = 'Edit Combo Offer';
 
                         // Load pickles for this weight variant
@@ -1101,12 +1097,12 @@
                     image: p.customImage.trim() !== '' ? p.customImage : p.fallbackImage
                 }));
 
-const comboData = {
-    weightVariant: weight,
-    isActive,
-    items: savedPickles,
-    updatedAt: Date.now()
-};
+                const comboData = {
+                    weightVariant: weight,
+                    isActive,
+                    items: savedPickles,
+                    updatedAt: Date.now()
+                };
 
                 // If no combo exists yet, we still need an ID for a new document
                 const comboRef = existingComboId 
