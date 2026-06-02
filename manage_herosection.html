@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Happy NonVeg Pickles – Hero Section Settings</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Preload SVG icons for sidebar -->
+    <link rel="preload" as="image" href="./assets/dashboard.svg">
+    <link rel="preload" as="image" href="./assets/hover_dashboard.svg">
+    <link rel="preload" as="image" href="./assets/fill_dashboard.svg">
+    <link rel="preload" as="image" href="./assets/inventory.svg">
+    <link rel="preload" as="image" href="./assets/hover_inventory.svg">
+    <link rel="preload" as="image" href="./assets/fill_inventory.svg">
+    <link rel="preload" as="image" href="./assets/coupons.svg">
+    <link rel="preload" as="image" href="./assets/hover_coupons.svg">
+    <link rel="preload" as="image" href="./assets/fill_coupons.svg">
+    <link rel="preload" as="image" href="./assets/site.svg">
+    <link rel="preload" as="image" href="./assets/hover_site.svg">
+    <link rel="preload" as="image" href="./assets/fill_site.svg">
+    <link rel="preload" as="image" href="./assets/panel_close.svg">
+    <link rel="preload" as="image" href="./assets/panel_open.svg">
+    <link rel="preload" as="image" href="./assets/herosection.svg">
+    <link rel="preload" as="image" href="./assets/hover_herosection.svg">
+    <link rel="preload" as="image" href="./assets/fill_herosection.svg">
+    <link rel="preload" as="image" href="./assets/sections.svg">
+    <link rel="preload" as="image" href="./assets/hover_sections.svg">
+    <link rel="preload" as="image" href="./assets/fill_sections.svg">
+    <link rel="preload" as="image" href="./assets/popup.svg">
+    <link rel="preload" as="image" href="./assets/hover_popup.svg">
+    <link rel="preload" as="image" href="./assets/fill_popup.svg">
+    <link rel="preload" as="image" href="./assets/combo.svg">
+    <link rel="preload" as="image" href="./assets/hover_combo.svg">
+    <link rel="preload" as="image" href="./assets/fill_combo.svg">
+
+    <style>
+        /* ========== GLOBAL VARIABLES ========== */
+        :root {
+            --text-sub: #6b7280;
+            --header-height-desktop: 70px;
+            --sidebar-width: 260px;
+            --sidebar-collapsed-width: 90px;
+            --row-height: 52px;
+            --sidebar-bg: #ffffff;
+            --header-bg: #ffffff;
+            --page-bg: #f4f5f7;
+            --text-color: rgb(24, 24, 26);
+            --icon-color: #6b7280;
+            --brand-primary: #643DE4;
+            --active-bg: #f4f0fa;
+            --hover-bg: #f3f4f6;
+            --border-subtle: #e5e7eb;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+            --shadow-premium: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            --tooltip-bg: #1f2937;
+            --danger-color: #ef4444;
+            --success-color: #10B981;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-decoration: none !important; }
+        body {
+            min-height: 100vh;
+            background: var(--page-bg);
+            font-family: "DM Sans", Roboto, sans-serif;
+            font-weight: 500;
+            color: var(--text-color);
+            overflow: hidden;
+            display: none; /* hidden until Firebase auth confirms */
+        }
+
+        /* LOGO */
+        .brand-logo { display: flex; align-items: center; text-decoration: none; transition: all 0.3s; }
+        .brand-logo img { height: 45px; width: auto; display: block; }
+        .mini-logo { display: none; align-items: center; justify-content: center; }
+        .mini-logo img { height: 45px; width: auto; display: block; }
+
+        /* ICON SYSTEM */
+        .icon { display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; flex-shrink: 0; }
+        .icon-custom { position: relative; width: 24px; height: 24px; }
+        .icon-custom > span {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: contain; background-repeat: no-repeat; background-position: center;
+        }
+        .icon-custom .icon-normal { display: block; }
+        .icon-custom .icon-hover, .icon-custom .icon-active { display: none; }
+        .nav-item:hover:not(.active) .icon-custom .icon-normal { display: none; }
+        .nav-item:hover:not(.active) .icon-custom .icon-hover { display: block; }
+        .nav-item.active .icon-custom .icon-normal,
+        .nav-item.active .icon-custom .icon-hover { display: none; }
+        .nav-item.active .icon-custom .icon-active { display: block; }
+        .nav-item.active.dropdown-open .icon-custom .icon-normal,
+        .nav-item.active.dropdown-open .icon-custom .icon-hover { display: none; }
+        .nav-item.active.dropdown-open .icon-custom .icon-active { display: block; }
+
+        /* ICON FILE MAPPINGS */
+        .icon-dashboard .icon-normal  { background-image: url('./assets/dashboard.svg'); }
+        .icon-dashboard .icon-hover   { background-image: url('./assets/hover_dashboard.svg'); }
+        .icon-dashboard .icon-active  { background-image: url('./assets/fill_dashboard.svg'); }
+        .icon-inventory .icon-normal  { background-image: url('./assets/inventory.svg'); }
+        .icon-inventory .icon-hover   { background-image: url('./assets/hover_inventory.svg'); }
+        .icon-inventory .icon-active  { background-image: url('./assets/fill_inventory.svg'); }
+        .icon-coupons .icon-normal    { background-image: url('./assets/coupons.svg'); }
+        .icon-coupons .icon-hover     { background-image: url('./assets/hover_coupons.svg'); }
+        .icon-coupons .icon-active    { background-image: url('./assets/fill_coupons.svg'); }
+        .icon-site .icon-normal       { background-image: url('./assets/site.svg'); }
+        .icon-site .icon-hover        { background-image: url('./assets/hover_site.svg'); }
+        .icon-site .icon-active       { background-image: url('./assets/fill_site.svg'); }
+
+        /* SUBMENU ICON MAPPINGS */
+        .icon-herosection .icon-normal  { background-image: url('./assets/herosection.svg'); }
+        .icon-herosection .icon-hover   { background-image: url('./assets/hover_herosection.svg'); }
+        .icon-herosection .icon-active  { background-image: url('./assets/fill_herosection.svg'); }
+        .icon-sections .icon-normal     { background-image: url('./assets/sections.svg'); }
+        .icon-sections .icon-hover      { background-image: url('./assets/hover_sections.svg'); }
+        .icon-sections .icon-active     { background-image: url('./assets/fill_sections.svg'); }
+        .icon-popup .icon-normal        { background-image: url('./assets/popup.svg'); }
+        .icon-popup .icon-hover         { background-image: url('./assets/hover_popup.svg'); }
+        .icon-popup .icon-active        { background-image: url('./assets/fill_popup.svg'); }
+        .icon-combo .icon-normal        { background-image: url('./assets/combo.svg'); }
+        .icon-combo .icon-hover         { background-image: url('./assets/hover_combo.svg'); }
+        .icon-combo .icon-active        { background-image: url('./assets/fill_combo.svg'); }
+
+        /* Submenu item icon states */
+        .nav-submenu-item .icon-custom .icon-normal { display: block; }
+        .nav-submenu-item .icon-custom .icon-hover,
+        .nav-submenu-item .icon-custom .icon-active { display: none; }
+        .nav-submenu-item:hover .icon-custom .icon-normal { display: none; }
+        .nav-submenu-item:hover .icon-custom .icon-hover { display: block; }
+        .nav-submenu-item.active .icon-custom .icon-normal,
+        .nav-submenu-item.active .icon-custom .icon-hover { display: none; }
+        .nav-submenu-item.active .icon-custom .icon-active { display: block; }
+
+        /* DESKTOP LAYOUT */
+        .page-desktop { display: flex; height: 100vh; width: 100vw; }
+        .d-sidebar {
+            width: var(--sidebar-width); height: 100%; background: var(--sidebar-bg);
+            border-right: 1px solid var(--border-subtle); display: flex; flex-direction: column;
+            flex-shrink: 0; transition: width 0.3s cubic-bezier(0.4,0,0.2,1); z-index: 100;
+        }
+        .d-sidebar-header {
+            min-height: var(--header-height-desktop); display: flex; align-items: center;
+            justify-content: space-between; padding: 30px 24px; transition: all 0.3s;
+        }
+        .d-sidebar-inner {
+            flex: 1; padding: 10px 16px; display: flex; flex-direction: column;
+            overflow-y: auto; overflow-x: hidden;
+        }
+        .sidebar-toggle {
+            background: none; border: none; cursor: pointer; color: var(--icon-color);
+            display: flex; align-items: center; justify-content: center;
+            padding: 6px; border-radius: 8px; transition: 0.2s;
+        }
+        .sidebar-toggle:hover { background: var(--hover-bg); color: var(--text-color); }
+
+        /* NAV ITEMS */
+        .nav-item {
+            position: relative; display: flex; align-items: center; height: var(--row-height);
+            padding: 0 16px; margin: 2px 0; border-radius: var(--radius-md); gap: 14px;
+            cursor: pointer; color: var(--text-color); text-decoration: none;
+            transition: background 0.2s, color 0.2s; white-space: nowrap; user-select: none;
+        }
+        .nav-item:hover { background: var(--hover-bg); }
+        .nav-item.active { background: var(--active-bg); color: var(--brand-primary); font-weight: 700; }
+
+        .nav-chevron {
+            margin-left: auto; width: 16px; height: 16px; stroke: currentColor;
+            flex-shrink: 0; transition: transform 0.25s ease;
+        }
+        .nav-item.dropdown-open .nav-chevron { transform: rotate(90deg); }
+
+        /* SUBMENU */
+        .nav-submenu {
+            display: none; margin: 2px 0 4px 20px; padding-left: 16px;
+            border-left: 2px solid var(--border-subtle); flex-direction: column;
+        }
+        .nav-submenu.open { display: flex; }
+        .nav-submenu-item {
+            display: flex; align-items: center; height: 50px; padding: 0 14px;
+            border-radius: 8px; margin: 1px 0; gap: 12px; cursor: pointer;
+            color: var(--text-color); font-size: 15px; font-weight: 600;
+            text-decoration: none; transition: background 0.15s, color 0.15s; white-space: nowrap;
+        }
+        .nav-submenu-item:hover { background: var(--hover-bg); color: var(--brand-primary); }
+        .nav-submenu-item.active { background: var(--active-bg); color: var(--brand-primary); font-weight: 700; }
+
+        /* ACCOUNT */
+        .d-account-section {
+            margin-top: auto; padding: 24px 16px; border-top: 1px solid var(--border-subtle); cursor: pointer;
+        }
+        .account-card { display: flex; align-items: center; gap: 12px; }
+        .account-avatar { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border-subtle); object-fit: cover; flex-shrink: 0; }
+        .account-text { display: flex; flex-direction: column; overflow: hidden; transition: opacity 0.2s; }
+        .account-name { font-size: 15px; font-weight: 700; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+        .account-email { font-size: 13px; color: var(--text-sub); white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+
+        .d-main-wrapper { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        .d-topbar {
+            height: 80px; background: var(--header-bg); border-bottom: 1px solid var(--border-subtle);
+            padding: 0 40px; display: flex; align-items: center; font-weight: 700; font-size: 20px;
+        }
+        .d-content { flex: 1; padding: 16px; overflow-y: auto; }
+
+        /* COLLAPSED SIDEBAR */
+        .d-sidebar.collapsed { width: var(--sidebar-collapsed-width); }
+        .d-sidebar.collapsed .brand-logo,
+        .d-sidebar.collapsed .account-text,
+        .d-sidebar.collapsed .btn-close-svg,
+        .d-sidebar.collapsed .nav-chevron,
+        .d-sidebar.collapsed .nav-submenu { display: none !important; }
+        .d-sidebar.collapsed .nav-label { display: none; }
+        .d-sidebar.collapsed .mini-logo,
+        .d-sidebar.collapsed .btn-open-svg { display: flex; }
+        .btn-open-svg { display: none; }
+        .d-sidebar.collapsed .d-sidebar-header { flex-direction: column; height: auto; padding: 30px 0 20px; gap: 30px; }
+        .d-sidebar.collapsed .nav-item { justify-content: center; padding: 0; }
+        .d-sidebar.collapsed .d-account-section { display: flex; justify-content: center; padding: 24px 0; }
+        .d-sidebar.collapsed .d-sidebar-inner { overflow: visible; }
+        .d-sidebar.collapsed .nav-item:hover .nav-label {
+            display: block; position: absolute; left: 100%; top: 50%; transform: translateY(-50%);
+            background-color: var(--tooltip-bg); color: #fff; padding: 8px 12px; border-radius: 6px;
+            font-size: 13px; font-weight: 500; white-space: nowrap; z-index: 1000; margin-left: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); pointer-events: none;
+        }
+        .d-sidebar.collapsed .nav-item:hover .nav-label::before {
+            content: ""; position: absolute; left: -6px; top: 50%; transform: translateY(-50%);
+            border-width: 6px 6px 6px 0; border-style: solid;
+            border-color: transparent var(--tooltip-bg) transparent transparent;
+        }
+
+        /* MOBILE HEADER & OVERLAY (hidden on desktop) */
+        .m-header { display: none; }
+        .m-header {
+            height: 72px; background: #fff; border-bottom: 1px solid var(--border-subtle);
+            align-items: center; justify-content: space-between;
+            padding: 0 16px; position: fixed; top: 0; width: 100%; z-index: 1000;
+        }
+        .m-menu-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid #e5e7eb; background: #f9fafb; display: flex; align-items: center; justify-content: center; }
+        .m-menu-lines { width: 18px; height: 14px; position: relative; }
+        .m-menu-lines::before, .m-menu-lines::after, .m-menu-lines span { content: ""; position: absolute; left: 0; right: 0; height: 2px; background: #111827; border-radius: 10px; }
+        .m-menu-lines::before { top: 0; }
+        .m-menu-lines span { top: 6px; }
+        .m-menu-lines::after { bottom: 0; }
+        .m-overlay {
+            position: fixed; inset: 0; background: rgba(15,23,42,0.45); opacity: 0;
+            pointer-events: none; transition: 0.25s; z-index: 2000;
+        }
+        .m-overlay.open { opacity: 1; pointer-events: auto; }
+        .m-drawer {
+            position: absolute; left: 0; top: 0; width: 300px; max-width: 85vw; height: 100%;
+            background: #fff; transform: translateX(-100%); transition: 0.25s;
+            display: flex; flex-direction: column; overflow-y: auto;
+        }
+        .m-overlay.open .m-drawer { transform: translateX(0); }
+        .m-drawer-header { height: 80px; padding: 0 20px; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+        .m-drawer-close { width: 40px; height: 40px; border-radius: 10px; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: center; background: #f9fafb; }
+        .m-drawer-close-icon { width: 14px; height: 14px; position: relative; }
+        .m-drawer-close-icon::before, .m-drawer-close-icon::after { content: ""; position: absolute; inset: 0; margin: auto; width: 14px; height: 2px; background: #111827; }
+        .m-drawer-close-icon::before { transform: rotate(45deg); }
+        .m-drawer-close-icon::after { transform: rotate(-45deg); }
+        .m-drawer-nav { padding: 20px 12px; flex: 1; }
+        .m-account-section { padding: 20px; border-top: 1px solid var(--border-subtle); background: #fff; }
+
+        /* PROFILE POPUP */
+        .profile-popup {
+            position: fixed; background: #fff; border-radius: 12px; box-shadow: var(--shadow-premium);
+            border: 1px solid #e5e7eb; width: 260px; z-index: 3000; opacity: 0; pointer-events: none;
+            transition: 0.2s; overflow: hidden;
+        }
+        .profile-popup.active { opacity: 1; pointer-events: all; }
+        .popup-header { padding: 16px; border-bottom: 1px solid #e5e7eb; background: #f9fafb; display: flex; align-items: center; gap: 12px; }
+        .popup-list { list-style: none; padding: 8px; }
+        .popup-list a { display: flex; align-items: center; gap: 12px; padding: 12px; text-decoration: none; color: var(--text-color); border-radius: 8px; cursor: pointer; }
+        .popup-list a:hover { background: #f3f4f6; }
+
+        /* ========== GLOBAL BUTTONS ========== */
+        .primary-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 24px;
+            border-radius: var(--radius-md);
+            border: none;
+            font-weight: 600;
+            font-size: 16px;
+            color: #ffffff;
+            background: var(--brand-primary);
+            transition: background 0.2s, transform 0.2s;
+            cursor: pointer;
+            letter-spacing: 0.2px;
+            white-space: nowrap;
+            font-family: inherit;
+        }
+        .primary-btn:hover { background: #5228d3; transform: translateY(-1px); }
+        .primary-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-subtle);
+            background: #ffffff;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-color);
+            transition: background 0.2s, transform 0.2s;
+            cursor: pointer;
+            letter-spacing: 0.2px;
+            font-family: inherit;
+        }
+        .btn-secondary:hover { background: #f9fafb; transform: translateY(-1px); }
+        .danger-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 24px;
+            border-radius: var(--radius-md);
+            border: none;
+            font-weight: 600;
+            font-size: 16px;
+            color: #ffffff;
+            background: var(--danger-color);
+            transition: background 0.2s, transform 0.2s;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .danger-btn:hover { background: #dc2626; transform: translateY(-1px); }
+
+        /* ========== PAGE CONTENT STYLES (scoped to .content-inner) ========== */
+        .content-inner {
+            --brand-primary: #643DE4;
+            --danger-color: #ef4444;
+            --success-color: #10B981;
+            --warning-color: #f59e0b;
+            --switch-on: #643DE4;
+            --switch-off: #9CA3AF;
+            --hover-bg: #f3f4f6;
+            --border-subtle: #e5e7eb;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+            max-width: 1110px;
+            margin: 0 auto;
+            padding: 16px 16px 24px;
+            width: 100%;
+            font-family: 'IBM Plex Sans', Roboto, sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 20px;
+            color: var(--text-color);
+        }
+        .content-inner .page-title {
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 32px;
+            color: rgb(29, 30, 32);
+        }
+        .content-inner .breadcrumbs {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            font-size: 13px;
+            color: var(--text-sub);
+            margin-bottom: 8px;
+        }
+        .content-inner .breadcrumbs .divider { color: #d1d5db; }
+        .content-inner .breadcrumbs img { width: 18px; height: 18px; vertical-align: middle; }
+        .content-inner .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        .content-inner .card {
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-subtle);
+            overflow: hidden;
+            width: 100%;
+            margin-bottom: 16px;
+        }
+        .content-inner .card-header {
+            padding: 24px 20px;
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Toggle switch */
+        .content-inner .toggle-switch { width: 44px; height: 24px; position: relative; display: inline-block; }
+        .content-inner .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .content-inner .slider {
+            position: absolute;
+            inset: 0;
+            background-color: var(--switch-off);
+            border-radius: 24px;
+            transition: .4s;
+            cursor: pointer;
+        }
+        .content-inner .slider::before {
+            content: "";
+            position: absolute;
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            border-radius: 50%;
+            transition: .4s;
+        }
+        .content-inner .toggle-switch input:checked + .slider { background-color: var(--switch-on); }
+        .content-inner .toggle-switch input:checked + .slider::before { transform: translateX(20px); }
+        .content-inner .toggle-disabled { opacity: 0.5; pointer-events: none; }
+
+        /* Kebab button (using SVG) */
+        .content-inner .kebab {
+            width: 44px; height: 44px; border-radius: var(--radius-md);
+            display: flex; justify-content: center; align-items: center;
+            border: 1px solid var(--border-subtle); background: #ffffff;
+            cursor: pointer; transition: background 0.15s, border-color 0.15s;
+        }
+        .content-inner .kebab img { width: 22px; height: 22px; }
+        .content-inner .kebab:hover { background: #f9fafb; border-color: #d1d5db; }
+
+        /* Desktop table */
+        .content-inner .desktop-view { display: block; }
+        .content-inner .table-wrapper { width: 100%; overflow-x: auto; overflow: visible !important; }
+        .content-inner table { width: 100%; border-collapse: collapse; z-index: 1; position: relative; }
+        .content-inner thead { height: 48px; }
+        .content-inner th {
+            font-weight: 700; font-size: 14px; line-height: 24px; color: rgb(29, 30, 32);
+            text-align: left; border-bottom: 1px solid var(--border-subtle); white-space: nowrap;
+            background-color: #ffffff; padding: 12px 20px;
+        }
+        .content-inner tbody tr { border-bottom: 1px solid #f3f4f6; background-color: #ffffff; transition: background-color 0.15s ease; }
+        .content-inner tbody tr:hover { background-color: #f9fafb; }
+        .content-inner tbody tr:last-child { border-bottom: none; }
+        .content-inner td { padding: 12px 20px; vertical-align: middle; text-align: left; }
+        .content-inner .product-thumb { width: 64px; height: 40px; border-radius: 4px; object-fit: cover; border: 1px solid var(--border-subtle); }
+        .content-inner .status-badge { font-size: 12px; font-weight: 600; padding: 4px 8px; border-radius: 4px; display: inline-block;}
+        .content-inner .status-active { color: var(--brand-primary); background: #f2efff; }
+        .content-inner .status-inactive { color: var(--text-sub); background: var(--hover-bg); }
+        .content-inner .item-inactive { opacity: 0.7; filter: grayscale(50%); background-color: #fafafa !important;}
+
+        /* Mobile cards – compact design */
+        .content-inner .mobile-view { display: none; padding: 0; }
+        .content-inner .mobile-category-cards .mobile-card {
+            background: #ffffff; border-radius: 16px; border: 1px solid var(--border-subtle);
+            padding: 12px 16px; display: flex; align-items: center; gap: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            width: 100%; margin-bottom: 14px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .content-inner .mobile-category-cards .mobile-card:hover {
+            transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+        }
+        .content-inner .mobile-card-content {
+            flex: 1; display: flex; flex-direction: column; gap: 2px;
+        }
+        .content-inner .mobile-card-title {
+            font-size: 17px; font-weight: 700; color: var(--text-color);
+        }
+        .content-inner .mobile-card-subtitle {
+            font-size: 14px; font-weight: 600; color: var(--brand-primary);
+        }
+        .content-inner .mobile-card-meta {
+            font-size: 12px; font-weight: 500; color: var(--text-sub);
+        }
+        .content-inner .mobile-card-actions {
+            display: flex; gap: 12px; align-items: center;
+        }
+        .content-inner .product-card-menu-btn {
+            width: 44px; height: 44px; border-radius: 10px;
+            border: 1px solid var(--border-subtle); background: #fff;
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer;
+        }
+        .content-inner .product-card-menu-btn img { width: 22px; height: 22px; }
+
+        /* ========== GLOBAL MODALS & DROPDOWN ========== */
+        .dropdown-menu {
+            position: fixed; background: #ffffff;
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.06);
+            min-width: 200px; z-index: 10002;
+            display: none; flex-direction: column;
+            padding: 8px;
+            animation: fadeInUp 0.2s ease-out;
+        }
+        .dropdown-menu.show { display: flex; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown-item {
+            padding: 14px 16px;
+            font-size: 15px; font-weight: 600;
+            color: var(--text-color);
+            cursor: pointer;
+            border-radius: 10px;
+            text-align: left;
+            background: transparent;
+            border: none;
+            width: 100%;
+            display: flex; align-items: center; gap: 14px;
+            font-family: inherit;
+            transition: background 0.15s;
+        }
+        .dropdown-item img { width: 20px; height: 20px; opacity: 0.85; }
+        .dropdown-item:hover { background: var(--hover-bg); }
+        .dropdown-item.text-danger { color: var(--danger-color); }
+        .dropdown-item.text-danger img { filter: invert(36%) sepia(87%) saturate(7464%) hue-rotate(344deg) brightness(92%) contrast(89%); }
+
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px); z-index: 2000;
+            display: none; align-items: center; justify-content: center;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-content {
+            width: 100%; max-width: 480px; background: white;
+            border-radius: var(--radius-lg); box-shadow: var(--shadow-premium);
+            animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal-header { padding: 20px 24px; border-bottom: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h3 { font-size: 18px; font-weight: 700; color: rgb(29, 30, 32); }
+        .modal-close { background: none; border: none; color: var(--text-sub); cursor: pointer; padding: 4px; border-radius: 4px; transition: all 0.15s; }
+        .modal-close:hover { background: var(--hover-bg); color: var(--text-color); }
+        .modal-body { padding: 24px; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: flex-end; gap: 12px; background: #fafafa; border-radius: 0 0 var(--radius-lg) var(--radius-lg); }
+
+        /* Form styles for modals */
+        .modal-overlay .form-group { margin-bottom: 16px; }
+        .modal-overlay .form-row { display: flex; gap: 12px; }
+        .modal-overlay .form-row .form-group { flex: 1; margin-bottom: 12px; }
+        .modal-overlay .form-label {
+            display: block; font-size: 13px; font-weight: 600;
+            color: rgb(29, 30, 32); margin-bottom: 8px;
+        }
+        .modal-overlay .form-input {
+            width: 100%; padding: 0.875rem 1rem;
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            background: white; transition: all 0.15s ease;
+            font-size: 0.95rem; color: var(--text-color); font-family: inherit;
+        }
+        .modal-overlay .form-input:focus {
+            border-color: var(--brand-primary);
+            box-shadow: 0 0 0 3px rgba(100, 61, 228, 0.1); outline: none;
+        }
+
+        @keyframes modalPop { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        @keyframes slideUpModal { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .animate-spin { animation: spin 1s linear infinite; }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .d-sidebar { display: none; }
+            .d-topbar { display: none; }
+            .d-content { padding: 8px; padding-top: 80px; padding-bottom: 100px; }
+
+            .m-header { display: flex; }
+
+            .profile-popup { bottom: 100px; left: 50%; transform: translateX(-50%); }
+            .brand-logo img { height: 45px; }
+
+            .content-inner { padding: 16px; }
+            .content-inner .page-title { font-size: 22px; }
+            .content-inner .header-section { flex-direction: column; align-items: flex-start; gap: 16px; }
+            .content-inner .desktop-view { display: none; }
+            .content-inner .mobile-view { display: block; }
+            .content-inner .card { background: transparent; border: none; }
+            /* Keep the master toggle card header visible on mobile */
+            .content-inner .master-toggle-card .card-header {
+                display: flex;
+            }
+            /* Hide other card headers on mobile */
+            .content-inner .card:not(.master-toggle-card) .card-header {
+                display: none;
+            }
+            .modal-content {
+                border-radius: 24px 24px 0 0;
+                animation: slideUpModal 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                align-self: flex-end;
+            }
+            .modal-footer { border-radius: 0; padding-bottom: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== MOBILE HEADER ========== -->
+    <header class="m-header" id="mobile-header">
+        <button class="m-menu-btn" id="m-open-drawer">
+            <div class="m-menu-lines"><span></span></div>
+        </button>
+        <a href="#" class="brand-logo">
+            <img src="./assets/logo.png" alt="Happy NonVeg Pickles">
+        </a>
+        <div style="width:40px;"></div>
+    </header>
+
+    <!-- ========== MOBILE DRAWER OVERLAY ========== -->
+    <div class="m-overlay" id="m-overlay">
+        <div class="m-drawer">
+            <div class="m-drawer-header">
+                <span class="brand-logo">
+                    <img src="./assets/logo.png" alt="Happy NonVeg Pickles">
+                </span>
+                <button class="m-drawer-close" id="m-close-drawer">
+                    <div class="m-drawer-close-icon"></div>
+                </button>
+            </div>
+
+            <nav class="m-drawer-nav">
+                <a href="dashboard.html" class="nav-item">
+                    <span class="icon icon-custom icon-dashboard">
+                        <span class="icon-normal"></span>
+                        <span class="icon-hover"></span>
+                        <span class="icon-active"></span>
+                    </span>
+                    <span class="nav-label">Dashboard</span>
+                </a>
+                <a href="manage-categories.html" class="nav-item">
+                    <span class="icon icon-custom icon-inventory">
+                        <span class="icon-normal"></span>
+                        <span class="icon-hover"></span>
+                        <span class="icon-active"></span>
+                    </span>
+                    <span class="nav-label">Inventory</span>
+                </a>
+                <a href="coupons.html" class="nav-item">
+                    <span class="icon icon-custom icon-coupons">
+                        <span class="icon-normal"></span>
+                        <span class="icon-hover"></span>
+                        <span class="icon-active"></span>
+                    </span>
+                    <span class="nav-label">Manage Coupons</span>
+                </a>
+
+                <!-- CUSTOMIZE SITE ACTIVE & OPEN -->
+                <div class="nav-item active dropdown-open" id="m-site-toggle">
+                    <span class="icon icon-custom icon-site">
+                        <span class="icon-normal"></span>
+                        <span class="icon-hover"></span>
+                        <span class="icon-active"></span>
+                    </span>
+                    <span class="nav-label">Customize Site</span>
+                    <svg class="nav-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m9 18 6-6-6-6"/>
+                    </svg>
+                </div>
+
+                <div class="nav-submenu open" id="m-site-submenu">
+                    <a href="manage_herosection.html" class="nav-submenu-item active">
+                        <span class="icon icon-custom icon-herosection">
+                            <span class="icon-normal"></span>
+                            <span class="icon-hover"></span>
+                            <span class="icon-active"></span>
+                        </span>
+                        Hero Section
+                    </a>
+                    <a href="manage-sections.html" class="nav-submenu-item">
+                        <span class="icon icon-custom icon-sections">
+                            <span class="icon-normal"></span>
+                            <span class="icon-hover"></span>
+                            <span class="icon-active"></span>
+                        </span>
+                        Sections
+                    </a>
+                    <a href="manage-popup.html" class="nav-submenu-item">
+                        <span class="icon icon-custom icon-popup">
+                            <span class="icon-normal"></span>
+                            <span class="icon-hover"></span>
+                            <span class="icon-active"></span>
+                        </span>
+                        Popup
+                    </a>
+                    <a href="manage-combo.html" class="nav-submenu-item">
+                        <span class="icon icon-custom icon-combo">
+                            <span class="icon-normal"></span>
+                            <span class="icon-hover"></span>
+                            <span class="icon-active"></span>
+                        </span>
+                        Combo Offer
+                    </a>
+                </div>
+            </nav>
+
+            <div class="m-account-section" id="profile-trigger-mobile">
+                <div class="account-card">
+                    <img class="account-avatar" src="" alt="User">
+                    <div class="account-text">
+                        <div class="account-name">Loading...</div>
+                        <div class="account-email">loading...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== DESKTOP LAYOUT ========== -->
+    <div class="page-desktop">
+        <aside class="d-sidebar" id="sidebar">
+            <div class="d-sidebar-header">
+                <a href="#" class="brand-logo">
+                    <img src="./assets/logo.png" alt="Happy NonVeg Pickles">
+                </a>
+                <span class="mini-logo">
+                    <img src="./assets/logo-small.png" alt="H">
+                </span>
+                <button class="sidebar-toggle" id="sidebar-toggle-btn">
+                    <img class="btn-close-svg" src="./assets/panel_close.svg" alt="Close sidebar" width="24" height="24">
+                    <img class="btn-open-svg" src="./assets/panel_open.svg" alt="Open sidebar" width="24" height="24">
+                </button>
+            </div>
+
+            <div class="d-sidebar-inner">
+                <nav>
+                    <a href="dashboard.html" class="nav-item">
+                        <span class="icon icon-custom icon-dashboard">
+                            <span class="icon-normal"></span>
+                            <span class="icon-hover"></span>
+                            <span class="icon-active"></span>
+                        </span>
+                        <span class="nav-label">Dashboard</span>
+                    </a>
+                    <a href="manage-categories.html" class="nav-item">
+                        <span class="icon icon-custom icon-inventory">
+                            <span class="icon-normal"></span>
+                            <span class="icon-hover"></span>
+                            <span class="icon-active"></span>
+                        </span>
+                        <span class="nav-label">Inventory</span>
+                    </a>
+                    <a href="coupons.html" class="nav-item">
+                        <span class="icon icon-custom icon-coupons">
+                            <span class="icon-normal"></span>
+                            <span class="icon-hover"></span>
+                            <span class="icon-active"></span>
+                        </span>
+                        <span class="nav-label">Manage Coupons</span>
+                    </a>
+
+                    <!-- CUSTOMIZE SITE ACTIVE & OPEN -->
+                    <div class="nav-item active dropdown-open" id="d-site-toggle">
+                        <span class="icon icon-custom icon-site">
+                            <span class="icon-normal"></span>
+                            <span class="icon-hover"></span>
+                            <span class="icon-active"></span>
+                        </span>
+                        <span class="nav-label">Customize Site</span>
+                        <svg class="nav-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 18 6-6-6-6"/>
+                        </svg>
+                    </div>
+
+                    <div class="nav-submenu open" id="d-site-submenu">
+                        <a href="manage_herosection.html" class="nav-submenu-item active">
+                            <span class="icon icon-custom icon-herosection">
+                                <span class="icon-normal"></span>
+                                <span class="icon-hover"></span>
+                                <span class="icon-active"></span>
+                            </span>
+                            Hero Section
+                        </a>
+                        <a href="manage-sections.html" class="nav-submenu-item">
+                            <span class="icon icon-custom icon-sections">
+                                <span class="icon-normal"></span>
+                                <span class="icon-hover"></span>
+                                <span class="icon-active"></span>
+                            </span>
+                            Sections
+                        </a>
+                        <a href="manage-popup.html" class="nav-submenu-item">
+                            <span class="icon icon-custom icon-popup">
+                                <span class="icon-normal"></span>
+                                <span class="icon-hover"></span>
+                                <span class="icon-active"></span>
+                            </span>
+                            Popup
+                        </a>
+                        <a href="manage-combo.html" class="nav-submenu-item">
+                            <span class="icon icon-custom icon-combo">
+                                <span class="icon-normal"></span>
+                                <span class="icon-hover"></span>
+                                <span class="icon-active"></span>
+                            </span>
+                            Combo Offer
+                        </a>
+                    </div>
+                </nav>
+
+                <div class="d-account-section" id="profile-trigger-desktop">
+                    <div class="account-card">
+                        <img class="account-avatar" src="" alt="User">
+                        <div class="account-text">
+                            <div class="account-name">Loading...</div>
+                            <div class="account-email">loading...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <div class="d-main-wrapper">
+            <header class="d-topbar">Customize Site</header>
+            <main class="d-content">
+                <!-- ========== PAGE CONTENT (hero section) ========== -->
+                <div class="content-inner">
+                    <div class="header-section">
+                        <div>
+                            <div class="breadcrumbs">
+                                <img src="./assets/home_icon.svg" alt="Home" />
+                                <span class="divider">/</span>
+                                <span style="color: var(--text-sub);">Customize Site</span>
+                                <span class="divider">/</span>
+                                <span style="color: var(--brand-primary); font-weight: 600;">Hero Section</span>
+                            </div>
+                            <h2 class="page-title">Hero Section Slider</h2>
+                        </div>
+                        <div class="header-actions" style="display: flex; gap: 8px;">
+                            <button onclick="app.openModal()" class="primary-btn">
+                                <i class="fas fa-plus" style="font-size: 14px;"></i> Add Slide
+                            </button>
+                            <!-- "Save Changes" button removed – every action auto-saves -->
+                        </div>
+                    </div>
+
+                    <!-- Master toggle -->
+                    <div class="card master-toggle-card" style="margin-bottom: 16px;">
+                        <div class="card-header" style="border-bottom: none;">
+                            <div>
+                                <h3 style="font-size: 16px; font-weight: 700; color: rgb(29, 30, 32);">Entire Hero Section</h3>
+                                <span style="font-size: 13px; color: var(--text-sub); display: block; margin-top: 4px;">Enable or disable the slider entirely on the website.</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px; background: #fafafa; padding: 8px 16px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+                                <span id="hero-status-text" style="font-weight: 700; font-size: 13px;">Enabled</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="hero-toggle" onchange="app.toggleMaster(event)">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slides table/cards -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 style="font-size: 16px; font-weight: 600;">Current Slides</h3>
+                        </div>
+                        
+                        <div class="desktop-view table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style="width: 50px;">#</th>
+                                        <th>Images (Desktop & Mobile)</th>
+                                        <th>Action Button</th>
+                                        <th>Status</th>
+                                        <th>Active</th>
+                                        <th style="width: 60px;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="desktop-tbody">
+                                    <tr><td colspan="6" class="empty-state">Loading slides...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="mobile-view mobile-category-cards" id="mobile-cards">
+                            <div class="empty-state">Loading slides...</div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- ========== PROFILE POPUP ========== -->
+    <div class="profile-popup" id="profile-popup">
+        <div class="popup-header">
+            <img class="account-avatar" src="" alt="User">
+            <div class="account-text">
+                <div class="account-name">Loading...</div>
+                <div class="account-email">loading...</div>
+            </div>
+        </div>
+        <ul class="popup-list">
+            <li><a id="logout-btn" style="color:var(--danger-color)"><span>Logout</span></a></li>
+        </ul>
+    </div>
+
+    <!-- ========== MODALS & MENUS ========== -->
+    <div id="slide-modal-overlay" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Add New Slide</h3>
+                <button onclick="app.closeModal()" class="modal-close">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Desktop Image URL <span style="color: var(--danger-color)">*</span></label>
+                    <input type="text" id="slide-desktop" class="form-input" placeholder="https://...">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Mobile Image URL <span style="color: var(--danger-color)">*</span></label>
+                    <input type="text" id="slide-mobile" class="form-input" placeholder="https://...">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Button Name</label>
+                        <input type="text" id="slide-btn-name" class="form-input" placeholder="Shop Now">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Button Link</label>
+                        <input type="text" id="slide-btn-link" class="form-input" placeholder="/products.html">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="app.closeModal()" class="btn-secondary">Cancel</button>
+                <button onclick="app.saveSlide()" id="modal-save-btn" class="primary-btn">Save Slide</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dropdown menus container -->
+    <div id="menus-container"></div>
+
+    <!-- ========== COMBINED JAVASCRIPT ========== -->
+    <script type="module">
+        // ========== FIREBASE INIT ==========
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCZbCr-Zt5KQblRQ8Pk58KuinCVP-TlXGo",
+            authDomain: "happynonvegpickles-f2636.firebaseapp.com",
+            projectId: "happynonvegpickles-f2636",
+            storageBucket: "happynonvegpickles-f2636.firebasestorage.app",
+            messagingSenderId: "802823212924",
+            appId: "1:802823212924:web:d82c92737ffa950798def9",
+            measurementId: "G-18GP45EWTT"
+        };
+
+        const firebaseApp = initializeApp(firebaseConfig);
+        const auth = getAuth(firebaseApp);
+        const db = getFirestore(firebaseApp);
+        const ALLOWED_ADMIN = "harshavardhanjw@gmail.com";
+        const MASTER_DOC = doc(db, 'landing_page', 'master');
+
+        // ========== SVG PRELOAD ==========
+        [
+            './assets/dashboard.svg','./assets/hover_dashboard.svg','./assets/fill_dashboard.svg',
+            './assets/inventory.svg','./assets/hover_inventory.svg','./assets/fill_inventory.svg',
+            './assets/coupons.svg','./assets/hover_coupons.svg','./assets/fill_coupons.svg',
+            './assets/site.svg','./assets/hover_site.svg','./assets/fill_site.svg',
+            './assets/herosection.svg','./assets/hover_herosection.svg','./assets/fill_herosection.svg',
+            './assets/sections.svg','./assets/hover_sections.svg','./assets/fill_sections.svg',
+            './assets/popup.svg','./assets/hover_popup.svg','./assets/fill_popup.svg',
+            './assets/combo.svg','./assets/hover_combo.svg','./assets/fill_combo.svg',
+            './assets/panel_close.svg','./assets/panel_open.svg'
+        ].forEach(src => { const i = new Image(); i.src = src; });
+
+        // ========== AUTH ==========
+        onAuthStateChanged(auth, (user) => {
+            if (!user || user.email !== ALLOWED_ADMIN) {
+                if (user) {
+                    signOut(auth).then(() => window.location.href = './');
+                } else {
+                    window.location.href = './';
+                }
+            } else {
+                document.body.style.display = 'block';
+                const avatars = document.querySelectorAll('.account-avatar');
+                const names = document.querySelectorAll('.account-name');
+                const emails = document.querySelectorAll('.account-email');
+                const defaultAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || 'Admin')}&background=673DE6&color=fff`;
+                avatars.forEach(img => img.src = user.photoURL || defaultAvatar);
+                names.forEach(name => name.textContent = user.displayName || 'Admin');
+                emails.forEach(email => email.textContent = user.email);
+            }
+        });
+
+        document.getElementById('logout-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            signOut(auth).then(() => window.location.href = './');
+        });
+
+        // ========== DASHBOARD UI ==========
+        const sidebar = document.getElementById('sidebar');
+        document.getElementById('sidebar-toggle-btn').addEventListener('click', () => sidebar.classList.toggle('collapsed'));
+
+        function clearNavActive(nav) {
+            nav.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+        }
+
+        function setupDropdown(toggleId, submenuId) {
+            const toggle  = document.getElementById(toggleId);
+            const submenu = document.getElementById(submenuId);
+            if (!toggle || !submenu) return;
+
+            toggle.addEventListener('click', () => {
+                if (sidebar && sidebar.classList.contains('collapsed')) {
+                    sidebar.classList.remove('collapsed');
+                    setTimeout(() => {
+                        submenu.classList.add('open');
+                        toggle.classList.add('dropdown-open');
+                    }, 300);
+                    return;
+                }
+                const isOpen = submenu.classList.contains('open');
+                submenu.classList.toggle('open', !isOpen);
+                toggle.classList.toggle('dropdown-open', !isOpen);
+            });
+
+            submenu.querySelectorAll('.nav-submenu-item').forEach(item => {
+                item.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    const parentNav = toggle.closest('nav') || toggle.parentElement;
+                    clearNavActive(parentNav);
+                    submenu.querySelectorAll('.nav-submenu-item').forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    toggle.classList.add('dropdown-open', 'active');
+                    submenu.classList.add('open');
+                });
+            });
+        }
+        setupDropdown('d-site-toggle', 'd-site-submenu');
+        setupDropdown('m-site-toggle', 'm-site-submenu');
+
+        // Mobile drawer
+        const mOverlay = document.getElementById('m-overlay');
+        document.getElementById('m-open-drawer').onclick = () => mOverlay.classList.add('open');
+        document.getElementById('m-close-drawer').onclick = () => mOverlay.classList.remove('open');
+        mOverlay.onclick = (e) => { if (e.target === mOverlay) mOverlay.classList.remove('open'); };
+
+        // Profile popup
+        const pPopup = document.getElementById('profile-popup');
+        ['profile-trigger-desktop','profile-trigger-mobile'].forEach(id => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.onclick = (e) => {
+                e.stopPropagation();
+                if (window.innerWidth > 768) { pPopup.style.left = '16px'; pPopup.style.bottom = '80px'; }
+                pPopup.classList.toggle('active');
+            };
+        });
+        document.addEventListener('click', () => pPopup.classList.remove('active'));
+
+        // Regular nav active state
+        document.querySelectorAll('.nav-item:not(#d-site-toggle):not(#m-site-toggle)').forEach(item => {
+            item.addEventListener('click', function () {
+                const parentNav = this.closest('nav');
+                if (parentNav) clearNavActive(parentNav);
+                this.classList.add('active');
+                ['d-site-toggle', 'm-site-toggle'].forEach(id => {
+                    const t = document.getElementById(id);
+                    t?.classList.remove('active', 'dropdown-open');
+                });
+                ['d-site-submenu', 'm-site-submenu'].forEach(id => {
+                    const s = document.getElementById(id);
+                    if (s) {
+                        s.classList.remove('open');
+                        s.querySelectorAll('.nav-submenu-item').forEach(i => i.classList.remove('active'));
+                    }
+                });
+            });
+        });
+
+        // ========== HERO SECTION LOGIC ==========
+        let editingSlideId = null;   // null = add new, otherwise slide id being edited
+
+        window.app = {
+            slides: [],
+            isHeroEnabled: true,
+
+            init: async () => {
+                try {
+                    const snap = await getDoc(MASTER_DOC);
+                    if (snap.exists()) {
+                        const data = snap.data();
+                        window.app.isHeroEnabled = data.config?.isHeroEnabled !== false;
+
+                        const rawSlides = data.hero_slides?.slides || [];
+                        window.app.slides = rawSlides.map(slide => ({
+                            ...slide,
+                            isActive: slide.isActive !== false
+                        }));
+                    }
+                } catch (error) {
+                    console.error("Error loading data:", error);
+                }
+                
+                window.app.render();
+
+                // Global click to close menus
+                document.addEventListener('click', (e) => {
+                    if (!e.target.closest('.dropdown-menu') && !e.target.closest('.kebab')) {
+                        document.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
+                    }
+                });
+                document.addEventListener('scroll', () => {
+                    document.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
+                }, true);
+
+                document.getElementById('slide-modal-overlay').addEventListener('click', (e) => {
+                    if (e.target.id === 'slide-modal-overlay') window.app.closeModal();
+                });
+            },
+
+            // Auto‑save everything to Firestore
+            async saveSettings() {
+                try {
+                    await setDoc(MASTER_DOC, {
+                        config: {
+                            isHeroEnabled: window.app.isHeroEnabled,
+                            updatedAt: Date.now()
+                        },
+                        hero_slides: {
+                            slides: window.app.slides,
+                            updatedAt: Date.now()
+                        }
+                    }, { merge: true });
+                } catch (error) {
+                    console.error("Error saving settings:", error);
+                }
+            },
+
+            render: () => {
+                const toggle = document.getElementById('hero-toggle');
+                const statusText = document.getElementById('hero-status-text');
+                toggle.checked = window.app.isHeroEnabled;
+                statusText.innerText = window.app.isHeroEnabled ? "Enabled" : "Disabled";
+                statusText.style.color = window.app.isHeroEnabled ? 'var(--success-color)' : 'var(--text-sub)';
+
+                const desktopTbody = document.getElementById('desktop-tbody');
+                const mobileContainer = document.getElementById('mobile-cards');
+                const menusContainer = document.getElementById('menus-container');
+                
+                if (window.app.slides.length === 0) {
+                    const emptyHtml = `<div class="empty-state">No slides added yet.</div>`;
+                    desktopTbody.innerHTML = `<tr><td colspan="6" class="empty-state">No slides added yet.</td></tr>`;
+                    mobileContainer.innerHTML = emptyHtml;
+                    menusContainer.innerHTML = '';
+                    return;
+                }
+
+                let desktopHTML = '';
+                let mobileHTML = '';
+                let popupsHTML = '';
+
+                window.app.slides.forEach((slide, index) => {
+                    const activeClass = slide.isActive ? 'status-active' : 'status-inactive';
+                    const activeText = slide.isActive ? 'Active' : 'Inactive';
+                    const rowClass = !slide.isActive ? 'item-inactive' : '';
+                    const toggleStateClass = !window.app.isHeroEnabled ? 'toggle-disabled' : '';
+
+                    desktopHTML += `
+                        <tr class="${rowClass}">
+                            <td style="font-weight: 700; color: var(--text-sub);">${index + 1}</td>
+                            <td>
+                                <div style="display: flex; gap: 8px;">
+                                    <img src="${slide.desktopImg}" class="product-thumb" alt="Desktop">
+                                    <img src="${slide.mobileImg}" class="product-thumb" style="width: 30px;" alt="Mobile">
+                                </div>
+                            </td>
+                            <td>
+                                ${slide.btnName 
+                                    ? `<strong>${slide.btnName}</strong><br><span style="font-size: 12px; color: var(--brand-primary);">${slide.btnLink || '#'}</span>` 
+                                    : `<span style="color: var(--text-sub); font-style: italic;">No button</span>`}
+                            </td>
+                            <td><span class="status-badge ${activeClass}">${activeText}</span></td>
+                            <td>
+                                <label class="toggle-switch ${toggleStateClass}">
+                                    <input type="checkbox" ${slide.isActive ? 'checked' : ''} ${!window.app.isHeroEnabled ? 'disabled' : ''} onchange="app.toggleSlideStatus('${slide.id}')">
+                                    <span class="slider"></span>
+                                </label>
+                            </td>
+                            <td>
+                                <button class="kebab" onclick="app.toggleMenu(event, 'menu-${slide.id}')">
+                                    <img src="./assets/dots.svg" alt="Menu" />
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+
+                    mobileHTML += `
+                        <div class="mobile-card ${rowClass}">
+                            <img src="${slide.desktopImg}" style="width: 56px; height: 56px; border-radius: 8px; object-fit: cover;" alt="Img">
+                            <div class="mobile-card-content">
+                                <div class="mobile-card-title">Slide ${index + 1}</div>
+                                <div class="mobile-card-subtitle">${slide.btnName ? slide.btnName : 'No button'}</div>
+                            </div>
+                            <div class="mobile-card-actions">
+                                <label class="toggle-switch ${toggleStateClass}">
+                                    <input type="checkbox" ${slide.isActive ? 'checked' : ''} ${!window.app.isHeroEnabled ? 'disabled' : ''} onchange="app.toggleSlideStatus('${slide.id}')">
+                                    <span class="slider"></span>
+                                </label>
+                                <button class="kebab product-card-menu-btn" onclick="app.toggleMenu(event, 'menu-${slide.id}')">
+                                    <img src="./assets/dots.svg" alt="Menu" />
+                                </button>
+                            </div>
+                        </div>
+                    `;
+
+                    popupsHTML += `
+                        <div class="dropdown-menu" id="menu-${slide.id}">
+                            <button class="dropdown-item" onclick="app.editSlide('${slide.id}'); event.stopPropagation();">
+                                <img src="./assets/edit.svg" alt="Edit" /> Edit Slide
+                            </button>
+                            <button class="dropdown-item text-danger" onclick="app.deleteSlide('${slide.id}'); event.stopPropagation();">
+                                <img src="./assets/delete.svg" alt="Delete" /> Delete Slide
+                            </button>
+                        </div>
+                    `;
+                });
+
+                desktopTbody.innerHTML = desktopHTML;
+                mobileContainer.innerHTML = mobileHTML;
+                menusContainer.innerHTML = popupsHTML;
+            },
+
+            toggleMenu: (event, menuId) => {
+                event.stopPropagation();
+                const button = event.currentTarget;
+                const targetMenu = document.getElementById(menuId);
+                if (!targetMenu) return;
+                const isCurrentlyShowing = targetMenu.classList.contains('show');
+
+                document.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
+
+                if (!isCurrentlyShowing) {
+                    targetMenu.classList.add('show');
+                    const btnRect = button.getBoundingClientRect();
+                    const menuRect = targetMenu.getBoundingClientRect();
+
+                    let topPosition = btnRect.bottom + 8;
+                    let leftPosition = btnRect.right - menuRect.width;
+                    if (topPosition + menuRect.height > window.innerHeight) {
+                        topPosition = btnRect.top - menuRect.height - 8;
+                    }
+                    targetMenu.style.top = topPosition + 'px';
+                    targetMenu.style.left = leftPosition + 'px';
+                }
+            },
+
+            toggleMaster: (event) => {
+                window.app.isHeroEnabled = event.target.checked;
+                if (!window.app.isHeroEnabled) {
+                    window.app.slides.forEach(slide => { slide.isActive = false; });
+                }
+                window.app.render();
+                window.app.saveSettings();
+            },
+
+            toggleSlideStatus: (id) => {
+                if (!window.app.isHeroEnabled) return; 
+                const slideIndex = window.app.slides.findIndex(s => s.id === id);
+                if (slideIndex > -1) {
+                    window.app.slides[slideIndex].isActive = !window.app.slides[slideIndex].isActive;
+                    window.app.render();
+                    window.app.saveSettings();
+                }
+            },
+
+            openModal: (editId = null) => {
+                editingSlideId = editId;
+                const modalTitle = document.getElementById('modal-title');
+                const saveBtn = document.getElementById('modal-save-btn');
+                if (editId) {
+                    const slide = window.app.slides.find(s => s.id === editId);
+                    if (slide) {
+                        document.getElementById('slide-desktop').value = slide.desktopImg || '';
+                        document.getElementById('slide-mobile').value = slide.mobileImg || '';
+                        document.getElementById('slide-btn-name').value = slide.btnName || '';
+                        document.getElementById('slide-btn-link').value = slide.btnLink || '';
+                        modalTitle.innerText = 'Edit Slide';
+                        saveBtn.innerText = 'Update Slide';
+                    }
+                } else {
+                    // Clear fields
+                    ['slide-desktop','slide-mobile','slide-btn-name','slide-btn-link'].forEach(id => {
+                        document.getElementById(id).value = '';
+                    });
+                    modalTitle.innerText = 'Add New Slide';
+                    saveBtn.innerText = 'Save Slide';
+                }
+                document.getElementById('slide-modal-overlay').classList.add('active');
+            },
+            
+            closeModal: () => {
+                document.getElementById('slide-modal-overlay').classList.remove('active');
+                editingSlideId = null;
+            },
+
+            editSlide: (id) => {
+                // Close all dropdowns and open modal in edit mode
+                document.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
+                window.app.openModal(id);
+            },
+
+            saveSlide: async () => {
+                const desktopImg = document.getElementById('slide-desktop').value.trim();
+                const mobileImg = document.getElementById('slide-mobile').value.trim();
+                const btnName = document.getElementById('slide-btn-name').value.trim();
+                const btnLink = document.getElementById('slide-btn-link').value.trim();
+
+                if (!desktopImg || !mobileImg) return alert("Desktop and Mobile images are required.");
+
+                const btn = document.getElementById('modal-save-btn');
+                const originalHtml = btn.innerHTML;
+                btn.innerHTML = `<span class="animate-spin" style="display:inline-block; width:18px; height:18px; border:2px solid #fff; border-top-color:transparent; border-radius:50%;"></span> <span>Saving...</span>`;
+                btn.disabled = true;
+
+                try {
+                    if (editingSlideId) {
+                        // Update existing slide
+                        const slideIndex = window.app.slides.findIndex(s => s.id === editingSlideId);
+                        if (slideIndex > -1) {
+                            window.app.slides[slideIndex] = {
+                                ...window.app.slides[slideIndex],
+                                desktopImg,
+                                mobileImg,
+                                btnName,
+                                btnLink,
+                                updatedAt: Date.now()
+                            };
+                        }
+                    } else {
+                        // Add new slide
+                        const newSlide = {
+                            id: Date.now().toString(),
+                            desktopImg,
+                            mobileImg,
+                            btnName,
+                            btnLink,
+                            isActive: window.app.isHeroEnabled,
+                            createdAt: Date.now()
+                        };
+                        window.app.slides.push(newSlide);
+                    }
+
+                    await window.app.saveSettings();
+                    window.app.closeModal();
+                    window.app.render();
+                } catch (error) {
+                    console.error(error);
+                    alert("Failed to save slide.");
+                } finally {
+                    btn.innerHTML = originalHtml;
+                    btn.disabled = false;
+                    editingSlideId = null;
+                }
+            },
+
+            deleteSlide: async (id) => {
+                if (confirm("Delete this slide entirely?")) {
+                    try {
+                        window.app.slides = window.app.slides.filter(s => s.id !== id);
+                        await window.app.saveSettings();
+                        window.app.render();
+                    } catch (error) {
+                        console.error(error);
+                        alert("Failed to delete slide.");
+                    }
+                }
+            }
+        };
+
+        window.app.init();
+    </script>
+</body>
+</html>
