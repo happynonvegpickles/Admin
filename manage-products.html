@@ -346,6 +346,35 @@
         .content-inner .actions-cell { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
         .content-inner .action-btn img { width: 18px; height: 18px; vertical-align: middle; }
 
+        /* ===== DRAG HANDLE ===== */
+        .drag-handle {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 32px; height: 32px; border-radius: 8px;
+            border: 1px solid var(--border-subtle); background: #fff;
+            cursor: grab; color: #9ca3af; transition: background 0.15s, color 0.15s, border-color 0.15s;
+            flex-shrink: 0;
+        }
+        .drag-handle:hover { background: var(--hover-bg); border-color: #9ca3af; color: var(--brand-primary); }
+        .drag-handle:active { cursor: grabbing; }
+        .drag-handle svg { width: 16px; height: 16px; pointer-events: none; }
+
+        /* Desktop row drag states */
+        .content-inner tbody tr.dragging {
+            opacity: 0.4;
+            background: #f4f0fa !important;
+        }
+        .content-inner tbody tr.drag-over-top {
+            box-shadow: inset 0 3px 0 var(--brand-primary);
+        }
+        .content-inner tbody tr.drag-over-bottom {
+            box-shadow: inset 0 -3px 0 var(--brand-primary);
+        }
+
+        /* Mobile card drag states */
+        .mobile-category-cards.dragging { opacity: 0.35; background: #f4f0fa !important; }
+        .mobile-category-cards.drag-over-top { box-shadow: 0 -3px 0 var(--brand-primary), 0 2px 8px rgba(0,0,0,0.04); }
+        .mobile-category-cards.drag-over-bottom { box-shadow: 0 3px 0 var(--brand-primary), 0 2px 8px rgba(0,0,0,0.04); }
+
         /* ===== PRODUCT BADGE TAGS ===== */
         .product-badge {
             display: inline-flex; align-items: center; gap: 4px;
@@ -364,6 +393,23 @@
         .badge-seasonal { background: #fff7ed; color: #7c2d12; border: 1px solid #fed7aa; }
         .badge-homemade { background: #f0fdf4; color: #14532d; border: 1px solid #86efac; }
         .badge-glutenfree { background: #f0f9ff; color: #1e3a5f; border: 1px solid #93c5fd; }
+
+        /* ===== BADGES DROPDOWN (desktop) - looks like a select ===== */
+        .badges-dropdown-trigger {
+            display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+            padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border-subtle);
+            background: #fff; font-size: 13px; font-weight: 600; color: var(--text-color);
+            transition: border-color 0.15s, background 0.15s; min-width: 120px;
+            white-space: nowrap; user-select: none; font-family: inherit;
+        }
+        .badges-dropdown-trigger:hover { border-color: var(--brand-primary); background: #faf9ff; }
+        .badges-dropdown-trigger.has-badges { color: var(--brand-primary); border-color: #c4b5fd; background: #faf8ff; }
+        .badges-dropdown-trigger .bdrop-chevron {
+            margin-left: auto; width: 14px; height: 14px; flex-shrink: 0;
+            transition: transform 0.2s; color: #9ca3af;
+        }
+        .badges-dropdown-trigger .bdrop-label { flex: 1; }
+        .bdrop-tag-icon { width: 14px; height: 14px; opacity: 0.7; flex-shrink: 0; }
 
         /* ===== TAG DROPDOWN PANEL ===== */
         .tag-dropdown-panel {
@@ -393,18 +439,7 @@
         .tdp-save-btn:hover { background: #5228d3; }
 
         /* Tags cell in table */
-        .tags-cell { max-width: 200px; }
-
-        /* ===== MOVE UP/DOWN BUTTONS ===== */
-        .move-btn {
-            width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border-subtle);
-            background: #fff; display: inline-flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: background 0.15s, border-color 0.15s, opacity 0.15s;
-            color: #6b7280; font-size: 13px; flex-shrink: 0;
-        }
-        .move-btn:hover:not(:disabled) { background: var(--hover-bg); border-color: #9ca3af; color: var(--brand-primary); }
-        .move-btn:disabled { opacity: 0.3; cursor: not-allowed; }
-        .move-btns-group { display: flex; gap: 4px; align-items: center; }
+        .tags-cell { min-width: 160px; }
 
         /* Mobile cards */
         .content-inner .mobile-view { display: none; }
@@ -412,7 +447,7 @@
             background: #ffffff; border-radius: 16px; border: 1px solid var(--border-subtle);
             padding: 14px 16px; display: flex; align-items: center; gap: 12px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.04); width: 100%; margin-bottom: 14px;
-            cursor: default;
+            cursor: default; touch-action: none;
         }
         .content-inner .mobile-category-cards img.prod-img { width: 56px; height: 56px; border-radius: var(--radius-lg); object-fit: cover; flex-shrink: 0; }
         .content-inner .mobile-card-content { flex: 1; display: flex; flex-direction: column; gap: 5px; min-width: 0; }
@@ -425,6 +460,17 @@
             background: #fff; display: flex; justify-content: center; align-items: center; cursor: pointer;
         }
         .content-inner .product-card-menu-btn img { width: 22px; height: 22px; }
+
+        /* Mobile drag ghost */
+        .mobile-drag-ghost {
+            position: fixed; pointer-events: none; z-index: 10099;
+            background: #fff; border-radius: 16px; border: 2px solid var(--brand-primary);
+            box-shadow: 0 16px 40px rgba(100,61,228,0.22);
+            opacity: 0.92; transform: rotate(2deg) scale(1.03);
+            transition: none; display: none; padding: 14px 16px;
+            display: flex; align-items: center; gap: 12px;
+            max-width: 340px; overflow: hidden;
+        }
 
         /* MODALS */
         .modal-overlay {
@@ -683,6 +729,15 @@
         </div>
     </div>
 
+    <!-- Mobile drag ghost element -->
+    <div class="mobile-drag-ghost" id="mobileDragGhost">
+        <img style="width:48px;height:48px;border-radius:10px;object-fit:cover;flex-shrink:0;" id="ghostImg" src="" alt="">
+        <div style="flex:1;min-width:0;">
+            <div style="font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="ghostName"></div>
+            <div style="font-size:13px;font-weight:600;color:#643DE4;margin-top:3px;" id="ghostPrice"></div>
+        </div>
+    </div>
+
     <div id="menus-container"></div>
 
     <script type="module">
@@ -827,12 +882,12 @@
         let tagDropdownProductId = null;
         let tagDropdownCurrentBadges = [];
 
-        const tagPanel      = document.getElementById('tag-dropdown-panel');
-        const tagOptionsList= document.getElementById('tag-options-list');
-        const tdpSaveBtn    = document.getElementById('tdp-save-btn');
+        const tagPanel       = document.getElementById('tag-dropdown-panel');
+        const tagOptionsList = document.getElementById('tag-options-list');
+        const tdpSaveBtn     = document.getElementById('tdp-save-btn');
 
         function openTagDropdown(productId, currentBadges, anchorEl) {
-            tagDropdownProductId   = productId;
+            tagDropdownProductId     = productId;
             tagDropdownCurrentBadges = [...(currentBadges || [])];
 
             // Build checkboxes
@@ -843,15 +898,18 @@
                 </label>
             `).join('');
 
-            // Position
+            // Show first so we can measure
             tagPanel.classList.add('show');
-            const rect = anchorEl.getBoundingClientRect();
-            const panelW = 240;
+
+            // Position
+            const rect   = anchorEl.getBoundingClientRect();
+            const panelW = tagPanel.offsetWidth  || 240;
             const panelH = tagPanel.offsetHeight || 420;
             let left = rect.left;
             let top  = rect.bottom + 6;
-            if (left + panelW > window.innerWidth - 8) left = window.innerWidth - panelW - 8;
-            if (top + panelH > window.innerHeight - 8) top = rect.top - panelH - 6;
+            if (left + panelW > window.innerWidth  - 8) left = window.innerWidth  - panelW - 8;
+            if (top  + panelH > window.innerHeight - 8) top  = rect.top - panelH - 6;
+            if (left < 8) left = 8;
             tagPanel.style.left = left + 'px';
             tagPanel.style.top  = top  + 'px';
         }
@@ -875,6 +933,149 @@
             }
         });
 
+        /* ══════════════════════════════════════════════════════
+           DESKTOP DRAG-AND-DROP (HTML5)
+        ══════════════════════════════════════════════════════ */
+        let dragSrcId = null;
+
+        function initDesktopDnd() {
+            const tbody = document.querySelector('#data-container table tbody');
+            if (!tbody) return;
+
+            tbody.querySelectorAll('tr[data-prod-id]').forEach(row => {
+                const handle = row.querySelector('.drag-handle');
+                if (!handle) return;
+
+                // Only the handle starts the drag
+                handle.addEventListener('mousedown', () => { row.draggable = true; });
+                handle.addEventListener('mouseup',   () => { row.draggable = false; });
+
+                row.addEventListener('dragstart', e => {
+                    dragSrcId = row.dataset.prodId;
+                    row.classList.add('dragging');
+                    e.dataTransfer.effectAllowed = 'move';
+                    e.dataTransfer.setData('text/plain', dragSrcId);
+                });
+                row.addEventListener('dragend', () => {
+                    row.classList.remove('dragging');
+                    row.draggable = false;
+                    tbody.querySelectorAll('tr').forEach(r => r.classList.remove('drag-over-top','drag-over-bottom'));
+                });
+                row.addEventListener('dragover', e => {
+                    e.preventDefault();
+                    if (row.dataset.prodId === dragSrcId) return;
+                    const rect = row.getBoundingClientRect();
+                    const midY = rect.top + rect.height / 2;
+                    tbody.querySelectorAll('tr').forEach(r => r.classList.remove('drag-over-top','drag-over-bottom'));
+                    row.classList.add(e.clientY < midY ? 'drag-over-top' : 'drag-over-bottom');
+                });
+                row.addEventListener('dragleave', () => {
+                    row.classList.remove('drag-over-top','drag-over-bottom');
+                });
+                row.addEventListener('drop', e => {
+                    e.preventDefault();
+                    if (!dragSrcId || row.dataset.prodId === dragSrcId) return;
+                    const rect   = row.getBoundingClientRect();
+                    const before = e.clientY < (rect.top + rect.height / 2);
+                    window.app.reorderByDrop(dragSrcId, row.dataset.prodId, before);
+                });
+            });
+        }
+
+        /* ══════════════════════════════════════════════════════
+           MOBILE TOUCH DRAG-AND-DROP
+        ══════════════════════════════════════════════════════ */
+        let touchDragId    = null;
+        let touchLongTimer = null;
+        const ghost        = document.getElementById('mobileDragGhost');
+
+        function initMobileDnd() {
+            const container = document.querySelector('#data-container .mobile-view');
+            if (!container) return;
+
+            container.querySelectorAll('.mobile-category-cards[data-prod-id]').forEach(card => {
+                card.addEventListener('touchstart', onTouchStart, { passive: true });
+                card.addEventListener('touchmove',  onTouchMove,  { passive: false });
+                card.addEventListener('touchend',   onTouchEnd,   { passive: true });
+            });
+        }
+
+        function onTouchStart(e) {
+            const card = this;
+            const touch = e.touches[0];
+            touchLongTimer = setTimeout(() => {
+                touchDragId = card.dataset.prodId;
+                card.classList.add('dragging');
+                // Populate ghost
+                const prod = window.app.products.find(p => p.id === touchDragId);
+                if (prod) {
+                    document.getElementById('ghostImg').src   = prod.image || 'https://placehold.co/150x150/f3f4f6/6b7280?text=Pickle';
+                    document.getElementById('ghostName').textContent = prod.name;
+                    let priceText = window.app.getPriceText(prod);
+                    document.getElementById('ghostPrice').textContent = priceText;
+                }
+                ghost.style.display = 'flex';
+                ghost.style.width   = card.offsetWidth + 'px';
+                moveGhost(touch.clientX, touch.clientY);
+                // Vibrate if supported
+                if (navigator.vibrate) navigator.vibrate(40);
+            }, 350);
+        }
+
+        function onTouchMove(e) {
+            if (!touchDragId) { clearTimeout(touchLongTimer); return; }
+            e.preventDefault();
+            const touch = e.touches[0];
+            moveGhost(touch.clientX, touch.clientY);
+
+            // Find card under finger
+            ghost.style.display = 'none';
+            const elUnder = document.elementFromPoint(touch.clientX, touch.clientY);
+            ghost.style.display = 'flex';
+
+            const container = document.querySelector('#data-container .mobile-view');
+            if (!container) return;
+            container.querySelectorAll('.mobile-category-cards').forEach(c => c.classList.remove('drag-over-top','drag-over-bottom'));
+
+            const targetCard = elUnder && elUnder.closest('.mobile-category-cards[data-prod-id]');
+            if (targetCard && targetCard.dataset.prodId !== touchDragId) {
+                const rect   = targetCard.getBoundingClientRect();
+                const before = touch.clientY < (rect.top + rect.height / 2);
+                targetCard.classList.add(before ? 'drag-over-top' : 'drag-over-bottom');
+            }
+        }
+
+        function onTouchEnd(e) {
+            clearTimeout(touchLongTimer);
+            if (!touchDragId) return;
+
+            ghost.style.display = 'none';
+
+            const container = document.querySelector('#data-container .mobile-view');
+            if (container) {
+                const lastTouch = e.changedTouches[0];
+                ghost.style.display = 'none';
+                const elUnder = document.elementFromPoint(lastTouch.clientX, lastTouch.clientY);
+                const targetCard = elUnder && elUnder.closest('.mobile-category-cards[data-prod-id]');
+
+                container.querySelectorAll('.mobile-category-cards').forEach(c => {
+                    c.classList.remove('drag-over-top','drag-over-bottom','dragging');
+                });
+
+                if (targetCard && targetCard.dataset.prodId !== touchDragId) {
+                    const rect   = targetCard.getBoundingClientRect();
+                    const before = lastTouch.clientY < (rect.top + rect.height / 2);
+                    window.app.reorderByDrop(touchDragId, targetCard.dataset.prodId, before);
+                }
+            }
+            touchDragId = null;
+        }
+
+        function moveGhost(x, y) {
+            ghost.style.left = (x - ghost.offsetWidth / 2) + 'px';
+            ghost.style.top  = (y - ghost.offsetHeight / 2) + 'px';
+        }
+
         /* ══════════════════════════════════════════
            APP
         ══════════════════════════════════════════ */
@@ -883,6 +1084,19 @@
             categoryName: '',
             pendingDeleteId: null,
             isLoading: false,
+
+            getPriceText(prod) {
+                if (prod.minPrice !== undefined && prod.maxPrice !== undefined) {
+                    return prod.minPrice === prod.maxPrice ? `₹${prod.minPrice}` : `₹${prod.minPrice} – ₹${prod.maxPrice}`;
+                } else if (prod.variants && prod.variants.length > 0) {
+                    const prices = prod.variants.map(v => parseFloat(v.price)).filter(p => !isNaN(p));
+                    if (prices.length > 0) {
+                        const minP = Math.min(...prices), maxP = Math.max(...prices);
+                        return minP === maxP ? `₹${minP}` : `₹${minP} – ₹${maxP}`;
+                    }
+                } else if (prod.price) { return `₹${prod.price}`; }
+                return 'N/A';
+            },
 
             init() {
                 if (!categoryId) {
@@ -900,15 +1114,12 @@
                         document.getElementById('breadcrumb-category').textContent = this.categoryName;
 
                         const productsMap = data.products || {};
-                        // Build array, respecting stored sortOrder
                         this.products = Object.entries(productsMap)
                             .map(([id, d]) => ({ id, ...d }))
                             .sort((a, b) => {
-                                // Primary: sortOrder (lower = higher priority)
                                 if (a.sortOrder !== undefined && b.sortOrder !== undefined) return a.sortOrder - b.sortOrder;
                                 if (a.sortOrder !== undefined) return -1;
                                 if (b.sortOrder !== undefined) return 1;
-                                // Fallback: createdAt desc
                                 return (b.createdAt || 0) - (a.createdAt || 0);
                             });
                         this.render();
@@ -959,66 +1170,60 @@
                     return;
                 }
 
-                const total = this.products.length;
-
                 let desktopHTML = `<div class="desktop-view card"><div class="table-wrapper"><table>
                     <thead><tr>
-                        <th style="width:50px;">Order</th>
+                        <th style="width:50px;"></th>
                         <th style="width:70px;">Image</th>
                         <th>Product Name</th>
                         <th>Price</th>
                         <th class="tags-cell">Badges</th>
                         <th>Visibility</th>
-                        <th style="width:260px;">Actions</th>
+                        <th style="width:240px;">Actions</th>
                     </tr></thead><tbody>`;
 
-                let mobileHTML  = `<div class="mobile-view">`;
-                let popupsHTML  = ``;
+                let mobileHTML = `<div class="mobile-view">`;
+                let popupsHTML = ``;
 
                 this.products.forEach((prod, idx) => {
-                    let priceText = 'N/A';
-                    if (prod.minPrice !== undefined && prod.maxPrice !== undefined) {
-                        priceText = prod.minPrice === prod.maxPrice ? `₹${prod.minPrice}` : `₹${prod.minPrice} – ₹${prod.maxPrice}`;
-                    } else if (prod.variants && prod.variants.length > 0) {
-                        const prices = prod.variants.map(v => parseFloat(v.price)).filter(p => !isNaN(p));
-                        if (prices.length > 0) {
-                            const minP = Math.min(...prices), maxP = Math.max(...prices);
-                            priceText = minP === maxP ? `₹${minP}` : `₹${minP} – ₹${maxP}`;
-                        }
-                    } else if (prod.price) { priceText = `₹${prod.price}`; }
-
+                    const priceText   = this.getPriceText(prod);
                     const isAvailable = prod.isavailable !== false;
-                    const imgUrl  = prod.image || 'https://placehold.co/150x150/f3f4f6/6b7280?text=Pickle';
+                    const imgUrl      = prod.image || 'https://placehold.co/150x150/f3f4f6/6b7280?text=Pickle';
                     const hiddenClass = !isAvailable ? 'item-hidden' : '';
-                    const badges  = prod.badges || [];
-                    const badgesHtml = renderBadgesHtml(badges);
-                    const isFirst = idx === 0;
-                    const isLast  = idx === total - 1;
+                    const badges      = prod.badges || [];
+                    const badgeCount  = badges.length;
 
-                    // DESKTOP ROW
+                    // Badge dropdown trigger label
+                    const badgeTriggerLabel = badgeCount === 0
+                        ? 'Add badges'
+                        : badgeCount === 1
+                            ? `${BADGE_DEFS.find(d=>d.key===badges[0])?.icon||''} ${BADGE_DEFS.find(d=>d.key===badges[0])?.label||badges[0]}`
+                            : `${badgeCount} badges`;
+                    const hasBadgesClass = badgeCount > 0 ? 'has-badges' : '';
+
+                    // DESKTOP ROW — drag handle replaces arrows
                     desktopHTML += `
-                        <tr class="${hiddenClass}" data-prod-id="${prod.id}">
-                            <td>
-                                <div class="move-btns-group">
-                                    <button class="move-btn" title="Move Up" onclick="app.moveProduct('${prod.id}', -1)" ${isFirst ? 'disabled' : ''}>
-                                        <i class="fas fa-chevron-up"></i>
-                                    </button>
-                                    <button class="move-btn" title="Move Down" onclick="app.moveProduct('${prod.id}', 1)" ${isLast ? 'disabled' : ''}>
-                                        <i class="fas fa-chevron-down"></i>
-                                    </button>
-                                </div>
+                        <tr class="${hiddenClass}" data-prod-id="${prod.id}" draggable="false">
+                            <td style="width:50px;">
+                                <button class="drag-handle" title="Drag to reorder" onclick="event.stopPropagation()">
+                                    <svg viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="5.5" cy="3.5" r="1.2"/><circle cx="10.5" cy="3.5" r="1.2"/>
+                                        <circle cx="5.5" cy="8" r="1.2"/><circle cx="10.5" cy="8" r="1.2"/>
+                                        <circle cx="5.5" cy="12.5" r="1.2"/><circle cx="10.5" cy="12.5" r="1.2"/>
+                                    </svg>
+                                </button>
                             </td>
                             <td><img src="${imgUrl}" class="product-thumb" alt="${prod.name}" onerror="this.src='https://placehold.co/150x150/f3f4f6/6b7280?text=Pickle'"></td>
                             <td style="font-weight:600;">${prod.name}</td>
                             <td style="font-weight:600;">${priceText}</td>
                             <td class="tags-cell">
-                                <div style="display:flex;flex-wrap:wrap;gap:3px;align-items:center;">
-                                    ${badgesHtml}
-                                    <button data-tag-btn class="move-btn" style="margin-left:4px;" title="Edit Badges"
-                                        onclick="app.openBadges(event,'${prod.id}')">
-                                        <i class="fas fa-tag" style="font-size:11px;"></i>
-                                    </button>
-                                </div>
+                                <button class="badges-dropdown-trigger ${hasBadgesClass}" data-tag-btn
+                                    onclick="app.openBadges(event,'${prod.id}')">
+                                    <img src="./assets/tag.svg" class="bdrop-tag-icon" alt="">
+                                    <span class="bdrop-label">${badgeTriggerLabel}</span>
+                                    <svg class="bdrop-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M4 6l4 4 4-4"/>
+                                    </svg>
+                                </button>
                             </td>
                             <td>
                                 <label class="toggle-switch">
@@ -1038,9 +1243,10 @@
                             </td>
                         </tr>`;
 
-                    // MOBILE CARD
+                    // MOBILE CARD — no icons, just hold-to-drag
+                    const badgesHtml = renderBadgesHtml(badges);
                     mobileHTML += `
-                        <div class="mobile-category-cards ${hiddenClass}">
+                        <div class="mobile-category-cards ${hiddenClass}" data-prod-id="${prod.id}">
                             <img class="prod-img" src="${imgUrl}" alt="${prod.name}" onerror="this.src='https://placehold.co/150x150/f3f4f6/6b7280?text=Pickle'">
                             <div class="mobile-card-content">
                                 <div class="mobile-card-title">${prod.name}</div>
@@ -1048,10 +1254,6 @@
                                 <div class="mobile-card-tags">${badgesHtml}</div>
                             </div>
                             <div class="mobile-card-actions" onclick="event.stopPropagation()">
-                                <div style="display:flex;flex-direction:column;gap:4px;">
-                                    <button class="move-btn" onclick="app.moveProduct('${prod.id}',-1)" ${isFirst ? 'disabled' : ''} title="Move Up"><i class="fas fa-chevron-up"></i></button>
-                                    <button class="move-btn" onclick="app.moveProduct('${prod.id}',1)" ${isLast ? 'disabled' : ''} title="Move Down"><i class="fas fa-chevron-down"></i></button>
-                                </div>
                                 <label class="toggle-switch">
                                     <input type="checkbox" ${isAvailable ? 'checked' : ''} onchange="app.toggleAvailability(event,'${prod.id}',${isAvailable})">
                                     <span class="toggle-slider"></span>
@@ -1068,8 +1270,8 @@
                             <button class="dropdown-item" onclick="app.editProductDirect('${prod.id}')">
                                 <img src="./assets/edit.svg" alt="Edit" /> Edit Pickle
                             </button>
-                            <button class="dropdown-item" data-tag-btn onclick="app.openBadgesMobile(event,'${prod.id}')">
-                                <i class="fas fa-tag" style="width:20px;text-align:center;"></i> Edit Badges
+                            <button class="dropdown-item" data-tag-btn data-prod-id="${prod.id}" onclick="app.openBadgesMobile(event,'${prod.id}')">
+                                <img src="./assets/tag.svg" alt="Badges" style="width:20px;height:20px;opacity:0.85;" /> Edit Badges
                             </button>
                             <button class="dropdown-item text-danger" onclick="app.deleteProductDirect('${prod.id}')">
                                 <img src="./assets/delete.svg" alt="Delete" /> Delete Pickle
@@ -1079,8 +1281,43 @@
 
                 desktopHTML += `</tbody></table></div></div>`;
                 mobileHTML  += `</div>`;
-                container.innerHTML   = desktopHTML + mobileHTML;
+                container.innerHTML      = desktopHTML + mobileHTML;
                 menusContainer.innerHTML = popupsHTML;
+
+                // Init drag-and-drop after render
+                initDesktopDnd();
+                initMobileDnd();
+            },
+
+            /* ── Reorder by drop ── */
+            async reorderByDrop(srcId, targetId, insertBefore) {
+                if (this.isLoading) return;
+                const srcIdx    = this.products.findIndex(p => p.id === srcId);
+                const targetIdx = this.products.findIndex(p => p.id === targetId);
+                if (srcIdx === -1 || targetIdx === -1) return;
+
+                // Remove source
+                const [moved] = this.products.splice(srcIdx, 1);
+                // Find new target position after removal
+                const newTargetIdx = this.products.findIndex(p => p.id === targetId);
+                const insertAt = insertBefore ? newTargetIdx : newTargetIdx + 1;
+                this.products.splice(insertAt, 0, moved);
+
+                this.showSpinner('Saving order…');
+                try {
+                    const batch = writeBatch(db);
+                    this.products.forEach((p, i) => {
+                        batch.update(doc(db, 'products', p.id), { sortOrder: i });
+                        batch.update(doc(db, 'categories', categoryId), { [`products.${p.id}.sortOrder`]: i });
+                    });
+                    await batch.commit();
+                    showToast('Order saved!', 'success', 1800);
+                } catch (err) {
+                    console.error(err);
+                    showToast('Failed to save order.', 'error');
+                } finally {
+                    this.hideSpinner();
+                }
             },
 
             /* ── Badges ── */
@@ -1091,9 +1328,12 @@
             },
             openBadgesMobile(event, productId) {
                 event.stopPropagation();
+                // Close the kebab menu first
                 document.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
                 const prod = this.products.find(p => p.id === productId);
-                setTimeout(() => openTagDropdown(productId, prod?.badges || [], event.currentTarget), 50);
+                // Small delay so menu closes before panel opens, then use the button as anchor
+                const btn = event.currentTarget;
+                setTimeout(() => openTagDropdown(productId, prod?.badges || [], btn), 60);
             },
             async saveBadges(productId, badges) {
                 if (this.isLoading) return;
@@ -1107,37 +1347,6 @@
                 } catch (err) {
                     console.error(err);
                     showToast('Failed to save badges.', 'error');
-                } finally {
-                    this.hideSpinner();
-                }
-            },
-
-            /* ── Move Up / Down ── */
-            async moveProduct(productId, direction) {
-                if (this.isLoading) return;
-                const idx = this.products.findIndex(p => p.id === productId);
-                if (idx === -1) return;
-                const newIdx = idx + direction;
-                if (newIdx < 0 || newIdx >= this.products.length) return;
-
-                // Swap in local array
-                [this.products[idx], this.products[newIdx]] = [this.products[newIdx], this.products[idx]];
-
-                // Assign sortOrder values based on current index positions
-                const updates = this.products.map((p, i) => ({ id: p.id, sortOrder: i }));
-
-                this.showSpinner('Saving order…');
-                try {
-                    const batch = writeBatch(db);
-                    for (const { id, sortOrder } of updates) {
-                        batch.update(doc(db, 'products', id), { sortOrder });
-                        batch.update(doc(db, 'categories', categoryId), { [`products.${id}.sortOrder`]: sortOrder });
-                    }
-                    await batch.commit();
-                    showToast('Order saved!', 'success', 1800);
-                } catch (err) {
-                    console.error(err);
-                    showToast('Failed to save order.', 'error');
                 } finally {
                     this.hideSpinner();
                 }
