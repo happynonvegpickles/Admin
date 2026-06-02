@@ -746,21 +746,6 @@
                         </div>
                     </div>
 
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 style="font-size: 16px; font-weight: 600;">Combo Details</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label class="form-label">Combo Name <span class="required-mark">*</span></label>
-                                <input type="text" id="combo-name" class="form-input" placeholder="e.g. Mega Family Pack - Pick Any 8">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Price (₹) <span class="required-mark">*</span></label>
-                                <input type="number" id="combo-price" class="form-input" placeholder="Total combo price">
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="card">
                         <div class="card-header">
@@ -827,13 +812,10 @@
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, getDocs, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCZbCr-Zt5KQblRQ8Pk58KuinCVP-TlXGo",
-            authDomain: "happynonvegpickles-f2636.firebaseapp.com",
-            projectId: "happynonvegpickles-f2636",
-            storageBucket: "happynonvegpickles-f2636.firebasestorage.app",
-            messagingSenderId: "802823212924",
-            appId: "1:802823212924:web:d82c92737ffa950798def9"
+        const firebaseConfig = { 
+            apiKey: "AIzaSyCxjDuFS_ntaOF-K8hFBaxQ0_8CR9yvbkM", 
+            authDomain: "pickle-fdc54.firebaseapp.com", 
+            projectId: "pickle-fdc54" 
         };
         const firebaseApp = initializeApp(firebaseConfig);
         const auth = getAuth(firebaseApp);
@@ -981,8 +963,6 @@
                         existingComboId = comboDoc.id;
                         
                         // Populate form
-                        document.getElementById('combo-name').value = combo.name || '';
-                        document.getElementById('combo-price').value = combo.price || '';
                         document.getElementById('combo-active').checked = combo.isActive;
                         document.getElementById('weight-filter').value = combo.weightVariant || '';
                         document.getElementById('page-heading').innerText = 'Edit Combo Offer';
@@ -1102,12 +1082,9 @@
             },
 
             saveCombo: async () => {
-                const name = document.getElementById('combo-name').value.trim();
-                const price = document.getElementById('combo-price').value.trim();
                 const isActive = document.getElementById('combo-active').checked;
                 const weight = document.getElementById('weight-filter').value.trim();
 
-                if(!name || !price) return alert("Combo Name and Price are required.");
                 if(window.app.selectedPickles.length === 0) return alert("Please select at least 1 pickle for the combo.");
 
                 const btn = document.getElementById('save-btn');
@@ -1121,14 +1098,12 @@
                     image: p.customImage.trim() !== '' ? p.customImage : p.fallbackImage
                 }));
 
-                const comboData = {
-                    name,
-                    price: parseFloat(price),
-                    weightVariant: weight,
-                    isActive,
-                    items: savedPickles,
-                    updatedAt: Date.now()
-                };
+const comboData = {
+    weightVariant: weight,
+    isActive,
+    items: savedPickles,
+    updatedAt: Date.now()
+};
 
                 // If no combo exists yet, we still need an ID for a new document
                 const comboRef = existingComboId 
