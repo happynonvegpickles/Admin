@@ -746,6 +746,8 @@
                         </div>
                     </div>
 
+                    <!-- Combo Details card removed – Name & Price are fixed -->
+
                     <div class="card">
                         <div class="card-header">
                             <h3 style="font-size: 16px; font-weight: 600;">Select Pickles (Max 8)</h3>
@@ -964,21 +966,20 @@
                         const combo = comboDoc.data();
                         existingComboId = comboDoc.id;
                         
-                        // Set the weight filter
-                        document.getElementById('weight-filter').value = combo.weightVariant || '';
+                        // Populate form
                         document.getElementById('combo-active').checked = combo.isActive;
+                        document.getElementById('weight-filter').value = combo.weightVariant || '';
                         document.getElementById('page-heading').innerText = 'Edit Combo Offer';
 
-                        // Load pickles for this weight variant
-                        window.app.filteredProducts = window.app.allProducts.filter(p => {
-                            if(!p.variants) return false;
-                            return p.variants.some(v => v.weight.toLowerCase() === combo.weightVariant.toLowerCase());
-                        });
-
-                        // Pre‑select the ones stored in the combo
+                        // Automatically fetch pickles for the stored weight variant
+                        window.app.fetchPicklesByWeight(true);   // true = keep existing selections (we'll override after)
+                        
+                        // After fetching, restore selected pickles from saved combo
+                        // (We need to wait for fetchPicklesByWeight to finish – it's synchronous, so we can call immediately after)
                         window.app.selectedPickles = [];
                         if (combo.items) {
                             combo.items.forEach(item => {
+                                // Try to find matching product in filtered list
                                 const matchingProduct = window.app.filteredProducts.find(p => p.id === item.id);
                                 if (matchingProduct) {
                                     const fallbackImg = matchingProduct.image || '';
@@ -988,11 +989,19 @@
                                         fallbackImage: fallbackImg,
                                         customImage: item.image !== fallbackImg ? item.image : ''
                                     });
+                                } else {
+                                    // Product not found in filtered list – still add with stored image as custom
+                                    window.app.selectedPickles.push({
+                                        id: item.id,
+                                        name: item.name,
+                                        fallbackImage: item.image || '',   // use stored image as fallback
+                                        customImage: item.image || ''
+                                    });
                                 }
                             });
                         }
 
-                        // Render the UI
+                        // Re-render with restored selections
                         window.app.renderPickles();
                         window.app.renderImageInputs();
                     }
@@ -1002,7 +1011,7 @@
                 }
             },
 
-            fetchPicklesByWeight: () => {
+            fetchPicklesByWeight: (keepSelections = false) => {
                 const targetWeight = document.getElementById('weight-filter').value.trim().toLowerCase();
                 if(!targetWeight) return alert("Please enter a weight to filter (e.g. 250g)");
 
@@ -1011,7 +1020,9 @@
                     return p.variants.some(v => v.weight.toLowerCase() === targetWeight);
                 });
 
-                window.app.selectedPickles = [];
+                if (!keepSelections) {
+                    window.app.selectedPickles = [];
+                }
                 window.app.renderPickles();
                 window.app.renderImageInputs();
             },
@@ -1107,7 +1118,6 @@
                     updatedAt: Date.now()
                 };
 
-                // If no combo exists yet, we still need an ID for a new document
                 const comboRef = existingComboId 
                     ? doc(db, 'combos', existingComboId) 
                     : doc(collection(db, 'combos'));
@@ -1120,7 +1130,7 @@
                     await setDoc(comboRef, comboData, { merge: true });
                     alert("Combo offer saved successfully!");
                     if (!existingComboId) {
-                        window.location.href = 'manage-combo.html'; // reload to edit mode
+                        window.location.href = 'manage-combo.html';
                     }
                 } catch (error) {
                     console.error("Error saving combo:", error);
