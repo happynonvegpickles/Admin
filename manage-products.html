@@ -71,6 +71,29 @@
             display: none;
         }
 
+        /* ── PREVENT SELECTION GLOBALLY DURING DRAG ── */
+        body.is-dragging,
+        body.is-dragging * {
+            -webkit-user-select: none !important;
+            -moz-user-select: none !important;
+            user-select: none !important;
+            cursor: grabbing !important;
+        }
+        /* Always prevent selection on cards and their children */
+        .mobile-category-cards,
+        .mobile-category-cards * {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+        /* Prevent image drag globally in mobile cards */
+        .mobile-category-cards img {
+            -webkit-user-drag: none;
+            user-drag: none;
+            pointer-events: none;
+            draggable: false;
+        }
+
         /* LOGO */
         .brand-logo { display: flex; align-items: center; text-decoration: none; transition: all 0.3s; }
         .brand-logo img { height: 45px; width: auto; display: block; }
@@ -343,7 +366,7 @@
         .content-inner td { padding: 12px 20px; vertical-align: middle; text-align: left; }
         .content-inner .product-thumb { width: 48px; height: 48px; border-radius: var(--radius-md); object-fit: cover; border: 1px solid var(--border-subtle); }
         .content-inner .item-hidden { opacity: 0.5; }
-.content-inner .actions-cell { display: flex; gap: 8px; align-items: center; flex-wrap: nowrap; }
+        .content-inner .actions-cell { display: flex; gap: 8px; align-items: center; flex-wrap: nowrap; }
         .content-inner .action-btn img { width: 18px; height: 18px; vertical-align: middle; }
 
         /* ===== DRAG HANDLE ===== */
@@ -371,9 +394,18 @@
         }
 
         /* Mobile card drag states */
-        .mobile-category-cards.dragging { opacity: 0.35; background: #f4f0fa !important; }
-        .mobile-category-cards.drag-over-top { box-shadow: 0 -3px 0 var(--brand-primary), 0 2px 8px rgba(0,0,0,0.04); }
-        .mobile-category-cards.drag-over-bottom { box-shadow: 0 3px 0 var(--brand-primary), 0 2px 8px rgba(0,0,0,0.04); }
+        .mobile-category-cards.dragging {
+            opacity: 0.35;
+            background: #f4f0fa !important;
+            transform: scale(0.98);
+            transition: transform 0.15s, opacity 0.15s;
+        }
+        .mobile-category-cards.drag-over-top {
+            box-shadow: 0 -3px 0 var(--brand-primary), 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .mobile-category-cards.drag-over-bottom {
+            box-shadow: 0 3px 0 var(--brand-primary), 0 2px 8px rgba(0,0,0,0.04);
+        }
 
         /* ===== PRODUCT BADGE TAGS ===== */
         .product-badge {
@@ -448,9 +480,27 @@
             padding: 14px 16px; display: flex; align-items: center; gap: 12px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.04); width: 100%; margin-bottom: 14px;
             cursor: default; touch-action: none;
+            /* Prevent ALL text/image selection */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
         }
-        .content-inner .mobile-category-cards img.prod-img { width: 56px; height: 56px; border-radius: var(--radius-lg); object-fit: cover; flex-shrink: 0; }
-        .content-inner .mobile-card-content { flex: 1; display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+        .content-inner .mobile-category-cards img.prod-img {
+            width: 56px; height: 56px; border-radius: var(--radius-lg); object-fit: cover; flex-shrink: 0;
+            /* Prevent image drag & callout */
+            -webkit-user-drag: none;
+            user-drag: none;
+            pointer-events: none;
+            -webkit-touch-callout: none;
+        }
+        .content-inner .mobile-card-content {
+            flex: 1; display: flex; flex-direction: column; gap: 5px; min-width: 0;
+            /* Prevent text selection */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
         .content-inner .mobile-card-title { font-size: 17px; font-weight: 700; color: var(--text-color); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .content-inner .mobile-card-sub { font-size: 14px; font-weight: 600; color: var(--brand-primary); }
         .content-inner .mobile-card-tags { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 2px; }
@@ -459,17 +509,27 @@
             width: 44px; height: 44px; border-radius: 10px; border: 1px solid var(--border-subtle);
             background: #fff; display: flex; justify-content: center; align-items: center; cursor: pointer;
         }
-        .content-inner .product-card-menu-btn img { width: 22px; height: 22px; }
+        .content-inner .product-card-menu-btn img { width: 22px; height: 22px; pointer-events: none; }
 
-        /* Mobile drag ghost */
+        /* Mobile drag ghost — GPU-accelerated with will-change */
         .mobile-drag-ghost {
-            position: fixed; pointer-events: none; z-index: 10099;
-            background: #fff; border-radius: 16px; border: 2px solid var(--brand-primary);
+            position: fixed;
+            pointer-events: none;
+            z-index: 10099;
+            background: #fff;
+            border-radius: 16px;
+            border: 2px solid var(--brand-primary);
             box-shadow: 0 16px 40px rgba(100,61,228,0.22);
-            opacity: 0.92; transform: rotate(2deg) scale(1.03);
-            transition: none; display: none; padding: 14px 16px;
-            display: flex; align-items: center; gap: 12px;
-            max-width: 340px; overflow: hidden;
+            opacity: 0.92;
+            transform: rotate(2deg) scale(1.03) translate(0, 0);
+            will-change: transform;
+            display: none;
+            padding: 14px 16px;
+            align-items: center;
+            gap: 12px;
+            max-width: 340px;
+            overflow: hidden;
+            /* No transition on ghost — must follow finger instantly */
         }
 
         /* MODALS */
@@ -506,7 +566,7 @@
             border: none; width: 100%; display: flex; align-items: center; gap: 14px;
             font-family: inherit; transition: background 0.15s;
         }
-        .dropdown-item img { width: 20px; height: 20px; opacity: 0.85; }
+        .dropdown-item img { width: 20px; height: 20px; opacity: 0.85; pointer-events: none; }
         .dropdown-item:hover { background: var(--hover-bg); }
         .dropdown-item.text-danger { color: var(--danger-color); }
 
@@ -731,8 +791,8 @@
 
     <!-- Mobile drag ghost element -->
     <div class="mobile-drag-ghost" id="mobileDragGhost">
-        <img style="width:48px;height:48px;border-radius:10px;object-fit:cover;flex-shrink:0;" id="ghostImg" src="" alt="">
-        <div style="flex:1;min-width:0;">
+        <img style="width:48px;height:48px;border-radius:10px;object-fit:cover;flex-shrink:0;pointer-events:none;" id="ghostImg" src="" alt="" draggable="false">
+        <div style="flex:1;min-width:0;pointer-events:none;">
             <div style="font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="ghostName"></div>
             <div style="font-size:13px;font-weight:600;color:#643DE4;margin-top:3px;" id="ghostPrice"></div>
         </div>
@@ -890,7 +950,6 @@
             tagDropdownProductId     = productId;
             tagDropdownCurrentBadges = [...(currentBadges || [])];
 
-            // Build checkboxes
             tagOptionsList.innerHTML = BADGE_DEFS.map(def => `
                 <label class="tag-option">
                     <input type="checkbox" value="${def.key}" ${tagDropdownCurrentBadges.includes(def.key) ? 'checked' : ''}>
@@ -898,10 +957,8 @@
                 </label>
             `).join('');
 
-            // Show first so we can measure
             tagPanel.classList.add('show');
 
-            // Position
             const rect   = anchorEl.getBoundingClientRect();
             const panelW = tagPanel.offsetWidth  || 240;
             const panelH = tagPanel.offsetHeight || 420;
@@ -926,7 +983,6 @@
             closeTagDropdown();
         });
 
-        // Close tag panel on outside click
         document.addEventListener('click', e => {
             if (!tagPanel.contains(e.target) && !e.target.closest('[data-tag-btn]')) {
                 closeTagDropdown();
@@ -946,7 +1002,6 @@
                 const handle = row.querySelector('.drag-handle');
                 if (!handle) return;
 
-                // Only the handle starts the drag
                 handle.addEventListener('mousedown', () => { row.draggable = true; });
                 handle.addEventListener('mouseup',   () => { row.draggable = false; });
 
@@ -983,59 +1038,104 @@
         }
 
         /* ══════════════════════════════════════════════════════
-           MOBILE TOUCH DRAG-AND-DROP
+           MOBILE TOUCH DRAG-AND-DROP  — SMOOTH & NO-SELECT
         ══════════════════════════════════════════════════════ */
         let touchDragId    = null;
         let touchLongTimer = null;
-        const ghost        = document.getElementById('mobileDragGhost');
+        let rafId          = null;          // requestAnimationFrame id
+        let ghostTx        = 0;             // current ghost X
+        let ghostTy        = 0;             // current ghost Y
+        let lastTouchX     = 0;
+        let lastTouchY     = 0;
+
+        const ghost = document.getElementById('mobileDragGhost');
+
+        // Smoothly move ghost via rAF — zero jank
+        function scheduleGhostMove(x, y) {
+            lastTouchX = x;
+            lastTouchY = y;
+            if (rafId) return;  // already scheduled
+            rafId = requestAnimationFrame(() => {
+                rafId = null;
+                const gw = ghost.offsetWidth  || 300;
+                const gh = ghost.offsetHeight || 80;
+                ghostTx = lastTouchX - gw / 2;
+                ghostTy = lastTouchY - gh / 2;
+                // Use transform instead of top/left for GPU compositing
+                ghost.style.left      = '0px';
+                ghost.style.top       = '0px';
+                ghost.style.transform = `translate(${ghostTx}px, ${ghostTy}px) rotate(2deg) scale(1.03)`;
+            });
+        }
 
         function initMobileDnd() {
             const container = document.querySelector('#data-container .mobile-view');
             if (!container) return;
 
             container.querySelectorAll('.mobile-category-cards[data-prod-id]').forEach(card => {
+                // Use non-passive touchstart so we can prevent default in touchmove
                 card.addEventListener('touchstart', onTouchStart, { passive: true });
                 card.addEventListener('touchmove',  onTouchMove,  { passive: false });
                 card.addEventListener('touchend',   onTouchEnd,   { passive: true });
+                card.addEventListener('touchcancel',onTouchCancel,{ passive: true });
             });
         }
 
         function onTouchStart(e) {
-            const card = this;
+            const card  = this;
             const touch = e.touches[0];
+
+            // Long-press threshold: 350ms
             touchLongTimer = setTimeout(() => {
                 touchDragId = card.dataset.prodId;
                 card.classList.add('dragging');
+
+                // Add global no-select class while dragging
+                document.body.classList.add('is-dragging');
+
                 // Populate ghost
                 const prod = window.app.products.find(p => p.id === touchDragId);
                 if (prod) {
-                    document.getElementById('ghostImg').src   = prod.image || 'https://placehold.co/150x150/f3f4f6/6b7280?text=Pickle';
+                    document.getElementById('ghostImg').src         = prod.image || 'https://placehold.co/150x150/f3f4f6/6b7280?text=Pickle';
                     document.getElementById('ghostName').textContent = prod.name;
-                    let priceText = window.app.getPriceText(prod);
-                    document.getElementById('ghostPrice').textContent = priceText;
+                    document.getElementById('ghostPrice').textContent = window.app.getPriceText(prod);
                 }
-                ghost.style.display = 'flex';
-                ghost.style.width   = card.offsetWidth + 'px';
-                moveGhost(touch.clientX, touch.clientY);
-                // Vibrate if supported
+
+                ghost.style.width     = Math.min(card.offsetWidth, 340) + 'px';
+                ghost.style.display   = 'flex';
+                ghost.style.transform = `translate(${touch.clientX}px, ${touch.clientY}px) rotate(2deg) scale(1.03)`;
+                scheduleGhostMove(touch.clientX, touch.clientY);
+
                 if (navigator.vibrate) navigator.vibrate(40);
             }, 350);
         }
 
         function onTouchMove(e) {
-            if (!touchDragId) { clearTimeout(touchLongTimer); return; }
+            if (!touchDragId) {
+                // Not dragging yet — cancel long-press if finger moved significantly
+                clearTimeout(touchLongTimer);
+                return;
+            }
+
+            // Prevent page scroll while dragging
             e.preventDefault();
+
             const touch = e.touches[0];
-            moveGhost(touch.clientX, touch.clientY);
 
-            // Find card under finger
-            ghost.style.display = 'none';
+            // Schedule ghost position update via rAF for smoothness
+            scheduleGhostMove(touch.clientX, touch.clientY);
+
+            // Find card under finger (hide ghost temporarily for hit-test)
+            ghost.style.visibility = 'hidden';
             const elUnder = document.elementFromPoint(touch.clientX, touch.clientY);
-            ghost.style.display = 'flex';
+            ghost.style.visibility = 'visible';
 
+            // Clear all indicators
             const container = document.querySelector('#data-container .mobile-view');
             if (!container) return;
-            container.querySelectorAll('.mobile-category-cards').forEach(c => c.classList.remove('drag-over-top','drag-over-bottom'));
+            container.querySelectorAll('.mobile-category-cards').forEach(c =>
+                c.classList.remove('drag-over-top', 'drag-over-bottom')
+            );
 
             const targetCard = elUnder && elUnder.closest('.mobile-category-cards[data-prod-id]');
             if (targetCard && targetCard.dataset.prodId !== touchDragId) {
@@ -1047,20 +1147,28 @@
 
         function onTouchEnd(e) {
             clearTimeout(touchLongTimer);
+            if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+
             if (!touchDragId) return;
 
-            ghost.style.display = 'none';
+            // Hide ghost immediately
+            ghost.style.display    = 'none';
+            ghost.style.transform  = '';
+            document.body.classList.remove('is-dragging');
 
             const container = document.querySelector('#data-container .mobile-view');
             if (container) {
-                const lastTouch = e.changedTouches[0];
+                const lastTouch  = e.changedTouches[0];
+
+                // Hit-test for drop target
                 ghost.style.display = 'none';
-                const elUnder = document.elementFromPoint(lastTouch.clientX, lastTouch.clientY);
+                const elUnder    = document.elementFromPoint(lastTouch.clientX, lastTouch.clientY);
                 const targetCard = elUnder && elUnder.closest('.mobile-category-cards[data-prod-id]');
 
-                container.querySelectorAll('.mobile-category-cards').forEach(c => {
-                    c.classList.remove('drag-over-top','drag-over-bottom','dragging');
-                });
+                // Clean all states
+                container.querySelectorAll('.mobile-category-cards').forEach(c =>
+                    c.classList.remove('drag-over-top', 'drag-over-bottom', 'dragging')
+                );
 
                 if (targetCard && targetCard.dataset.prodId !== touchDragId) {
                     const rect   = targetCard.getBoundingClientRect();
@@ -1068,12 +1176,25 @@
                     window.app.reorderByDrop(touchDragId, targetCard.dataset.prodId, before);
                 }
             }
+
             touchDragId = null;
         }
 
-        function moveGhost(x, y) {
-            ghost.style.left = (x - ghost.offsetWidth / 2) + 'px';
-            ghost.style.top  = (y - ghost.offsetHeight / 2) + 'px';
+        function onTouchCancel() {
+            clearTimeout(touchLongTimer);
+            if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+            if (touchDragId) {
+                ghost.style.display = 'none';
+                ghost.style.transform = '';
+                document.body.classList.remove('is-dragging');
+                const container = document.querySelector('#data-container .mobile-view');
+                if (container) {
+                    container.querySelectorAll('.mobile-category-cards').forEach(c =>
+                        c.classList.remove('drag-over-top', 'drag-over-bottom', 'dragging')
+                    );
+                }
+                touchDragId = null;
+            }
         }
 
         /* ══════════════════════════════════════════
@@ -1192,7 +1313,6 @@
                     const badges      = prod.badges || [];
                     const badgeCount  = badges.length;
 
-                    // Badge dropdown trigger label
                     const badgeTriggerLabel = badgeCount === 0
                         ? 'Add badges'
                         : badgeCount === 1
@@ -1200,7 +1320,7 @@
                             : `${badgeCount} badges`;
                     const hasBadgesClass = badgeCount > 0 ? 'has-badges' : '';
 
-                    // DESKTOP ROW — drag handle replaces arrows
+                    // DESKTOP ROW
                     desktopHTML += `
                         <tr class="${hiddenClass}" data-prod-id="${prod.id}" draggable="false">
                             <td style="width:50px;">
@@ -1243,11 +1363,12 @@
                             </td>
                         </tr>`;
 
-                    // MOBILE CARD — no icons, just hold-to-drag
+                    // MOBILE CARD — hold to drag, no arrows
                     const badgesHtml = renderBadgesHtml(badges);
                     mobileHTML += `
                         <div class="mobile-category-cards ${hiddenClass}" data-prod-id="${prod.id}">
-                            <img class="prod-img" src="${imgUrl}" alt="${prod.name}" onerror="this.src='https://placehold.co/150x150/f3f4f6/6b7280?text=Pickle'">
+                            <img class="prod-img" src="${imgUrl}" alt="${prod.name}" draggable="false"
+                                 onerror="this.src='https://placehold.co/150x150/f3f4f6/6b7280?text=Pickle'">
                             <div class="mobile-card-content">
                                 <div class="mobile-card-title">${prod.name}</div>
                                 <div class="mobile-card-sub">${priceText}</div>
@@ -1259,7 +1380,7 @@
                                     <span class="toggle-slider"></span>
                                 </label>
                                 <button class="product-card-menu-btn" data-kebab onclick="app.toggleMenu(event,'menu-${prod.id}')">
-                                    <img src="./assets/dots.svg" alt="Menu" />
+                                    <img src="./assets/dots.svg" alt="Menu" draggable="false" />
                                 </button>
                             </div>
                         </div>`;
@@ -1284,7 +1405,6 @@
                 container.innerHTML      = desktopHTML + mobileHTML;
                 menusContainer.innerHTML = popupsHTML;
 
-                // Init drag-and-drop after render
                 initDesktopDnd();
                 initMobileDnd();
             },
@@ -1296,9 +1416,7 @@
                 const targetIdx = this.products.findIndex(p => p.id === targetId);
                 if (srcIdx === -1 || targetIdx === -1) return;
 
-                // Remove source
                 const [moved] = this.products.splice(srcIdx, 1);
-                // Find new target position after removal
                 const newTargetIdx = this.products.findIndex(p => p.id === targetId);
                 const insertAt = insertBefore ? newTargetIdx : newTargetIdx + 1;
                 this.products.splice(insertAt, 0, moved);
@@ -1328,11 +1446,9 @@
             },
             openBadgesMobile(event, productId) {
                 event.stopPropagation();
-                // Close the kebab menu first
                 document.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
                 const prod = this.products.find(p => p.id === productId);
-                // Small delay so menu closes before panel opens, then use the button as anchor
-                const btn = event.currentTarget;
+                const btn  = event.currentTarget;
                 setTimeout(() => openTagDropdown(productId, prod?.badges || [], btn), 60);
             },
             async saveBadges(productId, badges) {
