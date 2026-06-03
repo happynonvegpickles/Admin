@@ -5,13 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Happy NonVeg Pickles – Manage Categories</title>
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-    <!-- Preload SVG icons for sidebar -->
     <link rel="preload" as="image" href="./assets/dashboard.svg">
     <link rel="preload" as="image" href="./assets/hover_dashboard.svg">
     <link rel="preload" as="image" href="./assets/fill_dashboard.svg">
@@ -70,16 +68,14 @@
             font-weight: 500;
             color: var(--text-color);
             overflow: hidden;
-            display: none; /* hidden until Firebase auth confirms */
+            display: none;
         }
 
-        /* LOGO */
         .brand-logo { display: flex; align-items: center; text-decoration: none; transition: all 0.3s; }
         .brand-logo img { height: 45px; width: auto; display: block; }
         .mini-logo { display: none; align-items: center; justify-content: center; }
         .mini-logo img { height: 45px; width: auto; display: block; }
 
-        /* ICON SYSTEM */
         .icon { display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; flex-shrink: 0; }
         .icon-custom { position: relative; width: 24px; height: 24px; }
         .icon-custom > span {
@@ -97,7 +93,6 @@
         .nav-item.active.dropdown-open .icon-custom .icon-hover { display: none; }
         .nav-item.active.dropdown-open .icon-custom .icon-active { display: block; }
 
-        /* ICON FILE MAPPINGS */
         .icon-dashboard .icon-normal  { background-image: url('./assets/dashboard.svg'); }
         .icon-dashboard .icon-hover   { background-image: url('./assets/hover_dashboard.svg'); }
         .icon-dashboard .icon-active  { background-image: url('./assets/fill_dashboard.svg'); }
@@ -111,7 +106,6 @@
         .icon-site .icon-hover        { background-image: url('./assets/hover_site.svg'); }
         .icon-site .icon-active       { background-image: url('./assets/fill_site.svg'); }
 
-        /* SUBMENU ICON MAPPINGS */
         .icon-herosection .icon-normal  { background-image: url('./assets/herosection.svg'); }
         .icon-herosection .icon-hover   { background-image: url('./assets/hover_herosection.svg'); }
         .icon-herosection .icon-active  { background-image: url('./assets/fill_herosection.svg'); }
@@ -125,7 +119,6 @@
         .icon-combo .icon-hover         { background-image: url('./assets/hover_combo.svg'); }
         .icon-combo .icon-active        { background-image: url('./assets/fill_combo.svg'); }
 
-        /* Submenu item icon states */
         .nav-submenu-item .icon-custom .icon-normal { display: block; }
         .nav-submenu-item .icon-custom .icon-hover,
         .nav-submenu-item .icon-custom .icon-active { display: none; }
@@ -135,7 +128,6 @@
         .nav-submenu-item.active .icon-custom .icon-hover { display: none; }
         .nav-submenu-item.active .icon-custom .icon-active { display: block; }
 
-        /* DESKTOP LAYOUT */
         .page-desktop { display: flex; height: 100vh; width: 100vw; }
         .d-sidebar {
             width: var(--sidebar-width); height: 100%; background: var(--sidebar-bg);
@@ -157,7 +149,6 @@
         }
         .sidebar-toggle:hover { background: var(--hover-bg); color: var(--text-color); }
 
-        /* NAV ITEMS */
         .nav-item {
             position: relative; display: flex; align-items: center; height: var(--row-height);
             padding: 0 16px; margin: 2px 0; border-radius: var(--radius-md); gap: 14px;
@@ -166,14 +157,12 @@
         }
         .nav-item:hover { background: var(--hover-bg); }
         .nav-item.active { background: var(--active-bg); color: var(--brand-primary); font-weight: 700; }
-
         .nav-chevron {
             margin-left: auto; width: 16px; height: 16px; stroke: currentColor;
             flex-shrink: 0; transition: transform 0.25s ease;
         }
         .nav-item.dropdown-open .nav-chevron { transform: rotate(90deg); }
 
-        /* SUBMENU */
         .nav-submenu {
             display: none; margin: 2px 0 4px 20px; padding-left: 16px;
             border-left: 2px solid var(--border-subtle); flex-direction: column;
@@ -188,7 +177,6 @@
         .nav-submenu-item:hover { background: var(--hover-bg); color: var(--brand-primary); }
         .nav-submenu-item.active { background: var(--active-bg); color: var(--brand-primary); font-weight: 700; }
 
-        /* ACCOUNT */
         .d-account-section {
             margin-top: auto; padding: 24px 16px; border-top: 1px solid var(--border-subtle); cursor: pointer;
         }
@@ -205,7 +193,6 @@
         }
         .d-content { flex: 1; padding: 16px; overflow-y: auto; }
 
-        /* COLLAPSED SIDEBAR */
         .d-sidebar.collapsed { width: var(--sidebar-collapsed-width); }
         .d-sidebar.collapsed .brand-logo,
         .d-sidebar.collapsed .account-text,
@@ -232,7 +219,6 @@
             border-color: transparent var(--tooltip-bg) transparent transparent;
         }
 
-        /* MOBILE HEADER & OVERLAY (hidden on desktop) */
         .m-header { display: none; }
         .m-header {
             height: 72px; background: #fff; border-bottom: 1px solid var(--border-subtle);
@@ -265,7 +251,6 @@
         .m-drawer-nav { padding: 20px 12px; flex: 1; }
         .m-account-section { padding: 20px; border-top: 1px solid var(--border-subtle); background: #fff; }
 
-        /* PROFILE POPUP */
         .profile-popup {
             position: fixed; background: #fff; border-radius: 12px; box-shadow: var(--shadow-premium);
             border: 1px solid #e5e7eb; width: 260px; z-index: 3000; opacity: 0; pointer-events: none;
@@ -277,332 +262,188 @@
         .popup-list a { display: flex; align-items: center; gap: 12px; padding: 12px; text-decoration: none; color: var(--text-color); border-radius: 8px; cursor: pointer; }
         .popup-list a:hover { background: #f3f4f6; }
 
-        /* ========== GLOBAL BUTTONS (for modals & page) ========== */
+        /* ========== BUTTONS ========== */
         .primary-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 14px 24px;
-            border-radius: var(--radius-md);
-            border: none;
-            font-weight: 600;
-            font-size: 16px;
-            color: #ffffff;
-            background: var(--brand-primary);
-            transition: background 0.2s, transform 0.2s;
-            cursor: pointer;
-            letter-spacing: 0.2px;
-            white-space: nowrap;
-            font-family: inherit;
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 14px 24px; border-radius: var(--radius-md); border: none; font-weight: 600;
+            font-size: 16px; color: #ffffff; background: var(--brand-primary);
+            transition: background 0.2s, transform 0.2s; cursor: pointer; letter-spacing: 0.2px;
+            white-space: nowrap; font-family: inherit;
         }
         .primary-btn:hover { background: #5228d3; transform: translateY(-1px); }
         .primary-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
         .btn-secondary {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px 20px;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border-subtle);
-            background: #ffffff;
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--brand-primary);
-            transition: background 0.2s, transform 0.2s;
-            cursor: pointer;
-            letter-spacing: 0.2px;
-            font-family: inherit;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 12px 20px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);
+            background: #ffffff; font-size: 15px; font-weight: 600; color: var(--brand-primary);
+            transition: background 0.2s, transform 0.2s; cursor: pointer; letter-spacing: 0.2px; font-family: inherit;
         }
         .btn-secondary:hover { background: #f2efff; transform: translateY(-1px); }
         .btn-secondary:disabled { opacity: 0.6; cursor: not-allowed; }
         .danger-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 14px 24px;
-            border-radius: var(--radius-md);
-            border: none;
-            font-weight: 600;
-            font-size: 16px;
-            color: #ffffff;
-            background: var(--danger-color);
-            transition: background 0.2s, transform 0.2s;
-            cursor: pointer;
-            font-family: inherit;
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 14px 24px; border-radius: var(--radius-md); border: none; font-weight: 600;
+            font-size: 16px; color: #ffffff; background: var(--danger-color);
+            transition: background 0.2s, transform 0.2s; cursor: pointer; font-family: inherit;
         }
         .danger-btn:hover { background: #dc2626; transform: translateY(-1px); }
         .danger-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
-        /* ========== PAGE CONTENT STYLES (scoped to .content-inner) ========== */
+        /* ========== PAGE CONTENT ========== */
         .content-inner {
-            --brand-primary: #643DE4;
-            --danger-color: #ef4444;
-            --success-color: #10B981;
-            --warning-color: #f59e0b;
-            --switch-on: #643DE4;
-            --switch-off: #9CA3AF;
-            --hover-bg: #f3f4f6;
-            --border-subtle: #e5e7eb;
-            --radius-md: 10px;
-            --radius-lg: 14px;
-            max-width: 1110px;
-            margin: 0 auto;
-            padding: 16px 16px 24px;
-            width: 100%;
-            font-family: 'IBM Plex Sans', Roboto, sans-serif;
-            font-weight: 500;
-            font-size: 14px;
-            line-height: 20px;
-            color: var(--text-color);
+            --brand-primary: #643DE4; --danger-color: #ef4444; --success-color: #10B981;
+            --warning-color: #f59e0b; --switch-on: #643DE4; --switch-off: #9CA3AF;
+            --hover-bg: #f3f4f6; --border-subtle: #e5e7eb; --radius-md: 10px; --radius-lg: 14px;
+            max-width: 1110px; margin: 0 auto; padding: 16px 16px 24px; width: 100%;
+            font-family: 'IBM Plex Sans', Roboto, sans-serif; font-weight: 500;
+            font-size: 14px; line-height: 20px; color: var(--text-color);
         }
-        .content-inner .page-title {
-            font-weight: 700;
-            line-height: 1.2;
-            color: rgb(29, 30, 32);
-            font-size: 22px;
-        }
-        .content-inner .page-title-group {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .content-inner .breadcrumbs {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            font-size: 14px;
-            color: var(--text-sub);
-        }
+        .content-inner .page-title { font-weight: 700; line-height: 1.2; color: rgb(29, 30, 32); font-size: 22px; }
+        .content-inner .page-title-group { display: flex; flex-direction: column; gap: 4px; }
+        .content-inner .breadcrumbs { display: flex; gap: 8px; align-items: center; font-size: 14px; color: var(--text-sub); }
         .content-inner .breadcrumbs .divider { color: #d1d5db; }
         .content-inner .breadcrumbs img { width: 18px; height: 18px; vertical-align: middle; }
-        .content-inner .header-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-        }
-        .content-inner .card {
-            background: #ffffff;
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--border-subtle);
-            overflow: hidden;
-            width: 100%;
-        }
-
-        /* Toggle switch */
-        .content-inner .toggle-switch {
-            width: 44px;
-            height: 24px;
-            position: relative;
-            display: inline-block;
-        }
+        .content-inner .header-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .content-inner .card { background: #ffffff; border-radius: var(--radius-lg); border: 1px solid var(--border-subtle); overflow: hidden; width: 100%; }
+        .content-inner .toggle-switch { width: 44px; height: 24px; position: relative; display: inline-block; }
         .content-inner .toggle-switch input { display: none; }
-        .content-inner .toggle-slider {
-            position: absolute;
-            inset: 0;
-            background-color: var(--switch-off);
-            border-radius: 24px;
-            transition: .4s;
-            cursor: pointer;
-        }
-        .content-inner .toggle-slider::before {
-            content: "";
-            position: absolute;
-            height: 16px;
-            width: 16px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            border-radius: 50%;
-            transition: .4s;
-        }
+        .content-inner .toggle-slider { position: absolute; inset: 0; background-color: var(--switch-off); border-radius: 24px; transition: .4s; cursor: pointer; }
+        .content-inner .toggle-slider::before { content: ""; position: absolute; height: 16px; width: 16px; left: 4px; bottom: 4px; background-color: white; border-radius: 50%; transition: .4s; }
         .content-inner .toggle-switch input:checked + .toggle-slider { background-color: var(--switch-on); }
         .content-inner .toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); }
-
-        /* Kebab button */
-        .content-inner .kebab {
-            width: 44px;
-            height: 44px;
-            border-radius: var(--radius-md);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 1px solid var(--border-subtle);
-            background: #ffffff;
-            cursor: pointer;
-            transition: background 0.15s, border-color 0.15s;
-        }
+        .content-inner .kebab { width: 44px; height: 44px; border-radius: var(--radius-md); display: flex; justify-content: center; align-items: center; border: 1px solid var(--border-subtle); background: #ffffff; cursor: pointer; transition: background 0.15s, border-color 0.15s; }
         .content-inner .kebab img { width: 22px; height: 22px; }
         .content-inner .kebab:hover { background: #f9fafb; border-color: #d1d5db; }
-
-        /* Desktop table */
         .content-inner .desktop-view { display: block; }
         .content-inner .table-wrapper { width: 100%; overflow-x: auto; overflow: visible !important; }
         .content-inner table { width: 100%; border-collapse: collapse; z-index: 1; position: relative; }
         .content-inner thead { height: 48px; }
-        .content-inner th {
-            font-weight: 700; font-size: 14px; line-height: 24px; color: rgb(29, 30, 32);
-            text-align: left; border-bottom: 1px solid var(--border-subtle); white-space: nowrap;
-            background-color: #ffffff; padding: 12px 20px;
-        }
+        .content-inner th { font-weight: 700; font-size: 14px; line-height: 24px; color: rgb(29, 30, 32); text-align: left; border-bottom: 1px solid var(--border-subtle); white-space: nowrap; background-color: #ffffff; padding: 12px 20px; }
         .content-inner tbody tr { border-bottom: 1px solid var(--hover-bg); background-color: #ffffff; }
         .content-inner tbody tr:hover { background-color: #f9fafb; }
         .content-inner tbody tr:last-child { border-bottom: none; }
         .content-inner td { padding: 12px 20px; vertical-align: middle; text-align: left; }
         .content-inner .product-thumb { width: 48px; height: 48px; border-radius: var(--radius-md); object-fit: cover; border: 1px solid var(--border-subtle); }
         .content-inner .td-flex { display: flex; align-items: center; gap: 12px; }
-
-        /* Mobile cards */
         .content-inner .mobile-view { display: none; }
-        .content-inner .mobile-category-cards {
-            background: #ffffff;
-            border-radius: 16px;
-            border: 1px solid var(--border-subtle);
-            padding: 14px 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-            width: 100%;
-            margin-bottom: 14px;
-            transition: transform 0.2s, box-shadow 0.2s;
-            cursor: pointer;
-        }
+        .content-inner .mobile-category-cards { background: #ffffff; border-radius: 16px; border: 1px solid var(--border-subtle); padding: 14px 16px; display: flex; align-items: center; gap: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); width: 100%; margin-bottom: 14px; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
         .content-inner .mobile-category-cards:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
         .content-inner .mobile-category-cards img { width: 56px; height: 56px; border-radius: var(--radius-lg); object-fit: cover; flex-shrink: 0; }
         .content-inner .mobile-card-content { flex: 1; display: flex; flex-direction: column; gap: 5px; }
         .content-inner .mobile-card-title { font-size: 17px; font-weight: 700; color: var(--text-color); }
         .content-inner .mobile-card-sub { font-size: 14px; font-weight: 600; color: var(--brand-primary); }
         .content-inner .mobile-card-actions { display: flex; gap: 12px; align-items: center; margin-left: auto; }
-        .content-inner .product-card-menu-btn {
-            width: 44px; height: 44px; border-radius: 10px;
-            border: 1px solid var(--border-subtle); background: #fff;
-            display: flex; justify-content: center; align-items: center;
-            cursor: pointer;
-        }
+        .content-inner .product-card-menu-btn { width: 44px; height: 44px; border-radius: 10px; border: 1px solid var(--border-subtle); background: #fff; display: flex; justify-content: center; align-items: center; cursor: pointer; }
         .content-inner .product-card-menu-btn img { width: 22px; height: 22px; }
 
-        /* ========== GLOBAL MODALS & DROPDOWN ========== */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(4px);
-            z-index: 2000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-        }
-        .modal-content {
-            width: 100%;
-            max-width: 520px;
-            background: white;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-premium);
-            padding: 28px 24px;
-            animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            margin: 16px;
-            position: relative;
-        }
-        .bottom-sheet-handle {
-            display: none;
-            width: 36px; height: 4px;
-            background: #d1d5db;
-            border-radius: 2px;
-            margin: 0 auto 16px;
-        }
+        /* ========== MODALS ========== */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 2000; display: none; align-items: center; justify-content: center; }
+        .modal-content { width: 100%; max-width: 520px; background: white; border-radius: var(--radius-lg); box-shadow: var(--shadow-premium); padding: 28px 24px; animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1); margin: 16px; position: relative; }
+        .bottom-sheet-handle { display: none; width: 36px; height: 4px; background: #d1d5db; border-radius: 2px; margin: 0 auto 16px; }
         .modal-header { font-size: 20px; font-weight: 700; margin-bottom: 20px; color: var(--text-color); }
         .modal-body-text { color: var(--text-sub); line-height: 1.6; margin-bottom: 24px; font-size: 15px; }
         .modal-footer { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
-
-        @keyframes modalPop {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes slideUpModal {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
-        }
+        @keyframes modalPop { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        @keyframes slideUpModal { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
         .form-group { margin-bottom: 16px; }
-        .form-input {
-            width: 100%;
-            padding: 0.875rem 1rem;
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-md);
-            background: white;
-            transition: all 0.15s ease;
-            font-size: 0.95rem;
-            color: var(--text-color);
-            font-family: inherit;
-        }
-        .form-input:focus {
-            border-color: var(--brand-primary);
-            box-shadow: 0 0 0 3px rgba(100, 61, 228, 0.1);
-            outline: none;
-        }
+        .form-label { display: block; font-size: 13px; font-weight: 700; color: rgb(29,30,32); margin-bottom: 6px; letter-spacing: 0.3px; }
+        .form-input { width: 100%; padding: 0.875rem 1rem; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); background: white; transition: all 0.15s ease; font-size: 0.95rem; color: var(--text-color); font-family: inherit; }
+        .form-input:focus { border-color: var(--brand-primary); box-shadow: 0 0 0 3px rgba(100, 61, 228, 0.1); outline: none; }
 
-        .dropdown-menu {
-            position: fixed;
-            background: #ffffff;
-            border: 1px solid var(--border-subtle);
-            border-radius: 14px;
-            box-shadow: 0 12px 32px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.06);
-            min-width: 200px;
-            z-index: 10002;
-            display: none;
-            flex-direction: column;
-            padding: 8px;
-            animation: fadeInUp 0.2s ease-out;
-        }
-        .dropdown-menu.show { display: flex; }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .dropdown-item {
-            padding: 14px 16px;
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text-color);
+        /* ========== IMAGE UPLOAD ZONE ========== */
+        .upload-zone {
+            border: 2px dashed #d1d5db;
+            border-radius: 12px;
+            padding: 28px 20px;
+            text-align: center;
             cursor: pointer;
-            border-radius: 10px;
-            text-align: left;
-            background: transparent;
-            border: none;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            font-family: inherit;
-            transition: background 0.15s;
+            background: #fafafa;
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
         }
+        .upload-zone:hover {
+            border-color: var(--brand-primary);
+            background: #f5f0ff;
+        }
+        .upload-zone.dragover {
+            border-color: var(--brand-primary);
+            background: #f0ebff;
+            transform: scale(1.01);
+        }
+        .upload-zone-icon {
+            width: 48px; height: 48px;
+            background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 12px;
+        }
+        .upload-zone-icon svg { width: 24px; height: 24px; stroke: var(--brand-primary); }
+        .upload-zone-title { font-size: 15px; font-weight: 700; color: rgb(29,30,32); margin-bottom: 4px; }
+        .upload-zone-sub { font-size: 13px; color: var(--text-sub); }
+        .upload-zone-sub span { color: var(--brand-primary); font-weight: 600; }
+
+        /* Image preview in modal */
+        .img-preview-wrap {
+            display: none;
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-subtle);
+            background: #f9fafb;
+        }
+        .img-preview-wrap.visible { display: block; }
+        .img-preview-wrap img {
+            width: 100%; height: 180px; object-fit: cover; display: block;
+        }
+        .img-preview-change {
+            position: absolute; bottom: 10px; right: 10px;
+            background: rgba(255,255,255,0.92);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px; padding: 7px 14px;
+            font-size: 13px; font-weight: 700;
+            color: var(--brand-primary); cursor: pointer;
+            display: flex; align-items: center; gap: 6px;
+            transition: background 0.15s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .img-preview-change:hover { background: #ffffff; }
+        .img-preview-change svg { width: 14px; height: 14px; stroke: var(--brand-primary); }
+
+        /* Upload progress bar */
+        .upload-progress {
+            display: none;
+            margin-top: 12px;
+        }
+        .upload-progress.visible { display: block; }
+        .upload-progress-bar-bg {
+            height: 6px; background: #e5e7eb; border-radius: 3px; overflow: hidden;
+        }
+        .upload-progress-bar {
+            height: 100%; background: linear-gradient(90deg, var(--brand-primary), #8b5cf6);
+            border-radius: 3px; transition: width 0.3s ease;
+            width: 0%;
+        }
+        .upload-progress-text {
+            font-size: 12px; color: var(--text-sub); margin-top: 6px;
+            display: flex; justify-content: space-between;
+        }
+
+        /* Dropdown */
+        .dropdown-menu { position: fixed; background: #ffffff; border: 1px solid var(--border-subtle); border-radius: 14px; box-shadow: 0 12px 32px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.06); min-width: 200px; z-index: 10002; display: none; flex-direction: column; padding: 8px; animation: fadeInUp 0.2s ease-out; }
+        .dropdown-menu.show { display: flex; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .dropdown-item { padding: 14px 16px; font-size: 15px; font-weight: 600; color: var(--text-color); cursor: pointer; border-radius: 10px; text-align: left; background: transparent; border: none; width: 100%; display: flex; align-items: center; gap: 14px; font-family: inherit; transition: background 0.15s; }
         .dropdown-item img { width: 20px; height: 20px; opacity: 0.85; }
         .dropdown-item:hover { background: var(--hover-bg); }
         .dropdown-item.text-danger { color: var(--danger-color); }
         .dropdown-item.text-danger img { filter: invert(36%) sepia(87%) saturate(7464%) hue-rotate(344deg) brightness(92%) contrast(89%); }
 
-        .spinner-overlay {
-            position: fixed; inset: 0; z-index: 3000;
-            background: rgba(255,255,255,0.7);
-            backdrop-filter: blur(4px);
-            display: none;
-            align-items: center; justify-content: center;
-            flex-direction: column; gap: 16px;
-        }
+        /* Spinner */
+        .spinner-overlay { position: fixed; inset: 0; z-index: 3000; background: rgba(255,255,255,0.7); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; flex-direction: column; gap: 16px; }
         .spinner-overlay.active { display: flex; }
-        .spinner {
-            width: 48px; height: 48px;
-            border: 5px solid #e5e7eb;
-            border-top-color: var(--brand-primary);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
+        .spinner { width: 48px; height: 48px; border: 5px solid #e5e7eb; border-top-color: var(--brand-primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
         .spinner-text { font-weight: 600; color: var(--text-color); }
 
@@ -611,22 +452,17 @@
             .d-sidebar { display: none; }
             .d-topbar { display: none; }
             .d-content { padding: 8px; padding-top: 80px; }
-
             .m-header { display: flex; }
-
             .profile-popup { bottom: 100px; left: 50%; transform: translateX(-50%); }
             .brand-logo img { height: 45px; }
-
             .content-inner { padding: 16px; }
             .content-inner .page-title { font-size: 24px; }
-            .content-inner .header-actions {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 14px;
-            }
+            .content-inner .header-actions { flex-direction: column; align-items: flex-start; gap: 14px; }
             .content-inner .primary-btn { width: 100%; justify-content: center; padding: 16px; font-size: 17px; }
             .content-inner .desktop-view { display: none; }
             .content-inner .mobile-view { display: block; }
+            .modal-content { margin: 0; border-radius: 24px 24px 0 0; position: fixed; bottom: 0; left: 0; right: 0; max-width: 100%; animation: slideUpModal 0.3s cubic-bezier(0.16, 1, 0.3, 1); max-height: 90vh; overflow-y: auto; }
+            .bottom-sheet-handle { display: block; }
         }
     </style>
 </head>
@@ -643,92 +479,38 @@
         <div style="width:40px;"></div>
     </header>
 
-    <!-- ========== MOBILE DRAWER OVERLAY ========== -->
+    <!-- ========== MOBILE DRAWER ========== -->
     <div class="m-overlay" id="m-overlay">
         <div class="m-drawer">
             <div class="m-drawer-header">
-                <span class="brand-logo">
-                    <img src="./assets/logo.png" alt="Happy NonVeg Pickles">
-                </span>
-                <button class="m-drawer-close" id="m-close-drawer">
-                    <div class="m-drawer-close-icon"></div>
-                </button>
+                <span class="brand-logo"><img src="./assets/logo.png" alt="Happy NonVeg Pickles"></span>
+                <button class="m-drawer-close" id="m-close-drawer"><div class="m-drawer-close-icon"></div></button>
             </div>
-
             <nav class="m-drawer-nav">
                 <a href="dashboard.html" class="nav-item">
-                    <span class="icon icon-custom icon-dashboard">
-                        <span class="icon-normal"></span>
-                        <span class="icon-hover"></span>
-                        <span class="icon-active"></span>
-                    </span>
+                    <span class="icon icon-custom icon-dashboard"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>
                     <span class="nav-label">Dashboard</span>
                 </a>
                 <a href="manage-categories.html" class="nav-item active">
-                    <span class="icon icon-custom icon-inventory">
-                        <span class="icon-normal"></span>
-                        <span class="icon-hover"></span>
-                        <span class="icon-active"></span>
-                    </span>
+                    <span class="icon icon-custom icon-inventory"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>
                     <span class="nav-label">Inventory</span>
                 </a>
                 <a href="coupons.html" class="nav-item">
-                    <span class="icon icon-custom icon-coupons">
-                        <span class="icon-normal"></span>
-                        <span class="icon-hover"></span>
-                        <span class="icon-active"></span>
-                    </span>
+                    <span class="icon icon-custom icon-coupons"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>
                     <span class="nav-label">Manage Coupons</span>
                 </a>
-
                 <div class="nav-item" id="m-site-toggle">
-                    <span class="icon icon-custom icon-site">
-                        <span class="icon-normal"></span>
-                        <span class="icon-hover"></span>
-                        <span class="icon-active"></span>
-                    </span>
+                    <span class="icon icon-custom icon-site"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>
                     <span class="nav-label">Customize Site</span>
-                    <svg class="nav-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="m9 18 6-6-6-6"/>
-                    </svg>
+                    <svg class="nav-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
                 </div>
-
                 <div class="nav-submenu" id="m-site-submenu">
-                    <a href="manage_herosection.html" class="nav-submenu-item">
-                        <span class="icon icon-custom icon-herosection">
-                            <span class="icon-normal"></span>
-                            <span class="icon-hover"></span>
-                            <span class="icon-active"></span>
-                        </span>
-                        Hero Section
-                    </a>
-                    <a href="manage-sections.html" class="nav-submenu-item">
-                        <span class="icon icon-custom icon-sections">
-                            <span class="icon-normal"></span>
-                            <span class="icon-hover"></span>
-                            <span class="icon-active"></span>
-                        </span>
-                        Sections
-                    </a>
-                    <a href="manage-popup.html" class="nav-submenu-item">
-                        <span class="icon icon-custom icon-popup">
-                            <span class="icon-normal"></span>
-                            <span class="icon-hover"></span>
-                            <span class="icon-active"></span>
-                        </span>
-                        Popup
-                    </a>
-                    <a href="manage-combo.html" class="nav-submenu-item">
-                        <span class="icon icon-custom icon-combo">
-                            <span class="icon-normal"></span>
-                            <span class="icon-hover"></span>
-                            <span class="icon-active"></span>
-                        </span>
-                        Combo Offer
-                    </a>
+                    <a href="manage_herosection.html" class="nav-submenu-item"><span class="icon icon-custom icon-herosection"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>Hero Section</a>
+                    <a href="manage-sections.html" class="nav-submenu-item"><span class="icon icon-custom icon-sections"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>Sections</a>
+                    <a href="manage-popup.html" class="nav-submenu-item"><span class="icon icon-custom icon-popup"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>Popup</a>
+                    <a href="manage-combo.html" class="nav-submenu-item"><span class="icon icon-custom icon-combo"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>Combo Offer</a>
                 </div>
             </nav>
-
             <div class="m-account-section" id="profile-trigger-mobile">
                 <div class="account-card">
                     <img class="account-avatar" src="" alt="User">
@@ -745,95 +527,39 @@
     <div class="page-desktop">
         <aside class="d-sidebar" id="sidebar">
             <div class="d-sidebar-header">
-                <a href="#" class="brand-logo">
-                    <img src="./assets/logo.png" alt="Happy NonVeg Pickles">
-                </a>
-                <span class="mini-logo">
-                    <img src="./assets/logo-small.png" alt="H">
-                </span>
+                <a href="#" class="brand-logo"><img src="./assets/logo.png" alt="Happy NonVeg Pickles"></a>
+                <span class="mini-logo"><img src="./assets/logo-small.png" alt="H"></span>
                 <button class="sidebar-toggle" id="sidebar-toggle-btn">
                     <img class="btn-close-svg" src="./assets/panel_close.svg" alt="Close sidebar" width="24" height="24">
                     <img class="btn-open-svg" src="./assets/panel_open.svg" alt="Open sidebar" width="24" height="24">
                 </button>
             </div>
-
             <div class="d-sidebar-inner">
                 <nav>
                     <a href="dashboard.html" class="nav-item">
-                        <span class="icon icon-custom icon-dashboard">
-                            <span class="icon-normal"></span>
-                            <span class="icon-hover"></span>
-                            <span class="icon-active"></span>
-                        </span>
+                        <span class="icon icon-custom icon-dashboard"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>
                         <span class="nav-label">Dashboard</span>
                     </a>
-
                     <a href="manage-categories.html" class="nav-item active">
-                        <span class="icon icon-custom icon-inventory">
-                            <span class="icon-normal"></span>
-                            <span class="icon-hover"></span>
-                            <span class="icon-active"></span>
-                        </span>
+                        <span class="icon icon-custom icon-inventory"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>
                         <span class="nav-label">Inventory</span>
                     </a>
-
                     <a href="coupons.html" class="nav-item">
-                        <span class="icon icon-custom icon-coupons">
-                            <span class="icon-normal"></span>
-                            <span class="icon-hover"></span>
-                            <span class="icon-active"></span>
-                        </span>
+                        <span class="icon icon-custom icon-coupons"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>
                         <span class="nav-label">Manage Coupons</span>
                     </a>
-
                     <div class="nav-item" id="d-site-toggle">
-                        <span class="icon icon-custom icon-site">
-                            <span class="icon-normal"></span>
-                            <span class="icon-hover"></span>
-                            <span class="icon-active"></span>
-                        </span>
+                        <span class="icon icon-custom icon-site"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>
                         <span class="nav-label">Customize Site</span>
-                        <svg class="nav-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m9 18 6-6-6-6"/>
-                        </svg>
+                        <svg class="nav-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
                     </div>
-
                     <div class="nav-submenu" id="d-site-submenu">
-                        <a href="manage_herosection.html" class="nav-submenu-item">
-                            <span class="icon icon-custom icon-herosection">
-                                <span class="icon-normal"></span>
-                                <span class="icon-hover"></span>
-                                <span class="icon-active"></span>
-                            </span>
-                            Hero Section
-                        </a>
-                        <a href="manage-sections.html" class="nav-submenu-item">
-                            <span class="icon icon-custom icon-sections">
-                                <span class="icon-normal"></span>
-                                <span class="icon-hover"></span>
-                                <span class="icon-active"></span>
-                            </span>
-                            Sections
-                        </a>
-                        <a href="manage-popup.html" class="nav-submenu-item">
-                            <span class="icon icon-custom icon-popup">
-                                <span class="icon-normal"></span>
-                                <span class="icon-hover"></span>
-                                <span class="icon-active"></span>
-                            </span>
-                            Popup
-                        </a>
-                        <a href="manage-combo.html" class="nav-submenu-item">
-                            <span class="icon icon-custom icon-combo">
-                                <span class="icon-normal"></span>
-                                <span class="icon-hover"></span>
-                                <span class="icon-active"></span>
-                            </span>
-                            Combo Offer
-                        </a>
+                        <a href="manage_herosection.html" class="nav-submenu-item"><span class="icon icon-custom icon-herosection"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>Hero Section</a>
+                        <a href="manage-sections.html" class="nav-submenu-item"><span class="icon icon-custom icon-sections"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>Sections</a>
+                        <a href="manage-popup.html" class="nav-submenu-item"><span class="icon icon-custom icon-popup"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>Popup</a>
+                        <a href="manage-combo.html" class="nav-submenu-item"><span class="icon icon-custom icon-combo"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>Combo Offer</a>
                     </div>
                 </nav>
-
                 <div class="d-account-section" id="profile-trigger-desktop">
                     <div class="account-card">
                         <img class="account-avatar" src="" alt="User">
@@ -849,7 +575,6 @@
         <div class="d-main-wrapper">
             <header class="d-topbar">Manage Categories</header>
             <main class="d-content">
-                <!-- ========== PAGE CONTENT (inventory) ========== -->
                 <div class="content-inner">
                     <div class="header-actions">
                         <div class="page-title-group">
@@ -884,23 +609,68 @@
         </ul>
     </div>
 
-    <!-- ========== PAGE MODALS & MENUS ========== -->
+    <!-- ========== SPINNER ========== -->
     <div class="spinner-overlay" id="spinnerOverlay">
         <div class="spinner"></div>
         <div class="spinner-text" id="spinnerText">Saving…</div>
     </div>
 
+    <!-- ========== ADD/EDIT CATEGORY MODAL ========== -->
     <div id="modal" class="modal-overlay">
         <div class="modal-content">
             <div class="bottom-sheet-handle"></div>
             <div class="modal-header" id="modalTitle">Add New Category</div>
             <input type="hidden" id="editingCategoryId" value="">
+
             <div class="form-group">
-                <input type="text" id="cat-name" placeholder="Category Name (e.g. Mango)" class="form-input">
+                <label class="form-label">Category Name</label>
+                <input type="text" id="cat-name" placeholder="e.g. Mango Pickle" class="form-input">
             </div>
+
+            <!-- ====== IMAGE UPLOAD (replaces manual URL input) ====== -->
             <div class="form-group">
-                <input type="text" id="cat-img" placeholder="Image URL (Optional)" class="form-input">
+                <label class="form-label">Category Image</label>
+
+                <!-- Upload zone (shown when no image selected) -->
+                <div class="upload-zone" id="upload-zone">
+                    <div class="upload-zone-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="17 8 12 3 7 8"/>
+                            <line x1="12" y1="3" x2="12" y2="15"/>
+                        </svg>
+                    </div>
+                    <div class="upload-zone-title">Click or drag to upload</div>
+                    <div class="upload-zone-sub"><span>Browse files</span> &nbsp;·&nbsp; PNG, JPG, WebP up to 5MB</div>
+                </div>
+
+                <!-- Hidden file input -->
+                <input type="file" id="cat-img-file" accept="image/png,image/jpeg,image/jpg,image/webp" style="display:none;">
+
+                <!-- Upload progress bar -->
+                <div class="upload-progress" id="upload-progress">
+                    <div class="upload-progress-bar-bg">
+                        <div class="upload-progress-bar" id="upload-progress-bar"></div>
+                    </div>
+                    <div class="upload-progress-text">
+                        <span id="upload-progress-label">Uploading…</span>
+                        <span id="upload-progress-pct">0%</span>
+                    </div>
+                </div>
+
+                <!-- Image preview (shown after upload) -->
+                <div class="img-preview-wrap" id="img-preview-wrap">
+                    <img id="img-preview" src="" alt="Preview">
+                    <button type="button" class="img-preview-change" id="change-img-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/></svg>
+                        Change Image
+                    </button>
+                </div>
+
+                <!-- Hidden field that stores the final public URL -->
+                <input type="hidden" id="cat-img-url" value="">
             </div>
+
             <div class="modal-footer">
                 <button id="modalCancelBtn" class="btn-secondary">Cancel</button>
                 <button id="modalSaveBtn" class="primary-btn">Save Category</button>
@@ -908,6 +678,7 @@
         </div>
     </div>
 
+    <!-- ========== DELETE MODAL ========== -->
     <div id="delete-modal" class="modal-overlay">
         <div class="modal-content" style="max-width: 480px;">
             <div class="bottom-sheet-handle"></div>
@@ -917,16 +688,15 @@
             </div>
             <div class="modal-footer">
                 <button id="deleteCancelBtn" class="btn-secondary">Cancel</button>
-                <button id="deleteConfirmBtn" class="danger-btn">Delete Category & Products</button>
+                <button id="deleteConfirmBtn" class="danger-btn">Delete Category &amp; Products</button>
             </div>
         </div>
     </div>
 
     <div id="menus-container"></div>
 
-    <!-- ========== COMBINED JAVASCRIPT ========== -->
+    <!-- ========== JAVASCRIPT ========== -->
     <script type="module">
-        // ========== FIREBASE INIT ==========
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, onSnapshot, doc, setDoc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
@@ -946,6 +716,146 @@
         const db = getFirestore(firebaseApp);
         const ALLOWED_ADMIN = "harshavardhanjw@gmail.com";
 
+        // ========== CLOUDFLARE R2 CONFIG ==========
+        // Your R2 bucket details — only the public URL and bucket name are used on the frontend.
+        // The secret keys MUST live in your backend API (/api/get-presigned-url).
+        const R2_PUBLIC_URL = "https://pub-e263b366c3584a049243b3d1fecb54ee.r2.dev";
+        const R2_BUCKET     = "happypickles";
+        // Account ID: bfbe230ca137edcedace515cddedf935  (used server-side only)
+
+        /**
+         * uploadToR2(file)
+         * ─────────────────
+         * 1. Calls your backend /api/get-presigned-url to get a signed PUT URL
+         * 2. PUTs the file binary directly to Cloudflare R2
+         * 3. Returns the permanent public URL of the uploaded file
+         *
+         * The backend must return JSON: { url: "<signed-put-url>", publicUrl: "<public-read-url>" }
+         *
+         * Progress is simulated (R2 presigned PUT doesn't support real XHR progress easily,
+         * but you can swap to XMLHttpRequest if you need true progress reporting).
+         */
+        async function uploadToR2(file, onProgress) {
+            // Step 1 — get presigned URL from your backend
+            const presignRes = await fetch(
+                `/api/get-presigned-url?fileName=${encodeURIComponent(file.name)}&contentType=${encodeURIComponent(file.type)}`
+            );
+            if (!presignRes.ok) {
+                const err = await presignRes.json().catch(() => ({}));
+                throw new Error(err.error || 'Failed to get upload URL from server');
+            }
+            const { url: signedUrl, publicUrl } = await presignRes.json();
+
+            // Step 2 — upload via XMLHttpRequest so we get real progress events
+            return new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+                xhr.open('PUT', signedUrl, true);
+                xhr.setRequestHeader('Content-Type', file.type);
+
+                xhr.upload.onprogress = (e) => {
+                    if (e.lengthComputable && onProgress) {
+                        onProgress(Math.round((e.loaded / e.total) * 100));
+                    }
+                };
+                xhr.onload = () => {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        resolve(publicUrl);
+                    } else {
+                        reject(new Error(`R2 upload failed (HTTP ${xhr.status})`));
+                    }
+                };
+                xhr.onerror = () => reject(new Error('Network error during R2 upload'));
+                xhr.send(file);
+            });
+        }
+
+        // ========== IMAGE UPLOAD UI ==========
+        const uploadZone      = document.getElementById('upload-zone');
+        const fileInput       = document.getElementById('cat-img-file');
+        const previewWrap     = document.getElementById('img-preview-wrap');
+        const previewImg      = document.getElementById('img-preview');
+        const catImgUrl       = document.getElementById('cat-img-url');
+        const progressWrap    = document.getElementById('upload-progress');
+        const progressBar     = document.getElementById('upload-progress-bar');
+        const progressLabel   = document.getElementById('upload-progress-label');
+        const progressPct     = document.getElementById('upload-progress-pct');
+        const changeImgBtn    = document.getElementById('change-img-btn');
+
+        function showUploadZone() {
+            uploadZone.style.display = '';
+            previewWrap.classList.remove('visible');
+            progressWrap.classList.remove('visible');
+            catImgUrl.value = '';
+            fileInput.value = '';
+        }
+
+        function showPreview(url) {
+            previewImg.src = url;
+            previewWrap.classList.add('visible');
+            uploadZone.style.display = 'none';
+            progressWrap.classList.remove('visible');
+        }
+
+        function setProgress(pct, label = 'Uploading…') {
+            progressBar.style.width = pct + '%';
+            progressLabel.textContent = label;
+            progressPct.textContent = pct + '%';
+        }
+
+        async function handleFileSelected(file) {
+            if (!file) return;
+
+            // Validate type
+            const allowed = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp'];
+            if (!allowed.includes(file.type)) {
+                alert('Please select a PNG, JPG, or WebP image.');
+                return;
+            }
+            // Validate size (5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('Image must be under 5MB.');
+                return;
+            }
+
+            // Show progress bar
+            uploadZone.style.display = 'none';
+            progressWrap.classList.add('visible');
+            setProgress(0, 'Uploading…');
+            document.getElementById('modalSaveBtn').disabled = true;
+
+            try {
+                const publicUrl = await uploadToR2(file, (pct) => {
+                    setProgress(pct, 'Uploading…');
+                });
+
+                catImgUrl.value = publicUrl;
+                setProgress(100, 'Upload complete!');
+                setTimeout(() => showPreview(publicUrl), 400);
+            } catch (err) {
+                console.error('Upload error:', err);
+                alert('Upload failed: ' + err.message);
+                showUploadZone();
+            } finally {
+                document.getElementById('modalSaveBtn').disabled = false;
+            }
+        }
+
+        // Click to browse
+        uploadZone.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', (e) => handleFileSelected(e.target.files[0]));
+
+        // Drag & drop
+        uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+        uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadZone.classList.remove('dragover');
+            handleFileSelected(e.dataTransfer.files[0]);
+        });
+
+        // Change image button (shown in preview)
+        changeImgBtn.addEventListener('click', () => showUploadZone());
+
         // ========== SVG PRELOAD ==========
         [
             './assets/dashboard.svg','./assets/hover_dashboard.svg','./assets/fill_dashboard.svg',
@@ -962,20 +872,14 @@
         // ========== AUTH ==========
         onAuthStateChanged(auth, (user) => {
             if (!user || user.email !== ALLOWED_ADMIN) {
-                if (user) {
-                    signOut(auth).then(() => window.location.href = './');
-                } else {
-                    window.location.href = './';
-                }
+                if (user) { signOut(auth).then(() => window.location.href = './'); }
+                else { window.location.href = './'; }
             } else {
                 document.body.style.display = 'block';
-                const avatars = document.querySelectorAll('.account-avatar');
-                const names = document.querySelectorAll('.account-name');
-                const emails = document.querySelectorAll('.account-email');
                 const defaultAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || 'Admin')}&background=673DE6&color=fff`;
-                avatars.forEach(img => img.src = user.photoURL || defaultAvatar);
-                names.forEach(name => name.textContent = user.displayName || 'Admin');
-                emails.forEach(email => email.textContent = user.email);
+                document.querySelectorAll('.account-avatar').forEach(img => img.src = user.photoURL || defaultAvatar);
+                document.querySelectorAll('.account-name').forEach(el => el.textContent = user.displayName || 'Admin');
+                document.querySelectorAll('.account-email').forEach(el => el.textContent = user.email);
             }
         });
 
@@ -984,35 +888,29 @@
             signOut(auth).then(() => window.location.href = './');
         });
 
-        // ========== DASHBOARD UI ==========
+        // ========== SIDEBAR / NAV ==========
         const sidebar = document.getElementById('sidebar');
         document.getElementById('sidebar-toggle-btn').addEventListener('click', () => sidebar.classList.toggle('collapsed'));
 
         function clearNavActive(nav) {
             nav.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
         }
-
         function setupDropdown(toggleId, submenuId) {
             const toggle  = document.getElementById(toggleId);
             const submenu = document.getElementById(submenuId);
             if (!toggle || !submenu) return;
-
             toggle.addEventListener('click', () => {
                 if (sidebar && sidebar.classList.contains('collapsed')) {
                     sidebar.classList.remove('collapsed');
-                    setTimeout(() => {
-                        submenu.classList.add('open');
-                        toggle.classList.add('dropdown-open');
-                    }, 300);
+                    setTimeout(() => { submenu.classList.add('open'); toggle.classList.add('dropdown-open'); }, 300);
                     return;
                 }
                 const isOpen = submenu.classList.contains('open');
                 submenu.classList.toggle('open', !isOpen);
                 toggle.classList.toggle('dropdown-open', !isOpen);
             });
-
             submenu.querySelectorAll('.nav-submenu-item').forEach(item => {
-                item.addEventListener('click', function (e) {
+                item.addEventListener('click', function(e) {
                     e.stopPropagation();
                     const parentNav = toggle.closest('nav') || toggle.parentElement;
                     clearNavActive(parentNav);
@@ -1026,13 +924,11 @@
         setupDropdown('d-site-toggle', 'd-site-submenu');
         setupDropdown('m-site-toggle', 'm-site-submenu');
 
-        // Mobile drawer
         const mOverlay = document.getElementById('m-overlay');
         document.getElementById('m-open-drawer').onclick = () => mOverlay.classList.add('open');
         document.getElementById('m-close-drawer').onclick = () => mOverlay.classList.remove('open');
         mOverlay.onclick = (e) => { if (e.target === mOverlay) mOverlay.classList.remove('open'); };
 
-        // Profile popup
         const pPopup = document.getElementById('profile-popup');
         ['profile-trigger-desktop','profile-trigger-mobile'].forEach(id => {
             const el = document.getElementById(id);
@@ -1045,22 +941,15 @@
         });
         document.addEventListener('click', () => pPopup.classList.remove('active'));
 
-        // Regular nav active state
         document.querySelectorAll('.nav-item:not(#d-site-toggle):not(#m-site-toggle)').forEach(item => {
-            item.addEventListener('click', function () {
+            item.addEventListener('click', function() {
                 const parentNav = this.closest('nav');
                 if (parentNav) clearNavActive(parentNav);
                 this.classList.add('active');
-                ['d-site-toggle', 'm-site-toggle'].forEach(id => {
-                    const t = document.getElementById(id);
-                    t?.classList.remove('active', 'dropdown-open');
-                });
-                ['d-site-submenu', 'm-site-submenu'].forEach(id => {
+                ['d-site-toggle','m-site-toggle'].forEach(id => document.getElementById(id)?.classList.remove('active','dropdown-open'));
+                ['d-site-submenu','m-site-submenu'].forEach(id => {
                     const s = document.getElementById(id);
-                    if (s) {
-                        s.classList.remove('open');
-                        s.querySelectorAll('.nav-submenu-item').forEach(i => i.classList.remove('active'));
-                    }
+                    if (s) { s.classList.remove('open'); s.querySelectorAll('.nav-submenu-item').forEach(i => i.classList.remove('active')); }
                 });
             });
         });
@@ -1074,20 +963,17 @@
 
             init: () => {
                 onSnapshot(collection(db, 'categories'), snap => {
-                    window.app.categories = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    window.app.categories = snap.docs.map(d => ({ id: d.id, ...d.data() }));
                     window.app.render();
                 });
                 onSnapshot(collection(db, 'products'), snap => {
-                    window.app.products = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    window.app.products = snap.docs.map(d => ({ id: d.id, ...d.data() }));
                     window.app.render();
                 });
 
                 document.querySelectorAll('.modal-overlay').forEach(overlay => {
                     overlay.addEventListener('click', (e) => {
-                        if (e.target === overlay) {
-                            window.app.closeModal();
-                            window.app.cancelDelete();
-                        }
+                        if (e.target === overlay) { window.app.closeModal(); window.app.cancelDelete(); }
                     });
                 });
 
@@ -1111,53 +997,43 @@
             },
             disableButtons: (disabled) => {
                 document.querySelectorAll('.primary-btn, .btn-secondary, .danger-btn').forEach(btn => {
-                    if (btn.id !== 'modalCancelBtn' && btn.id !== 'deleteCancelBtn') {
-                        btn.disabled = disabled;
-                    }
+                    if (btn.id !== 'modalCancelBtn' && btn.id !== 'deleteCancelBtn') btn.disabled = disabled;
                 });
             },
 
             render: () => {
                 const container = document.getElementById('data-container');
                 const menusContainer = document.getElementById('menus-container');
-                
                 let desktopHTML = `<div class="desktop-view card"><div class="table-wrapper"><table>
-                                    <thead><tr>
-                                        <th>Image</th>
-                                        <th>Name</th>
-                                        <th>Items</th>
-                                        <th>Visibility</th>
-                                        <th>Actions</th>
-                                    </tr></thead><tbody>`;
+                    <thead><tr><th>Image</th><th>Name</th><th>Items</th><th>Visibility</th><th>Actions</th></tr></thead><tbody>`;
                 let mobileHTML = `<div class="mobile-view">`;
                 let popupsHTML = ``;
 
                 window.app.categories.forEach(cat => {
                     const count = cat.products ? Object.keys(cat.products).length : window.app.products.filter(p => p.categoryId === cat.id).length;
                     const isAvailable = cat.isavailable !== false;
-                    const imgSrc = cat.image || `https://placehold.co/400x300/fef3c7/b45309?text=${cat.name}`;
+                    const imgSrc = cat.image || `https://placehold.co/400x300/fef3c7/b45309?text=${encodeURIComponent(cat.name)}`;
 
                     desktopHTML += `
                         <tr>
                             <td><img src="${imgSrc}" class="product-thumb" alt="${cat.name}"></td>
-                            <td><span style="font-weight: 600;">${cat.name}</span></td>
+                            <td><span style="font-weight:600;">${cat.name}</span></td>
                             <td>${count} Items</td>
                             <td>
                                 <label class="toggle-switch">
-                                    <input type="checkbox" ${isAvailable ? 'checked' : ''} onchange="app.toggleAvailability(event, '${cat.id}', ${isAvailable})">
+                                    <input type="checkbox" ${isAvailable ? 'checked' : ''} onchange="app.toggleAvailability(event,'${cat.id}',${isAvailable})">
                                     <span class="toggle-slider"></span>
                                 </label>
                             </td>
                             <td>
                                 <div class="td-flex">
                                     <button onclick="window.location.href='manage-products.html?categoryId=${cat.id}'" class="btn-secondary">Manage</button>
-                                    <button class="kebab" onclick="app.toggleMenu(event, 'menu-${cat.id}')">
-                                        <img src="./assets/dots.svg" alt="Menu" />
+                                    <button class="kebab" onclick="app.toggleMenu(event,'menu-${cat.id}')">
+                                        <img src="./assets/dots.svg" alt="Menu">
                                     </button>
                                 </div>
                             </td>
-                        </tr>
-                    `;
+                        </tr>`;
 
                     mobileHTML += `
                         <div class="mobile-category-cards" onclick="window.location.href='manage-products.html?categoryId=${cat.id}'">
@@ -1168,26 +1044,24 @@
                             </div>
                             <div class="mobile-card-actions" onclick="event.stopPropagation()">
                                 <label class="toggle-switch">
-                                    <input type="checkbox" ${isAvailable ? 'checked' : ''} onchange="app.toggleAvailability(event, '${cat.id}', ${isAvailable})">
+                                    <input type="checkbox" ${isAvailable ? 'checked' : ''} onchange="app.toggleAvailability(event,'${cat.id}',${isAvailable})">
                                     <span class="toggle-slider"></span>
                                 </label>
-                                <button class="kebab product-card-menu-btn" onclick="app.toggleMenu(event, 'menu-${cat.id}')">
-                                    <img src="./assets/dots.svg" alt="Menu" />
+                                <button class="kebab product-card-menu-btn" onclick="app.toggleMenu(event,'menu-${cat.id}')">
+                                    <img src="./assets/dots.svg" alt="Menu">
                                 </button>
                             </div>
-                        </div>
-                    `;
+                        </div>`;
 
                     popupsHTML += `
                         <div class="dropdown-menu" id="menu-${cat.id}">
-                            <button class="dropdown-item" onclick="app.editCategory(event, '${cat.id}')">
-                                <img src="./assets/edit.svg" alt="Edit" /> Edit
+                            <button class="dropdown-item" onclick="app.editCategory(event,'${cat.id}')">
+                                <img src="./assets/edit.svg" alt="Edit"> Edit
                             </button>
-                            <button class="dropdown-item text-danger" onclick="app.deleteCategory(event, '${cat.id}')">
-                                <img src="./assets/delete.svg" alt="Delete" /> Delete
+                            <button class="dropdown-item text-danger" onclick="app.deleteCategory(event,'${cat.id}')">
+                                <img src="./assets/delete.svg" alt="Delete"> Delete
                             </button>
-                        </div>
-                    `;
+                        </div>`;
                 });
 
                 desktopHTML += `</tbody></table></div></div>`;
@@ -1197,44 +1071,46 @@
             },
 
             showCategoryModal: (editId = null) => {
-                const modal = document.getElementById('modal');
-                const title = document.getElementById('modalTitle');
-                const nameInput = document.getElementById('cat-name');
-                const imgInput = document.getElementById('cat-img');
-                const hiddenId = document.getElementById('editingCategoryId');
-                
-                if (editId) {
+                const isEdit = !!editId;
+                document.getElementById('modalTitle').textContent = isEdit ? 'Edit Category' : 'Add New Category';
+                document.getElementById('editingCategoryId').value = editId || '';
+                document.getElementById('cat-name').value = '';
+                catImgUrl.value = '';
+
+                // Reset upload UI to initial state
+                showUploadZone();
+
+                if (isEdit) {
                     const cat = window.app.categories.find(c => c.id === editId);
                     if (!cat) return;
-                    title.textContent = 'Edit Category';
-                    nameInput.value = cat.name || '';
-                    imgInput.value = cat.image || '';
-                    hiddenId.value = editId;
-                } else {
-                    title.textContent = 'Add New Category';
-                    nameInput.value = '';
-                    imgInput.value = '';
-                    hiddenId.value = '';
+                    document.getElementById('cat-name').value = cat.name || '';
+                    if (cat.image) {
+                        catImgUrl.value = cat.image;
+                        showPreview(cat.image);
+                    }
                 }
-                modal.style.display = 'flex';
+                document.getElementById('modal').style.display = 'flex';
             },
 
             closeModal: () => {
                 document.getElementById('modal').style.display = 'none';
                 document.getElementById('editingCategoryId').value = '';
+                showUploadZone();
             },
 
             saveCategory: async () => {
                 if (window.app.isLoading) return;
                 const name = document.getElementById('cat-name').value.trim();
-                const image = document.getElementById('cat-img').value.trim() || 'https://placehold.co/400x300/fef3c7/b45309?text=' + name;
-                if(!name) return alert("Category name required.");
-                
+                const image = catImgUrl.value.trim() ||
+                    `https://placehold.co/400x300/fef3c7/b45309?text=${encodeURIComponent(name)}`;
+
+                if (!name) { alert('Category name is required.'); return; }
+
                 const editingId = document.getElementById('editingCategoryId').value;
                 const isEdit = !!editingId;
-                
+
                 window.app.showSpinner(isEdit ? 'Updating category…' : 'Creating category…');
-                
+
                 try {
                     if (isEdit) {
                         await updateDoc(doc(db, 'categories', editingId), { name, image });
@@ -1244,9 +1120,9 @@
                         });
                     }
                     window.app.closeModal();
-                } catch (error) {
-                    console.error("Save error:", error);
-                    alert("Failed to save category. Please try again.");
+                } catch (err) {
+                    console.error('Save error:', err);
+                    alert('Failed to save category. Please try again.');
                 } finally {
                     window.app.hideSpinner();
                 }
@@ -1257,9 +1133,9 @@
                 if (window.app.isLoading) return;
                 try {
                     await updateDoc(doc(db, 'categories', id), { isavailable: !currentState });
-                } catch (error) {
-                    console.error("Toggle error:", error);
-                    alert("Failed to update availability.");
+                } catch (err) {
+                    console.error('Toggle error:', err);
+                    alert('Failed to update availability.');
                 }
             },
 
@@ -1268,34 +1144,29 @@
                 if (window.app.isLoading) return;
                 const button = event.currentTarget;
                 const targetMenu = document.getElementById(menuId);
-                const isCurrentlyShowing = targetMenu.classList.contains('show');
-                
-                document.querySelectorAll('.dropdown-menu.show').forEach(menu => menu.classList.remove('show'));
-                
-                if (!isCurrentlyShowing) {
+                const isShowing = targetMenu.classList.contains('show');
+                document.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
+                if (!isShowing) {
                     targetMenu.classList.add('show');
                     const btnRect = button.getBoundingClientRect();
                     const menuRect = targetMenu.getBoundingClientRect();
-                    
-                    let topPosition = btnRect.bottom + 8;
-                    let leftPosition = btnRect.right - menuRect.width;
-                    if (topPosition + menuRect.height > window.innerHeight) {
-                        topPosition = btnRect.top - menuRect.height - 8;
-                    }
-                    targetMenu.style.top = topPosition + 'px';
-                    targetMenu.style.left = leftPosition + 'px';
+                    let top = btnRect.bottom + 8;
+                    let left = btnRect.right - menuRect.width;
+                    if (top + menuRect.height > window.innerHeight) top = btnRect.top - menuRect.height - 8;
+                    targetMenu.style.top = top + 'px';
+                    targetMenu.style.left = left + 'px';
                 }
             },
 
             editCategory: (event, id) => {
                 event.stopPropagation();
-                document.querySelectorAll('.dropdown-menu.show').forEach(menu => menu.classList.remove('show'));
+                document.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
                 window.app.showCategoryModal(id);
             },
 
             deleteCategory: (event, id) => {
                 event.stopPropagation();
-                document.querySelectorAll('.dropdown-menu.show').forEach(menu => menu.classList.remove('show'));
+                document.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
                 window.app.pendingDeleteId = id;
                 document.getElementById('delete-modal').style.display = 'flex';
             },
@@ -1308,19 +1179,18 @@
             confirmDelete: async () => {
                 if (!window.app.pendingDeleteId || window.app.isLoading) return;
                 window.app.showSpinner('Deleting category & products…');
-                
                 try {
                     const catId = window.app.pendingDeleteId;
                     const deletePromises = [];
-                    const productsToDelete = window.app.products.filter(p => p.categoryId === catId);
-                    productsToDelete.forEach(p => deletePromises.push(deleteDoc(doc(db, 'products', p.id))));
+                    window.app.products.filter(p => p.categoryId === catId).forEach(p => {
+                        deletePromises.push(deleteDoc(doc(db, 'products', p.id)));
+                    });
                     deletePromises.push(deleteDoc(doc(db, 'categories', catId)));
-                    
                     await Promise.all(deletePromises);
                     window.app.cancelDelete();
-                } catch (error) {
-                    console.error("Delete error:", error);
-                    alert("Failed to delete. Please try again.");
+                } catch (err) {
+                    console.error('Delete error:', err);
+                    alert('Failed to delete. Please try again.');
                 } finally {
                     window.app.hideSpinner();
                 }
@@ -1329,15 +1199,13 @@
 
         window.app.init();
 
-        // Global click to close menus
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.dropdown-menu') && !e.target.closest('.kebab')) {
-                document.querySelectorAll('.dropdown-menu.show').forEach(menu => menu.classList.remove('show'));
+                document.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
             }
         });
-
         document.addEventListener('scroll', () => {
-            document.querySelectorAll('.dropdown-menu.show').forEach(menu => menu.classList.remove('show'));
+            document.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
         }, true);
     </script>
 </body>
