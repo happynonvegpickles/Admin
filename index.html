@@ -6,33 +6,31 @@
     <title>Admin Login - Happy NonVeg Pickles</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --primary:       #1a0a00;
-            --accent:        #e85d04;
-            --accent-dark:   #c44d00;
-            --accent-light:  #fb923c;
-            --accent-glow:   rgba(232, 93, 4, 0.15);
-            --bg:            #fdf6ee;
-            --card-bg:       #fffaf4;
-            --pure-white:    #ffffff;
-            --light-gray:    #fef3e2;
-            --text:          #1a0a00;
-            --text-light:    #7c5c3e;
-            --border:        #f0d9be;
-            --danger:        #dc2626;
-            --success:       #16a34a;
-            --shadow-card:   0 24px 64px rgba(232,93,4,0.12), 0 4px 16px rgba(0,0,0,0.07);
+            --accent:       #643DE4;
+            --accent-dark:  #4f2fc0;
+            --accent-light: #7f5ef0;
+            --accent-glow:  rgba(100, 61, 228, 0.14);
+            --bg:           #ffffff;
+            --surface:      #f7f5ff;
+            --pure-white:   #ffffff;
+            --input-bg:     #f4f2fe;
+            --text:         #16113a;
+            --text-light:   #6b648f;
+            --border:       #ddd8f8;
+            --danger:       #dc2626;
+            --success:      #16a34a;
+            --shadow-card:  0 24px 64px rgba(100,61,228,0.13), 0 4px 16px rgba(0,0,0,0.06);
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         html, body {
             height: 100%;
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'IBM Plex Sans', sans-serif;
             background: var(--bg);
             color: var(--text);
         }
@@ -43,13 +41,9 @@
             align-items: center;
             min-height: 100vh;
             padding: 2rem 1.25rem 3rem;
-            background-image:
-                radial-gradient(ellipse 70% 55% at 15% 10%, rgba(232,93,4,0.08) 0%, transparent 60%),
-                radial-gradient(ellipse 50% 40% at 85% 85%, rgba(251,146,60,0.07) 0%, transparent 60%),
-                url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle fill='%23e85d04' fill-opacity='0.025' cx='20' cy='20' r='1.5'/%3E%3C/svg%3E");
         }
 
-        /* ── PAGE CARD — no card on mobile ── */
+        /* ── PAGE CONTAINER — flat on mobile ── */
         .page-container {
             width: 100%;
             max-width: 1060px;
@@ -64,11 +58,11 @@
         }
 
         @keyframes fadeUp {
-            from { opacity:0; transform:translateY(28px); }
+            from { opacity:0; transform:translateY(24px); }
             to   { opacity:1; transform:translateY(0); }
         }
 
-        /* ── LEFT PANEL (desktop) ── */
+        /* ── LEFT PANEL (desktop only) ── */
         .info-panel { display: none; }
 
         /* ── RIGHT PANEL ── */
@@ -76,7 +70,6 @@
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            overflow-y: auto;
             padding: 0;
             align-items: center;
             justify-content: center;
@@ -92,22 +85,24 @@
 
         .brand-icon {
             width: 64px; height: 64px;
-            background: linear-gradient(135deg, var(--accent) 0%, #ff6b1a 100%);
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
             border-radius: 18px;
             display: flex; align-items: center; justify-content: center;
             font-size: 2rem;
-            box-shadow: 0 6px 24px rgba(232,93,4,0.28);
+            box-shadow: 0 6px 24px rgba(100,61,228,0.3);
             margin-bottom: 0.85rem;
         }
 
         .brand-name {
-            font-family: 'Sora', sans-serif;
+            font-family: 'IBM Plex Serif', serif;
             font-size: 1.1rem; font-weight: 700;
             color: var(--accent); text-align: center; line-height: 1.2;
         }
 
         .brand-name span {
-            display: block; color: var(--text-light);
+            display: block;
+            font-family: 'IBM Plex Sans', sans-serif;
+            color: var(--text-light);
             font-size: 0.72rem; font-weight: 500;
             letter-spacing: 0.06em; text-transform: uppercase; margin-top: 2px;
         }
@@ -115,62 +110,66 @@
         /* ── FORM CONTENT ── */
         .form-content { width: 100%; max-width: 400px; }
 
-        .form-header { text-align: center; margin-bottom: 1.8rem; }
-
-        .admin-badge {
-            display: inline-flex; align-items: center; gap: 0.4rem;
-            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-            color: var(--accent);
-            border: 1px solid rgba(232,93,4,0.22);
-            padding: 0.3rem 0.9rem; border-radius: 99px;
-            font-size: 0.7rem; font-weight: 700;
-            text-transform: uppercase; letter-spacing: 0.08em;
-            margin-bottom: 0.8rem;
-        }
+        .form-header { text-align: center; margin-bottom: 2rem; }
 
         .form-header h2 {
-            font-family: 'Sora', sans-serif;
-            font-size: 1.85rem; font-weight: 800;
-            color: var(--primary); letter-spacing: -0.03em; line-height: 1.15;
-            margin-bottom: 0.35rem;
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 1.9rem; font-weight: 700;
+            color: var(--text); letter-spacing: -0.02em; line-height: 1.15;
+            margin-bottom: 0.4rem;
         }
 
         .form-header p { color: var(--text-light); font-size: 0.88rem; }
 
         /* ── INPUTS ── */
-        .input-group { margin-bottom: 1.15rem; }
+        .input-group { margin-bottom: 1.2rem; }
 
         .input-group label {
             display: block; font-size: 0.8rem; font-weight: 600;
-            margin-bottom: 0.4rem; color: var(--text); letter-spacing: 0.01em;
+            margin-bottom: 0.45rem; color: var(--text); letter-spacing: 0.01em;
         }
 
         .input-wrapper { position: relative; }
 
-        .input-wrapper .input-icon {
+        /* SVG icon — left */
+        .input-wrapper .field-icon {
             position: absolute; left: 1rem; top: 50%; transform: translateY(-50%);
-            font-size: 1.2rem; color: var(--text-light);
-            pointer-events: none; transition: color 0.2s;
+            width: 20px; height: 20px;
+            pointer-events: none;
+            display: flex; align-items: center; justify-content: center;
         }
 
-        .input-wrapper .toggle-password {
+        .input-wrapper .field-icon img {
+            width: 20px; height: 20px;
+            object-fit: contain;
+            transition: opacity 0.2s;
+        }
+
+        /* eye toggle — right */
+        .input-wrapper .eye-toggle {
             position: absolute; right: 1rem; top: 50%; transform: translateY(-50%);
-            font-size: 1.2rem; color: var(--text-light); cursor: pointer;
-            pointer-events: all; transition: color 0.2s;
+            width: 22px; height: 22px;
+            cursor: pointer; pointer-events: all;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .input-wrapper .eye-toggle img {
+            width: 22px; height: 22px;
+            object-fit: contain;
         }
 
         .input-wrapper input {
             width: 100%;
-            padding: 0.85rem 3rem 0.85rem 2.9rem;
+            padding: 0.88rem 3rem 0.88rem 3rem;
             border: 1.5px solid var(--border);
-            background: var(--light-gray);
+            background: var(--input-bg);
             border-radius: 12px;
-            font-size: 0.95rem; font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem; font-family: 'IBM Plex Sans', sans-serif;
             color: var(--text);
             transition: all 0.25s ease;
         }
 
-        .input-wrapper input::placeholder { color: #c4a07a; }
+        .input-wrapper input::placeholder { color: #b0a8d4; }
 
         .input-wrapper input:focus {
             outline: none;
@@ -179,32 +178,31 @@
             box-shadow: 0 0 0 4px var(--accent-glow);
         }
 
-        .input-wrapper:focus-within .input-icon { color: var(--accent); }
-
         /* ── SUBMIT BUTTON ── */
         .btn-submit {
             width: 100%; padding: 0.95rem 1rem;
-            font-size: 0.97rem; font-weight: 700; font-family: 'Sora', sans-serif;
+            font-size: 0.97rem; font-weight: 700;
+            font-family: 'IBM Plex Sans', sans-serif;
             color: #fff;
-            background: linear-gradient(135deg, var(--accent) 0%, #ff6b1a 100%);
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
             border: none; border-radius: 12px; cursor: pointer;
             margin-top: 0.5rem;
             transition: all 0.3s cubic-bezier(0.22,1,0.36,1);
             display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-            box-shadow: 0 4px 16px rgba(232,93,4,0.28);
-            letter-spacing: 0.01em;
+            box-shadow: 0 4px 18px rgba(100,61,228,0.3);
+            letter-spacing: 0.02em;
         }
 
         .btn-submit:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 28px rgba(232,93,4,0.38);
+            box-shadow: 0 8px 28px rgba(100,61,228,0.4);
             background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent) 100%);
         }
 
         .btn-submit:active { transform: translateY(0); }
 
         .btn-submit:disabled {
-            background: #d4a57a; cursor: not-allowed;
+            background: #b8aee8; cursor: not-allowed;
             transform: none; box-shadow: none;
         }
 
@@ -212,9 +210,9 @@
         .forgot-link { text-align: center; margin-top: 1rem; }
         .forgot-link a {
             color: var(--accent); font-size: 0.86rem; font-weight: 600;
-            text-decoration: none; cursor: pointer; transition: color 0.2s;
+            text-decoration: none; transition: color 0.2s;
         }
-        .forgot-link a:hover { text-decoration: underline; color: var(--primary); }
+        .forgot-link a:hover { text-decoration: underline; color: var(--accent-dark); }
 
         /* ── DIVIDER ── */
         .divider {
@@ -229,24 +227,18 @@
         /* ── GOOGLE BUTTON ── */
         .btn-google {
             width: 100%; padding: 0.88rem 1rem;
-            font-size: 0.93rem; font-weight: 600; font-family: 'DM Sans', sans-serif;
+            font-size: 0.93rem; font-weight: 600;
+            font-family: 'IBM Plex Sans', sans-serif;
             color: var(--text); background: var(--pure-white);
             border: 1.5px solid var(--border); border-radius: 12px;
             cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.7rem;
             transition: all 0.25s;
         }
         .btn-google:hover {
-            background: var(--light-gray); border-color: var(--accent);
-            transform: translateY(-1px); box-shadow: 0 4px 12px rgba(232,93,4,0.10);
+            background: var(--surface); border-color: var(--accent);
+            transform: translateY(-1px); box-shadow: 0 4px 14px rgba(100,61,228,0.12);
         }
         .google-icon { width: 20px; height: 20px; flex-shrink: 0; }
-
-        /* ── SECURITY NOTE ── */
-        .security-note {
-            display: flex; align-items: center; justify-content: center; gap: 0.4rem;
-            margin-top: 1.4rem; font-size: 0.75rem; color: var(--text-light);
-        }
-        .security-note i { color: var(--success); font-size: 0.9rem; }
 
         /* ── SPINNER ── */
         .btn-spinner {
@@ -257,16 +249,16 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* ── LOADER overlay ── */
+        /* ── LOADER ── */
         #loader {
             display: none; position: fixed; inset: 0;
-            background: rgba(253,246,238,0.82);
+            background: rgba(255,255,255,0.82);
             justify-content: center; align-items: center;
             z-index: 9999; backdrop-filter: blur(5px);
         }
         .spinner-lg {
             width: 48px; height: 48px;
-            border: 4px solid rgba(232,93,4,0.15);
+            border: 4px solid rgba(100,61,228,0.15);
             border-bottom-color: var(--accent);
             border-radius: 50%; animation: spin 0.85s linear infinite;
         }
@@ -279,7 +271,7 @@
             box-shadow: 0 8px 24px rgba(0,0,0,0.15);
             transition: bottom 0.45s cubic-bezier(0.68,-0.55,0.27,1.55);
             z-index: 10001; display: flex; align-items: center; gap: 0.55rem;
-            white-space: nowrap;
+            white-space: nowrap; font-family: 'IBM Plex Sans', sans-serif;
         }
         #toast.show    { bottom: 28px; }
         #toast.success { background: linear-gradient(135deg, #16a34a, #15803d); }
@@ -289,7 +281,7 @@
         /* ── SUCCESS OVERLAY ── */
         #success-overlay {
             display: none; position: fixed; inset: 0;
-            background: rgba(253,246,238,0.9);
+            background: rgba(255,255,255,0.92);
             z-index: 10000; justify-content: center; align-items: center;
             flex-direction: column; gap: 1rem; backdrop-filter: blur(6px);
         }
@@ -298,35 +290,40 @@
 
         .success-icon-wrap {
             width: 80px; height: 80px;
-            background: linear-gradient(135deg, var(--accent), #ff6b1a);
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
             font-size: 2.4rem; color: #fff;
-            box-shadow: 0 8px 32px rgba(232,93,4,0.35);
+            box-shadow: 0 8px 32px rgba(100,61,228,0.35);
             animation: popIn 0.4s cubic-bezier(0.22,1,0.36,1) 0.1s both;
         }
         @keyframes popIn { from{transform:scale(0.3);opacity:0} to{transform:scale(1);opacity:1} }
 
         .success-text {
-            font-family: 'Sora', sans-serif;
-            font-size: 1.3rem; font-weight: 700; color: var(--primary); text-align: center;
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 1.3rem; font-weight: 700; color: var(--text); text-align: center;
         }
         .success-sub { font-size: 0.88rem; color: var(--text-light); }
 
         /* ── DESKTOP ── */
         @media (min-width: 900px) {
-            body { padding: 2rem; }
+            body { padding: 2rem; background: var(--surface); }
 
             .page-container {
                 flex-direction: row;
                 max-width: 1060px;
                 min-height: 660px;
+                background: var(--pure-white);
+                border-radius: 2rem;
+                box-shadow: var(--shadow-card);
+                overflow: hidden;
+                border: 1px solid var(--border);
             }
 
             .info-panel {
                 display: flex; flex-direction: column;
                 justify-content: center; align-items: center;
                 flex-basis: 46%; flex-shrink: 0;
-                background: linear-gradient(150deg, #fffbf0 0%, #fef3c7 50%, #fde68a 100%);
+                background: linear-gradient(150deg, #f0ebff 0%, #e4d9ff 50%, #d4c4ff 100%);
                 padding: 3.5rem; position: relative; overflow: hidden;
                 border-right: 1px solid var(--border);
             }
@@ -334,13 +331,13 @@
             .info-panel::before {
                 content:''; position:absolute; top:-80px; left:-80px;
                 width:340px; height:340px;
-                background: radial-gradient(circle, rgba(232,93,4,0.12) 0%, transparent 70%);
+                background: radial-gradient(circle, rgba(100,61,228,0.12) 0%, transparent 70%);
                 border-radius: 50%;
             }
             .info-panel::after {
                 content:''; position:absolute; bottom:-60px; right:-60px;
                 width:260px; height:260px;
-                background: radial-gradient(circle, rgba(255,107,26,0.10) 0%, transparent 70%);
+                background: radial-gradient(circle, rgba(127,94,240,0.10) 0%, transparent 70%);
                 border-radius: 50%;
             }
 
@@ -352,20 +349,22 @@
 
             .info-logo-icon {
                 width: 90px; height: 90px;
-                background: linear-gradient(135deg, var(--accent) 0%, #ff6b1a 100%);
+                background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
                 border-radius: 26px; display: flex; align-items: center; justify-content: center;
-                font-size: 3rem; box-shadow: 0 12px 40px rgba(232,93,4,0.32);
+                font-size: 3rem; box-shadow: 0 12px 40px rgba(100,61,228,0.32);
                 animation: float 3.5s ease-in-out infinite;
             }
             @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
 
             .info-brand {
-                font-family: 'Sora', sans-serif;
-                font-size: 1.6rem; font-weight: 800; color: var(--primary);
-                letter-spacing: -0.03em; line-height: 1.2;
+                font-family: 'IBM Plex Serif', serif;
+                font-size: 1.6rem; font-weight: 700; color: var(--text);
+                letter-spacing: -0.02em; line-height: 1.2;
             }
             .info-brand span {
-                display:block; font-size:0.82rem; color:var(--accent);
+                display:block;
+                font-family: 'IBM Plex Sans', sans-serif;
+                font-size:0.82rem; color:var(--accent);
                 font-weight:600; letter-spacing:0.07em; text-transform:uppercase; margin-top:0.3rem;
             }
             .info-tagline { font-size:0.9rem; color:var(--text-light); line-height:1.6; max-width:240px; }
@@ -376,17 +375,18 @@
             }
             .info-features li {
                 display:flex; align-items:center; gap:0.7rem;
-                font-size:0.84rem; color:#78350f; font-weight:500;
+                font-size:0.84rem; color:#3a2580; font-weight:500;
             }
-            .info-features li i {
+            .info-features li .feat-icon {
                 width:30px; height:30px; background:var(--pure-white);
                 border-radius:8px; display:flex; align-items:center; justify-content:center;
-                font-size:1rem; color:var(--accent); flex-shrink:0;
+                font-size:1rem; flex-shrink:0;
             }
 
             .form-panel-wrapper {
                 flex-basis: 54%;
                 padding: 3rem 3.5rem;
+                overflow-y: auto;
             }
 
             .mobile-logo-area { display: none; }
@@ -419,10 +419,10 @@
             </div>
             <p class="info-tagline">Manage your spicy empire from one secure place. Authorized personnel only.</p>
             <ul class="info-features">
-                <li><i class='bx bxs-package'></i> Orders &amp; inventory</li>
-                <li><i class='bx bxs-user-detail'></i> Customer insights</li>
-                <li><i class='bx bxs-chart'></i> Real-time analytics</li>
-                <li><i class='bx bxs-shield-alt-2'></i> Secure admin access</li>
+                <li><span class="feat-icon">📦</span> Orders &amp; inventory</li>
+                <li><span class="feat-icon">👥</span> Customer insights</li>
+                <li><span class="feat-icon">📊</span> Real-time analytics</li>
+                <li><span class="feat-icon">🔒</span> Secure admin access</li>
             </ul>
         </div>
     </div>
@@ -441,31 +441,40 @@
 
         <div class="form-content">
             <div class="form-header">
-                <div><span class="admin-badge"><i class='bx bxs-shield-alt-2'></i> Secure Access</span></div>
                 <h2>Welcome Back</h2>
                 <p>Sign in to manage your store.</p>
             </div>
 
             <!-- Email / Password form -->
             <form id="login-form" autocomplete="on">
+
+                <!-- Email field -->
                 <div class="input-group">
                     <label for="email">Email Address</label>
                     <div class="input-wrapper">
-                        <i class='bx bxs-envelope input-icon'></i>
+                        <span class="field-icon" id="email-icon">
+                            <img src="./assets/email.svg" id="email-icon-img" alt="email">
+                        </span>
                         <input type="email" id="email" name="email"
                                placeholder="admin@happynonvegpickles.com"
                                autocomplete="email" required>
                     </div>
                 </div>
 
+                <!-- Password field -->
                 <div class="input-group">
                     <label for="password">Password</label>
                     <div class="input-wrapper">
-                        <i class='bx bxs-lock-alt input-icon'></i>
+                        <span class="field-icon" id="pass-icon">
+                            <img src="./assets/pass.svg" id="pass-icon-img" alt="password">
+                        </span>
                         <input type="password" id="password" name="password"
                                placeholder="Enter your password"
                                autocomplete="current-password" required>
-                        <i class='bx bx-hide toggle-password' id="toggle-pwd"></i>
+                        <!-- eye toggle: open_eye = show password, close_eye = hide -->
+                        <span class="eye-toggle" id="eye-toggle" title="Toggle password visibility">
+                            <img src="./assets/open_eye.svg" id="eye-img" alt="show password">
+                        </span>
                     </div>
                 </div>
 
@@ -491,11 +500,6 @@
                 </svg>
                 Sign in with Google
             </button>
-
-            <div class="security-note">
-                <i class='bx bxs-lock-alt'></i>
-                Secured with Firebase Authentication
-            </div>
         </div>
     </div>
 </div>
@@ -503,11 +507,11 @@
 <div id="toast"></div>
 
 <script type="module">
-    import { initializeApp }                                from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { initializeApp }           from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword,
              signInWithPopup, GoogleAuthProvider,
              signOut, onAuthStateChanged,
-             sendPasswordResetEmail }                       from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+             sendPasswordResetEmail }  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
     /* ── Firebase config ── */
     const firebaseConfig = {
@@ -523,31 +527,60 @@
     const app      = initializeApp(firebaseConfig);
     const auth     = getAuth(app);
     const provider = new GoogleAuthProvider();
-
     const ADMIN_EMAIL = "harshavardhanjw@gmail.com";
 
     /* ── DOM refs ── */
-    const loginForm   = document.getElementById('login-form');
-    const emailBtn    = document.getElementById('email-btn');
-    const emailSpinner= document.getElementById('email-spinner');
-    const googleBtn   = document.getElementById('google-btn');
-    const togglePwd   = document.getElementById('toggle-pwd');
-    const pwdInput    = document.getElementById('password');
-    const forgotBtn   = document.getElementById('forgot-btn');
-    const loader      = document.getElementById('loader');
+    const loginForm    = document.getElementById('login-form');
+    const emailBtn     = document.getElementById('email-btn');
+    const emailSpinner = document.getElementById('email-spinner');
+    const googleBtn    = document.getElementById('google-btn');
+    const pwdInput     = document.getElementById('password');
+    const forgotBtn    = document.getElementById('forgot-btn');
+    const loader       = document.getElementById('loader');
 
-    /* ── password toggle ── */
-    togglePwd.addEventListener('click', () => {
-        const hidden = pwdInput.type === 'password';
-        pwdInput.type = hidden ? 'text' : 'password';
-        togglePwd.classList.toggle('bx-hide', !hidden);
-        togglePwd.classList.toggle('bx-show',  hidden);
+    const emailInput   = document.getElementById('email');
+    const emailIconImg = document.getElementById('email-icon-img');
+    const passIconImg  = document.getElementById('pass-icon-img');
+    const eyeToggle    = document.getElementById('eye-toggle');
+    const eyeImg       = document.getElementById('eye-img');
+
+    /* ── Email icon swap on focus/blur ── */
+    emailInput.addEventListener('focus', () => {
+        emailIconImg.src = './assets/fill_email.svg';
+    });
+    emailInput.addEventListener('blur', () => {
+        if (!emailInput.value) emailIconImg.src = './assets/email.svg';
+    });
+    emailInput.addEventListener('input', () => {
+        emailIconImg.src = emailInput.value ? './assets/fill_email.svg' : './assets/email.svg';
     });
 
-    /* ── email / password sign-in ── */
+    /* ── Password icon swap on focus/blur ── */
+    pwdInput.addEventListener('focus', () => {
+        passIconImg.src = './assets/fill_pass.svg';
+    });
+    pwdInput.addEventListener('blur', () => {
+        if (!pwdInput.value) passIconImg.src = './assets/pass.svg';
+    });
+    pwdInput.addEventListener('input', () => {
+        passIconImg.src = pwdInput.value ? './assets/fill_pass.svg' : './assets/pass.svg';
+    });
+
+    /* ── Eye toggle: open_eye = currently hidden → click to SHOW
+                      close_eye = currently visible → click to HIDE ── */
+    let pwdVisible = false;
+    eyeToggle.addEventListener('click', () => {
+        pwdVisible = !pwdVisible;
+        pwdInput.type = pwdVisible ? 'text' : 'password';
+        // open_eye shown when password is hidden (default); close_eye when visible
+        eyeImg.src = pwdVisible ? './assets/close_eye.svg' : './assets/open_eye.svg';
+        eyeImg.alt = pwdVisible ? 'hide password' : 'show password';
+    });
+
+    /* ── Email / password sign-in ── */
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const email    = document.getElementById('email').value.trim();
+        const email    = emailInput.value.trim();
         const password = pwdInput.value;
         setBtnLoading(true);
         try {
@@ -574,10 +607,10 @@
     /* ── Forgot password ── */
     forgotBtn.addEventListener('click', async (e) => {
         e.preventDefault();
-        const email = document.getElementById('email').value.trim();
+        const email = emailInput.value.trim();
         if (!email) {
             showToast('Enter your email above first.', 'error');
-            document.getElementById('email').focus();
+            emailInput.focus();
             return;
         }
         loader.style.display = 'flex';
@@ -608,7 +641,7 @@
         }
     }
 
-    /* ── Auth state listener (auto-redirect) ── */
+    /* ── Auth state listener ── */
     onAuthStateChanged(auth, (user) => {
         if (user && user.email === ADMIN_EMAIL) {
             window.location.href = 'dashboard.html';
@@ -617,17 +650,15 @@
 
     /* ── Helpers ── */
     function setBtnLoading(on) {
-        emailBtn.disabled                        = on;
-        emailBtn.querySelector('.btn-text').style.display    = on ? 'none'         : 'inline';
-        emailSpinner.style.display               = on ? 'inline-block' : 'none';
+        emailBtn.disabled = on;
+        emailBtn.querySelector('.btn-text').style.display = on ? 'none' : 'inline';
+        emailSpinner.style.display = on ? 'inline-block' : 'none';
     }
 
     function showToast(msg, type) {
         const toast = document.getElementById('toast');
-        const icon  = type === 'success' ? 'bx-check-circle'
-                    : type === 'info'    ? 'bx-info-circle'
-                    :                      'bx-error-circle';
-        toast.innerHTML = `<i class='bx ${icon}'></i><span>${msg}</span>`;
+        const icons = { success: '✓', error: '✕', info: 'ℹ' };
+        toast.innerHTML = `<span>${icons[type] || 'ℹ'}</span><span>${msg}</span>`;
         toast.className = `show ${type}`;
         setTimeout(() => { toast.className = ''; }, 3500);
     }
