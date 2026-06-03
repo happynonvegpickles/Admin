@@ -6,520 +6,643 @@
     <title>Admin Login - Happy NonVeg Pickles</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
     <style>
         :root {
-            --primary: #111827;
-            --accent: #d97706;
-            --accent-hover: #b45309;
-            --pure-white: #FFFFFF;
-            --light-gray: #F3F4F6;
-            --text-color: #111827;
-            --text-light: #6B7280;
-            --border-gray: #E5E7EB;
-            --color-danger: #EF4444;
-            --color-success: #10B981;
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --primary:       #1a0a00;
+            --accent:        #e85d04;
+            --accent-dark:   #c44d00;
+            --accent-light:  #fb923c;
+            --accent-glow:   rgba(232, 93, 4, 0.15);
+            --bg:            #fdf6ee;
+            --card-bg:       #fffaf4;
+            --pure-white:    #ffffff;
+            --light-gray:    #fef3e2;
+            --text:          #1a0a00;
+            --text-light:    #7c5c3e;
+            --border:        #f0d9be;
+            --danger:        #dc2626;
+            --success:       #16a34a;
+            --shadow-card:   0 24px 64px rgba(232,93,4,0.12), 0 4px 16px rgba(0,0,0,0.07);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        html, body { height: 100%; overflow: hidden; }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body {
+            height: 100%;
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
         body {
-            font-family: 'IBM Plex Sans', sans-serif;
-            background-color: #fdf4e7;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: var(--text-color);
+            min-height: 100vh;
+            padding: 1.5rem;
+            background-image:
+                radial-gradient(ellipse 70% 55% at 15% 10%, rgba(232,93,4,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 40% at 85% 85%, rgba(251,146,60,0.07) 0%, transparent 60%),
+                url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle fill='%23e85d04' fill-opacity='0.025' cx='20' cy='20' r='1.5'/%3E%3C/svg%3E");
         }
 
+        /* ── PAGE CARD ── */
         .page-container {
-            width: 100%; height: 100%; max-height: 960px;
-            background-color: var(--pure-white); border-radius: 0;
-            overflow: hidden; display: flex; flex-direction: column;
+            width: 100%;
+            max-width: 1060px;
+            background: var(--card-bg);
+            border-radius: 2rem;
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border);
+            animation: fadeUp 0.55s cubic-bezier(0.22,1,0.36,1) both;
         }
 
-        .form-panel-wrapper {
-            flex-grow: 1; position: relative; display: flex;
-            flex-direction: column; overflow-y: auto; padding: 2rem;
-            align-items: center; justify-content: center;
+        @keyframes fadeUp {
+            from { opacity:0; transform:translateY(28px); }
+            to   { opacity:1; transform:translateY(0); }
         }
 
+        /* ── LEFT PANEL (desktop) ── */
         .info-panel { display: none; }
 
-        /* Mobile brand header */
-        .mobile-brand {
+        /* ── RIGHT PANEL ── */
+        .form-panel-wrapper {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            padding: 2.5rem 2rem;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ── MOBILE LOGO ── */
+        .mobile-logo-area {
             display: flex;
             flex-direction: column;
             align-items: center;
             margin-bottom: 2rem;
         }
-        .brand-icon-wrap {
+
+        .brand-icon {
             width: 64px; height: 64px;
-            background: #fef3c7;
+            background: linear-gradient(135deg, var(--accent) 0%, #ff6b1a 100%);
             border-radius: 18px;
             display: flex; align-items: center; justify-content: center;
             font-size: 2rem;
-            margin-bottom: 0.6rem;
-        }
-        .brand-name-mobile {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--primary);
-            letter-spacing: -0.3px;
-        }
-        .brand-sub-mobile {
-            font-size: 0.78rem;
-            color: var(--text-light);
-            margin-top: 2px;
+            box-shadow: 0 6px 24px rgba(232,93,4,0.28);
+            margin-bottom: 0.85rem;
         }
 
-        /* Form content */
+        .brand-name {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.1rem; font-weight: 700;
+            color: var(--accent); text-align: center; line-height: 1.2;
+        }
+
+        .brand-name span {
+            display: block; color: var(--text-light);
+            font-size: 0.72rem; font-weight: 500;
+            letter-spacing: 0.06em; text-transform: uppercase; margin-top: 2px;
+        }
+
+        /* ── FORM CONTENT ── */
         .form-content { width: 100%; max-width: 400px; }
-        .form-header h2 {
-            font-size: 1.75rem; font-weight: 700;
-            text-align: center; margin-bottom: 0.4rem;
-            color: var(--primary);
-        }
-        .form-header p {
-            text-align: center; color: var(--text-light);
-            margin-bottom: 2rem; font-size: 0.875rem;
-        }
+
+        .form-header { text-align: center; margin-bottom: 1.8rem; }
 
         .admin-badge {
-            background: #fef3c7; color: #92400e;
-            padding: 0.25rem 0.85rem;
-            border-radius: 99px; font-size: 0.7rem; font-weight: 700;
-            text-transform: uppercase; letter-spacing: 0.05em;
-            display: inline-block; margin-bottom: 0.6rem;
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            color: var(--accent);
+            border: 1px solid rgba(232,93,4,0.22);
+            padding: 0.3rem 0.9rem; border-radius: 99px;
+            font-size: 0.7rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.08em;
+            margin-bottom: 0.8rem;
         }
 
-        /* Inputs */
-        .input-group { margin-bottom: 1.2rem; }
+        .form-header h2 {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.85rem; font-weight: 800;
+            color: var(--primary); letter-spacing: -0.03em; line-height: 1.15;
+            margin-bottom: 0.35rem;
+        }
+
+        .form-header p { color: var(--text-light); font-size: 0.88rem; }
+
+        /* ── INPUTS ── */
+        .input-group { margin-bottom: 1.15rem; }
+
         .input-group label {
             display: block; font-size: 0.8rem; font-weight: 600;
-            margin-bottom: 0.45rem; color: var(--text-light);
-            text-transform: uppercase; letter-spacing: 0.04em;
+            margin-bottom: 0.4rem; color: var(--text); letter-spacing: 0.01em;
         }
+
         .input-wrapper { position: relative; }
-        .input-wrapper i {
-            position: absolute; left: 1rem; top: 50%;
-            transform: translateY(-50%); font-size: 1.2rem;
-            color: var(--text-light); pointer-events: none;
+
+        .input-wrapper .input-icon {
+            position: absolute; left: 1rem; top: 50%; transform: translateY(-50%);
+            font-size: 1.2rem; color: var(--text-light);
+            pointer-events: none; transition: color 0.2s;
         }
+
         .input-wrapper .toggle-password {
-            position: absolute; right: 1rem; left: auto;
-            cursor: pointer; pointer-events: all;
+            position: absolute; right: 1rem; top: 50%; transform: translateY(-50%);
+            font-size: 1.2rem; color: var(--text-light); cursor: pointer;
+            pointer-events: all; transition: color 0.2s;
         }
-        .input-group input {
-            width: 100%; padding: 0.85rem 1rem 0.85rem 3rem;
-            border: 1.5px solid var(--border-gray);
-            background-color: var(--light-gray);
-            border-radius: 12px; font-size: 0.95rem;
-            font-family: 'IBM Plex Sans', sans-serif;
-            transition: all 0.25s ease; color: var(--text-color);
-        }
-        .input-group input:focus {
-            outline: none; border-color: var(--accent);
-            background-color: var(--pure-white);
-            box-shadow: 0 0 0 4px rgba(217,119,6,0.1);
-        }
-        .input-group input::placeholder { color: #adb5bd; }
 
-        /* Submit button */
+        .input-wrapper input {
+            width: 100%;
+            padding: 0.85rem 3rem 0.85rem 2.9rem;
+            border: 1.5px solid var(--border);
+            background: var(--light-gray);
+            border-radius: 12px;
+            font-size: 0.95rem; font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            transition: all 0.25s ease;
+        }
+
+        .input-wrapper input::placeholder { color: #c4a07a; }
+
+        .input-wrapper input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: var(--pure-white);
+            box-shadow: 0 0 0 4px var(--accent-glow);
+        }
+
+        .input-wrapper:focus-within .input-icon { color: var(--accent); }
+
+        /* ── SUBMIT BUTTON ── */
         .btn-submit {
-            width: 100%; padding: 0.95rem; font-size: 0.95rem; font-weight: 700;
-            color: var(--pure-white); background-color: var(--accent);
-            border: none; border-radius: 12px; cursor: pointer; margin-top: 0.5rem;
-            transition: all 0.25s; display: flex; align-items: center;
-            justify-content: center; gap: 0.5rem; letter-spacing: 0.02em;
+            width: 100%; padding: 0.95rem 1rem;
+            font-size: 0.97rem; font-weight: 700; font-family: 'Sora', sans-serif;
+            color: #fff;
+            background: linear-gradient(135deg, var(--accent) 0%, #ff6b1a 100%);
+            border: none; border-radius: 12px; cursor: pointer;
+            margin-top: 0.5rem;
+            transition: all 0.3s cubic-bezier(0.22,1,0.36,1);
+            display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+            box-shadow: 0 4px 16px rgba(232,93,4,0.28);
+            letter-spacing: 0.01em;
         }
-        .btn-submit:hover { background-color: var(--accent-hover); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(180,83,9,0.25); }
-        .btn-submit:active { transform: translateY(0); }
-        .btn-submit:disabled { background-color: #9CA3AF; cursor: not-allowed; transform: none; box-shadow: none; }
 
-        /* Forgot link */
-        .forgot-link { text-align: center; margin-top: 1.1rem; }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(232,93,4,0.38);
+            background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent) 100%);
+        }
+
+        .btn-submit:active { transform: translateY(0); }
+
+        .btn-submit:disabled {
+            background: #d4a57a; cursor: not-allowed;
+            transform: none; box-shadow: none;
+        }
+
+        /* ── FORGOT ── */
+        .forgot-link { text-align: center; margin-top: 1rem; }
         .forgot-link a {
-            color: var(--accent); font-size: 0.875rem; font-weight: 500;
+            color: var(--accent); font-size: 0.86rem; font-weight: 600;
             text-decoration: none; cursor: pointer; transition: color 0.2s;
         }
-        .forgot-link a:hover { text-decoration: underline; color: var(--accent-hover); }
+        .forgot-link a:hover { text-decoration: underline; color: var(--primary); }
 
-        /* Divider */
+        /* ── DIVIDER ── */
         .divider {
             display: flex; align-items: center; text-align: center;
-            color: var(--text-light); margin: 1.6rem 0; font-size: 0.75rem; font-weight: 600;
-            text-transform: uppercase; letter-spacing: 0.06em;
+            color: var(--text-light); margin: 1.5rem 0;
+            font-size: 0.75rem; font-weight: 600; letter-spacing: 0.07em;
         }
-        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--border-gray); }
-        .divider:not(:empty)::before { margin-right: .75em; }
-        .divider:not(:empty)::after { margin-left: .75em; }
+        .divider::before, .divider::after { content:''; flex:1; border-bottom: 1.5px solid var(--border); }
+        .divider:not(:empty)::before { margin-right: .85em; }
+        .divider:not(:empty)::after  { margin-left:  .85em; }
 
-        /* Google button */
+        /* ── GOOGLE BUTTON ── */
         .btn-google {
-            width: 100%; padding: 0.85rem 1rem; font-size: 0.9rem; font-weight: 600;
-            color: var(--text-color); background-color: var(--pure-white);
-            border: 1.5px solid var(--border-gray); border-radius: 12px;
-            cursor: pointer; display: flex; align-items: center; justify-content: center;
-            transition: all 0.25s; gap: 0.6rem;
+            width: 100%; padding: 0.88rem 1rem;
+            font-size: 0.93rem; font-weight: 600; font-family: 'DM Sans', sans-serif;
+            color: var(--text); background: var(--pure-white);
+            border: 1.5px solid var(--border); border-radius: 12px;
+            cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.7rem;
+            transition: all 0.25s;
         }
-        .btn-google:hover { background-color: var(--light-gray); border-color: #d1d5db; }
+        .btn-google:hover {
+            background: var(--light-gray); border-color: var(--accent);
+            transform: translateY(-1px); box-shadow: 0 4px 12px rgba(232,93,4,0.10);
+        }
         .google-icon { width: 20px; height: 20px; flex-shrink: 0; }
 
-        /* Security note */
+        /* ── SECURITY NOTE ── */
         .security-note {
-            display: flex; align-items: center; justify-content: center;
-            gap: 0.4rem; margin-top: 1.5rem;
-            font-size: 0.75rem; color: var(--text-light);
+            display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+            margin-top: 1.4rem; font-size: 0.75rem; color: var(--text-light);
         }
-        .security-note i { font-size: 0.9rem; color: var(--color-success); }
+        .security-note i { color: var(--success); font-size: 0.9rem; }
 
-        /* Loader */
-        #loader {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255,255,255,0.85); justify-content: center; align-items: center;
-            z-index: 9999; backdrop-filter: blur(4px);
-        }
-        .spinner {
-            width: 48px; height: 48px;
-            border: 4px solid rgba(217,119,6,0.2);
-            border-bottom-color: var(--accent);
-            border-radius: 50%; animation: rotation 0.9s linear infinite;
-        }
+        /* ── SPINNER ── */
         .btn-spinner {
             display: none; width: 18px; height: 18px;
-            border: 2px solid rgba(255,255,255,0.35);
-            border-top-color: #fff;
-            border-radius: 50%; animation: rotation 0.9s linear infinite;
+            border: 2.5px solid rgba(255,255,255,0.35);
+            border-top-color: #fff; border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ── LOADER overlay ── */
+        #loader {
+            display: none; position: fixed; inset: 0;
+            background: rgba(253,246,238,0.82);
+            justify-content: center; align-items: center;
+            z-index: 9999; backdrop-filter: blur(5px);
+        }
+        .spinner-lg {
+            width: 48px; height: 48px;
+            border: 4px solid rgba(232,93,4,0.15);
+            border-bottom-color: var(--accent);
+            border-radius: 50%; animation: spin 0.85s linear infinite;
         }
 
-        /* Toast */
+        /* ── TOAST ── */
         #toast {
             position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%);
-            padding: 0.9rem 1.4rem; border-radius: 12px; color: white; font-weight: 500;
-            box-shadow: var(--shadow-lg);
-            transition: bottom 0.45s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            z-index: 1001; display: flex; align-items: center; gap: 0.6rem;
-            white-space: nowrap; font-size: 0.9rem;
+            padding: 0.9rem 1.4rem; border-radius: 12px;
+            color: white; font-weight: 600; font-size: 0.88rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            transition: bottom 0.45s cubic-bezier(0.68,-0.55,0.27,1.55);
+            z-index: 10001; display: flex; align-items: center; gap: 0.55rem;
+            white-space: nowrap;
         }
-        #toast.show { bottom: 28px; }
-        #toast.success { background-color: var(--color-success); }
-        #toast.error { background-color: var(--color-danger); }
-        #toast.info { background-color: #d97706; }
+        #toast.show    { bottom: 28px; }
+        #toast.success { background: linear-gradient(135deg, #16a34a, #15803d); }
+        #toast.error   { background: linear-gradient(135deg, #dc2626, #b91c1c); }
+        #toast.info    { background: linear-gradient(135deg, var(--accent), var(--accent-dark)); }
 
-        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        /* ── SUCCESS OVERLAY ── */
+        #success-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(253,246,238,0.9);
+            z-index: 10000; justify-content: center; align-items: center;
+            flex-direction: column; gap: 1rem; backdrop-filter: blur(6px);
+        }
+        #success-overlay.show { display: flex; animation: fadeIn 0.35s ease; }
+        @keyframes fadeIn { from{opacity:0} to{opacity:1} }
 
-        /* Desktop layout */
-        @media (min-width: 992px) {
-            html, body { height: auto; overflow: auto; }
-            body { padding: 2rem; min-height: 100vh; }
+        .success-icon-wrap {
+            width: 80px; height: 80px;
+            background: linear-gradient(135deg, var(--accent), #ff6b1a);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 2.4rem; color: #fff;
+            box-shadow: 0 8px 32px rgba(232,93,4,0.35);
+            animation: popIn 0.4s cubic-bezier(0.22,1,0.36,1) 0.1s both;
+        }
+        @keyframes popIn { from{transform:scale(0.3);opacity:0} to{transform:scale(1);opacity:1} }
+
+        .success-text {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.3rem; font-weight: 700; color: var(--primary); text-align: center;
+        }
+        .success-sub { font-size: 0.88rem; color: var(--text-light); }
+
+        /* ── DESKTOP ── */
+        @media (min-width: 900px) {
+            body { padding: 2rem; }
+
             .page-container {
-                flex-direction: row; max-width: 1080px; height: 720px;
-                border-radius: 2rem;
-                box-shadow: 0 25px 60px -10px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.04);
+                flex-direction: row;
+                max-width: 1060px;
+                min-height: 660px;
             }
+
             .info-panel {
                 display: flex; flex-direction: column;
                 justify-content: center; align-items: center;
-                flex-basis: 48%;
-                background: linear-gradient(145deg, #fffbf0 0%, #fef3c7 50%, #fde68a 100%);
-                border-right: 1px solid #fcd34d;
-                padding: 4rem; color: var(--primary);
-                position: relative; overflow: hidden;
+                flex-basis: 46%; flex-shrink: 0;
+                background: linear-gradient(150deg, #fffbf0 0%, #fef3c7 50%, #fde68a 100%);
+                padding: 3.5rem; position: relative; overflow: hidden;
+                border-right: 1px solid var(--border);
             }
+
             .info-panel::before {
-                content: '';
-                position: absolute; top: -80px; right: -80px;
-                width: 300px; height: 300px;
-                background: rgba(253,230,138,0.5);
+                content:''; position:absolute; top:-80px; left:-80px;
+                width:340px; height:340px;
+                background: radial-gradient(circle, rgba(232,93,4,0.12) 0%, transparent 70%);
                 border-radius: 50%;
             }
             .info-panel::after {
-                content: '';
-                position: absolute; bottom: -60px; left: -60px;
-                width: 220px; height: 220px;
-                background: rgba(253,230,138,0.4);
+                content:''; position:absolute; bottom:-60px; right:-60px;
+                width:260px; height:260px;
+                background: radial-gradient(circle, rgba(255,107,26,0.10) 0%, transparent 70%);
                 border-radius: 50%;
             }
-            .brand-logo-desktop {
+
+            .info-panel-content {
                 position: relative; z-index: 1;
-                display: flex; flex-direction: column; align-items: center; text-align: center;
+                text-align: center; display: flex; flex-direction: column;
+                align-items: center; gap: 1.4rem;
             }
-            .logo-icon-lg {
-                width: 96px; height: 96px;
-                background: var(--pure-white);
-                border-radius: 28px;
-                display: flex; align-items: center; justify-content: center;
-                font-size: 3rem; margin-bottom: 1.5rem;
-                box-shadow: 0 8px 24px rgba(180,83,9,0.15);
+
+            .info-logo-icon {
+                width: 90px; height: 90px;
+                background: linear-gradient(135deg, var(--accent) 0%, #ff6b1a 100%);
+                border-radius: 26px; display: flex; align-items: center; justify-content: center;
+                font-size: 3rem; box-shadow: 0 12px 40px rgba(232,93,4,0.32);
+                animation: float 3.5s ease-in-out infinite;
             }
-            .brand-title {
-                font-size: 1.75rem; font-weight: 700;
-                color: #78350f; margin-bottom: 0.4rem; line-height: 1.2;
+            @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+            .info-brand {
+                font-family: 'Sora', sans-serif;
+                font-size: 1.6rem; font-weight: 800; color: var(--primary);
+                letter-spacing: -0.03em; line-height: 1.2;
             }
-            .brand-tagline {
-                font-size: 0.9rem; color: #92400e; font-weight: 500;
-                margin-bottom: 2.5rem;
+            .info-brand span {
+                display:block; font-size:0.82rem; color:var(--accent);
+                font-weight:600; letter-spacing:0.07em; text-transform:uppercase; margin-top:0.3rem;
             }
+            .info-tagline { font-size:0.9rem; color:var(--text-light); line-height:1.6; max-width:240px; }
+
             .info-features {
-                list-style: none; text-align: left; width: 100%;
-                display: flex; flex-direction: column; gap: 0.85rem;
+                list-style:none; text-align:left; width:100%;
+                display:flex; flex-direction:column; gap:0.8rem; margin-top:0.5rem;
             }
             .info-features li {
-                display: flex; align-items: center; gap: 0.75rem;
-                font-size: 0.875rem; color: #78350f; font-weight: 500;
+                display:flex; align-items:center; gap:0.7rem;
+                font-size:0.84rem; color:#78350f; font-weight:500;
             }
             .info-features li i {
-                width: 32px; height: 32px; background: var(--pure-white);
-                border-radius: 8px; display: flex; align-items: center;
-                justify-content: center; font-size: 1rem; color: var(--accent);
-                flex-shrink: 0;
+                width:30px; height:30px; background:var(--pure-white);
+                border-radius:8px; display:flex; align-items:center; justify-content:center;
+                font-size:1rem; color:var(--accent); flex-shrink:0;
             }
-            .form-panel-wrapper { flex-basis: 52%; padding: 3.5rem; }
-            .mobile-brand { display: none; }
+
+            .form-panel-wrapper {
+                flex-basis: 54%;
+                padding: 3rem 3.5rem;
+            }
+
+            .mobile-logo-area { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <div id="loader"><div class="spinner"></div></div>
+<!-- Loader -->
+<div id="loader"><div class="spinner-lg"></div></div>
 
-    <div class="page-container">
+<!-- Success overlay -->
+<div id="success-overlay">
+    <div class="success-icon-wrap">✓</div>
+    <div class="success-text">Login Successful!</div>
+    <div class="success-sub">Redirecting to dashboard…</div>
+</div>
 
-        <!-- Desktop Left Panel -->
-        <div class="info-panel">
-            <div class="brand-logo-desktop">
-                <div class="logo-icon-lg">🌶️</div>
-                <div class="brand-title">Happy NonVeg<br>Pickles</div>
-                <div class="brand-tagline">Authentic Flavours, Every Jar</div>
+<div class="page-container">
 
-                <ul class="info-features">
-                    <li>
-                        <i class='bx bxs-package'></i>
-                        Manage orders & inventory
-                    </li>
-                    <li>
-                        <i class='bx bxs-user-detail'></i>
-                        Customer & sales insights
-                    </li>
-                    <li>
-                        <i class='bx bxs-chart'></i>
-                        Real-time analytics dashboard
-                    </li>
-                    <li>
-                        <i class='bx bxs-shield-alt-2'></i>
-                        Secure admin access only
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Right Form Panel -->
-        <div class="form-panel-wrapper">
-
-            <!-- Mobile brand header -->
-            <div class="mobile-brand">
-                <div class="brand-icon-wrap">🌶️</div>
-                <div class="brand-name-mobile">Happy NonVeg Pickles</div>
-                <div class="brand-sub-mobile">Admin Portal</div>
-            </div>
-
-            <div class="form-content">
-                <div class="form-header">
-                    <div style="text-align:center"><span class="admin-badge">🔐 Admin Portal</span></div>
-                    <h2>Welcome Back</h2>
-                    <p>Sign in to manage your pickle empire.</p>
-                </div>
-
-                <!-- Email/Password Form -->
-                <form id="login-form">
-                    <div class="input-group">
-                        <label for="email">Email Address</label>
-                        <div class="input-wrapper">
-                            <i class='bx bxs-envelope'></i>
-                            <input type="email" id="email" placeholder="admin@happynonvegpickles.com" required autocomplete="email">
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label for="password">Password</label>
-                        <div class="input-wrapper">
-                            <i class='bx bxs-lock-alt'></i>
-                            <input type="password" id="password" placeholder="Enter your password" required autocomplete="current-password">
-                            <i class='bx bx-hide toggle-password' id="toggle-password" title="Show/hide password"></i>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn-submit" id="email-submit-btn">
-                        <span class="btn-text">Sign In</span>
-                        <span class="btn-spinner"></span>
-                    </button>
-
-                    <div class="forgot-link">
-                        <a href="#" id="forgot-password-btn">Forgot your password?</a>
-                    </div>
-                </form>
-
-                <div class="divider">or continue with</div>
-
-                <button type="button" class="btn-google" id="google-login-btn">
-                    <svg class="google-icon" viewBox="0 0 48 48">
-                        <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/>
-                        <path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"/>
-                        <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.222,0-9.519-3.108-11.127-7.481l-6.522,5.025C9.505,39.556,16.227,44,24,44z"/>
-                        <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571l6.19,5.238C42.022,36.218,44,30.561,44,24C44,22.659,43.862,21.35,43.611,20.083z"/>
-                    </svg>
-                    Sign in with Google
-                </button>
-
-                <div class="security-note">
-                    <i class='bx bxs-lock-alt'></i>
-                    Secured with Firebase Authentication
+    <!-- LEFT PANEL (desktop) -->
+    <div class="info-panel">
+        <div class="info-panel-content">
+            <div class="info-logo-icon">🌶️</div>
+            <div>
+                <div class="info-brand">
+                    Happy NonVeg Pickles
+                    <span>Admin Portal</span>
                 </div>
             </div>
+            <p class="info-tagline">Manage your spicy empire from one secure place. Authorized personnel only.</p>
+            <ul class="info-features">
+                <li><i class='bx bxs-package'></i> Orders &amp; inventory</li>
+                <li><i class='bx bxs-user-detail'></i> Customer insights</li>
+                <li><i class='bx bxs-chart'></i> Real-time analytics</li>
+                <li><i class='bx bxs-shield-alt-2'></i> Secure admin access</li>
+            </ul>
         </div>
     </div>
 
-    <div id="toast"></div>
+    <!-- RIGHT FORM PANEL -->
+    <div class="form-panel-wrapper">
 
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyCZbCr-Zt5KQblRQ8Pk58KuinCVP-TlXGo",
-            authDomain: "happynonvegpickles-f2636.firebaseapp.com",
-            projectId: "happynonvegpickles-f2636",
-            storageBucket: "happynonvegpickles-f2636.firebasestorage.app",
-            messagingSenderId: "802823212924",
-            appId: "1:802823212924:web:d82c92737ffa950798def9",
-            measurementId: "G-18GP45EWTT"
-        };
+        <!-- Mobile logo -->
+        <div class="mobile-logo-area">
+            <div class="brand-icon">🌶️</div>
+            <div class="brand-name">
+                Happy NonVeg Pickles
+                <span>Admin Portal</span>
+            </div>
+        </div>
 
-        firebase.initializeApp(firebaseConfig);
-        const ADMIN_EMAIL = "harshavardhanjw@gmail.com";
+        <div class="form-content">
+            <div class="form-header">
+                <div><span class="admin-badge"><i class='bx bxs-shield-alt-2'></i> Secure Access</span></div>
+                <h2>Welcome Back</h2>
+                <p>Sign in to manage your store.</p>
+            </div>
 
-        const loginForm    = document.getElementById('login-form');
-        const googleBtn    = document.getElementById('google-login-btn');
-        const togglePwd    = document.getElementById('toggle-password');
-        const passwordInput= document.getElementById('password');
-        const loader       = document.getElementById('loader');
-        const forgotBtn    = document.getElementById('forgot-password-btn');
+            <!-- Email / Password form -->
+            <form id="login-form" autocomplete="on">
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-wrapper">
+                        <i class='bx bxs-envelope input-icon'></i>
+                        <input type="email" id="email" name="email"
+                               placeholder="admin@happynonvegpickles.com"
+                               autocomplete="email" required>
+                    </div>
+                </div>
 
-        /* ── password visibility toggle ── */
-        togglePwd.addEventListener('click', function () {
-            const isHidden = passwordInput.getAttribute('type') === 'password';
-            passwordInput.setAttribute('type', isHidden ? 'text' : 'password');
-            this.classList.toggle('bx-hide', !isHidden);
-            this.classList.toggle('bx-show',  isHidden);
-        });
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <div class="input-wrapper">
+                        <i class='bx bxs-lock-alt input-icon'></i>
+                        <input type="password" id="password" name="password"
+                               placeholder="Enter your password"
+                               autocomplete="current-password" required>
+                        <i class='bx bx-hide toggle-password' id="toggle-pwd"></i>
+                    </div>
+                </div>
 
-        /* ── email / password sign-in ── */
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email    = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value;
-            const btn      = document.getElementById('email-submit-btn');
-            setButtonLoading(btn, true);
+                <button type="submit" class="btn-submit" id="email-btn">
+                    <span class="btn-text">Sign In</span>
+                    <span class="btn-spinner" id="email-spinner"></span>
+                </button>
 
-            try {
-                const cred = await firebase.auth().signInWithEmailAndPassword(email, password);
-                await handleAdminAuth(cred.user);
-            } catch (err) {
-                showToast(getErrorMsg(err.code), 'error');
-                setButtonLoading(btn, false);
-            }
-        });
+                <div class="forgot-link">
+                    <a href="#" id="forgot-btn">Forgot your password?</a>
+                </div>
+            </form>
 
-        /* ── google sign-in ── */
-        googleBtn.addEventListener('click', async () => {
-            loader.style.display = 'flex';
-            try {
-                const provider = new firebase.auth.GoogleAuthProvider();
-                const result   = await firebase.auth().signInWithPopup(provider);
-                await handleAdminAuth(result.user);
-            } catch (err) {
-                showToast(getErrorMsg(err.code), 'error');
-                loader.style.display = 'none';
-            }
-        });
+            <div class="divider">or continue with</div>
 
-        /* ── forgot password ── */
-        forgotBtn.addEventListener('click', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value.trim();
-            if (!email) {
-                showToast('Please enter your email address first.', 'error');
-                document.getElementById('email').focus();
-                return;
-            }
-            loader.style.display = 'flex';
-            try {
-                await firebase.auth().sendPasswordResetEmail(email);
-                showToast('Reset link sent to ' + email, 'info');
-            } catch (err) {
-                showToast(getErrorMsg(err.code), 'error');
-            } finally {
-                loader.style.display = 'none';
-            }
-        });
+            <!-- Google button -->
+            <button type="button" class="btn-google" id="google-btn">
+                <svg class="google-icon" viewBox="0 0 48 48">
+                    <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303C33.654 32.657 29.223 36 24 36c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/>
+                    <path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/>
+                    <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238C29.211 35.091 26.715 36 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/>
+                    <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 01-4.087 5.571l6.19 5.238C42.022 36.218 44 30.561 44 24c0-1.341-.138-2.65-.389-3.917z"/>
+                </svg>
+                Sign in with Google
+            </button>
 
-        /* ── admin auth handler ── */
-        async function handleAdminAuth(user) {
-            if (user.email === ADMIN_EMAIL) {
-                showToast('Welcome back, Admin! 🌶️', 'success');
-                sessionStorage.setItem('adminAuthenticated', 'true');
-                sessionStorage.setItem('adminEmail', user.email);
-                sessionStorage.setItem('adminName', user.displayName || 'Admin');
-                setTimeout(() => { window.location.href = 'admin-dashboard.html'; }, 1000);
-            } else {
-                await firebase.auth().signOut();
-                showToast('Access Denied: Unauthorized account', 'error');
-                const btn = document.getElementById('email-submit-btn');
-                setButtonLoading(btn, false);
-                loader.style.display = 'none';
-            }
+            <div class="security-note">
+                <i class='bx bxs-lock-alt'></i>
+                Secured with Firebase Authentication
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="toast"></div>
+
+<script type="module">
+    import { initializeApp }                                from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword,
+             signInWithPopup, GoogleAuthProvider,
+             signOut, onAuthStateChanged,
+             sendPasswordResetEmail }                       from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+    /* ── Firebase config ── */
+    const firebaseConfig = {
+        apiKey:            "AIzaSyCZbCr-Zt5KQblRQ8Pk58KuinCVP-TlXGo",
+        authDomain:        "happynonvegpickles-f2636.firebaseapp.com",
+        projectId:         "happynonvegpickles-f2636",
+        storageBucket:     "happynonvegpickles-f2636.firebasestorage.app",
+        messagingSenderId: "802823212924",
+        appId:             "1:802823212924:web:d82c92737ffa950798def9",
+        measurementId:     "G-18GP45EWTT"
+    };
+
+    const app      = initializeApp(firebaseConfig);
+    const auth     = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    const ADMIN_EMAIL = "harshavardhanjw@gmail.com";
+
+    /* ── DOM refs ── */
+    const loginForm   = document.getElementById('login-form');
+    const emailBtn    = document.getElementById('email-btn');
+    const emailSpinner= document.getElementById('email-spinner');
+    const googleBtn   = document.getElementById('google-btn');
+    const togglePwd   = document.getElementById('toggle-pwd');
+    const pwdInput    = document.getElementById('password');
+    const forgotBtn   = document.getElementById('forgot-btn');
+    const loader      = document.getElementById('loader');
+
+    /* ── password toggle ── */
+    togglePwd.addEventListener('click', () => {
+        const hidden = pwdInput.type === 'password';
+        pwdInput.type = hidden ? 'text' : 'password';
+        togglePwd.classList.toggle('bx-hide', !hidden);
+        togglePwd.classList.toggle('bx-show',  hidden);
+    });
+
+    /* ── email / password sign-in ── */
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email    = document.getElementById('email').value.trim();
+        const password = pwdInput.value;
+        setBtnLoading(true);
+        try {
+            const cred = await signInWithEmailAndPassword(auth, email, password);
+            await handleAdminAuth(cred.user);
+        } catch (err) {
+            showToast(friendlyError(err.code), 'error');
+            setBtnLoading(false);
         }
+    });
 
-        /* ── auto-redirect if already authenticated ── */
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user && user.email === ADMIN_EMAIL) {
-                window.location.href = 'admin-dashboard.html';
-            }
-        });
-
-        /* ── helpers ── */
-        function setButtonLoading(btn, loading) {
-            btn.disabled = loading;
-            btn.querySelector('.btn-text').style.display   = loading ? 'none'         : 'inline';
-            btn.querySelector('.btn-spinner').style.display = loading ? 'inline-block' : 'none';
+    /* ── Google sign-in ── */
+    googleBtn.addEventListener('click', async () => {
+        loader.style.display = 'flex';
+        try {
+            const result = await signInWithPopup(auth, provider);
+            await handleAdminAuth(result.user);
+        } catch (err) {
+            showToast(friendlyError(err.code), 'error');
+            loader.style.display = 'none';
         }
+    });
 
-        function showToast(message, type) {
-            const toast = document.getElementById('toast');
-            const icon  = type === 'success' ? 'bx-check-circle'
-                        : type === 'info'    ? 'bx-info-circle'
-                        :                      'bx-error-circle';
-            toast.innerHTML = `<i class='bx ${icon}'></i><span>${message}</span>`;
-            toast.className = `show ${type}`;
-            setTimeout(() => { toast.className = ''; }, 3500);
+    /* ── Forgot password ── */
+    forgotBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value.trim();
+        if (!email) {
+            showToast('Enter your email above first.', 'error');
+            document.getElementById('email').focus();
+            return;
         }
+        loader.style.display = 'flex';
+        try {
+            await sendPasswordResetEmail(auth, email);
+            showToast('Reset link sent to ' + email, 'info');
+        } catch (err) {
+            showToast(friendlyError(err.code), 'error');
+        } finally {
+            loader.style.display = 'none';
+        }
+    });
 
-        function getErrorMsg(code) {
-            const map = {
-                'auth/user-not-found':      'No account found with this email.',
-                'auth/wrong-password':      'Incorrect password. Please try again.',
-                'auth/invalid-email':       'Please enter a valid email address.',
-                'auth/invalid-credential':  'Invalid email or password.',
-                'auth/popup-closed-by-user':'Sign-in popup was closed.',
-                'auth/too-many-requests':   'Too many attempts. Please try later.',
-                'auth/network-request-failed': 'Network error. Check your connection.',
-            };
-            return map[code] || 'Authentication failed. Please try again.';
+    /* ── Admin auth handler ── */
+    async function handleAdminAuth(user) {
+        if (user.email === ADMIN_EMAIL) {
+            sessionStorage.setItem('adminAuthenticated', 'true');
+            sessionStorage.setItem('adminEmail', user.email);
+            sessionStorage.setItem('adminName', user.displayName || 'Admin');
+            document.getElementById('success-overlay').classList.add('show');
+            showToast('Welcome back, Admin! 🌶️', 'success');
+            setTimeout(() => { window.location.href = 'dashboard.html'; }, 1400);
+        } else {
+            await signOut(auth);
+            showToast('Access Denied: Unauthorized account.', 'error');
+            setBtnLoading(false);
+            loader.style.display = 'none';
         }
-    </script>
+    }
+
+    /* ── Auth state listener (auto-redirect) ── */
+    onAuthStateChanged(auth, (user) => {
+        if (user && user.email === ADMIN_EMAIL) {
+            window.location.href = 'dashboard.html';
+        }
+    });
+
+    /* ── Helpers ── */
+    function setBtnLoading(on) {
+        emailBtn.disabled                        = on;
+        emailBtn.querySelector('.btn-text').style.display    = on ? 'none'         : 'inline';
+        emailSpinner.style.display               = on ? 'inline-block' : 'none';
+    }
+
+    function showToast(msg, type) {
+        const toast = document.getElementById('toast');
+        const icon  = type === 'success' ? 'bx-check-circle'
+                    : type === 'info'    ? 'bx-info-circle'
+                    :                      'bx-error-circle';
+        toast.innerHTML = `<i class='bx ${icon}'></i><span>${msg}</span>`;
+        toast.className = `show ${type}`;
+        setTimeout(() => { toast.className = ''; }, 3500);
+    }
+
+    function friendlyError(code) {
+        return ({
+            'auth/user-not-found':         'No account found with this email.',
+            'auth/wrong-password':         'Incorrect password. Please try again.',
+            'auth/invalid-email':          'Please enter a valid email address.',
+            'auth/invalid-credential':     'Invalid email or password.',
+            'auth/popup-closed-by-user':   'Sign-in popup was closed.',
+            'auth/too-many-requests':      'Too many attempts. Please try later.',
+            'auth/network-request-failed': 'Network error. Check your connection.',
+        })[code] || 'Authentication failed. Please try again.';
+    }
+</script>
 </body>
 </html>
