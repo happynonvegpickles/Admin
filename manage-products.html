@@ -38,7 +38,6 @@
     <link rel="preload" as="image" href="./assets/fill_combo.svg">
 
     <style>
-        /* ========== GLOBAL VARIABLES ========== */
         :root {
             --text-sub: #6b7280;
             --header-height-desktop: 70px;
@@ -71,13 +70,11 @@
             display: none;
         }
 
-        /* LOGO */
         .brand-logo { display: flex; align-items: center; text-decoration: none; transition: all 0.3s; }
         .brand-logo img { height: 45px; width: auto; display: block; }
         .mini-logo { display: none; align-items: center; justify-content: center; }
         .mini-logo img { height: 45px; width: auto; display: block; }
 
-        /* ICON SYSTEM */
         .icon { display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; flex-shrink: 0; }
         .icon-custom { position: relative; width: 24px; height: 24px; }
         .icon-custom > span {
@@ -95,7 +92,6 @@
         .nav-item.active.dropdown-open .icon-custom .icon-hover { display: none; }
         .nav-item.active.dropdown-open .icon-custom .icon-active { display: block; }
 
-        /* ICON FILE MAPPINGS */
         .icon-dashboard .icon-normal  { background-image: url('./assets/dashboard.svg'); }
         .icon-dashboard .icon-hover   { background-image: url('./assets/hover_dashboard.svg'); }
         .icon-dashboard .icon-active  { background-image: url('./assets/fill_dashboard.svg'); }
@@ -109,7 +105,6 @@
         .icon-site .icon-hover        { background-image: url('./assets/hover_site.svg'); }
         .icon-site .icon-active       { background-image: url('./assets/fill_site.svg'); }
 
-        /* SUBMENU ICON MAPPINGS */
         .icon-herosection .icon-normal  { background-image: url('./assets/herosection.svg'); }
         .icon-herosection .icon-hover   { background-image: url('./assets/hover_herosection.svg'); }
         .icon-herosection .icon-active  { background-image: url('./assets/fill_herosection.svg'); }
@@ -123,7 +118,6 @@
         .icon-combo .icon-hover         { background-image: url('./assets/hover_combo.svg'); }
         .icon-combo .icon-active        { background-image: url('./assets/fill_combo.svg'); }
 
-        /* Submenu item icon states */
         .nav-submenu-item .icon-custom .icon-normal { display: block; }
         .nav-submenu-item .icon-custom .icon-hover,
         .nav-submenu-item .icon-custom .icon-active { display: none; }
@@ -133,7 +127,6 @@
         .nav-submenu-item.active .icon-custom .icon-hover { display: none; }
         .nav-submenu-item.active .icon-custom .icon-active { display: block; }
 
-        /* DESKTOP LAYOUT */
         .page-desktop { display: flex; height: 100vh; width: 100vw; }
         .d-sidebar {
             width: var(--sidebar-width); height: 100%; background: var(--sidebar-bg);
@@ -155,7 +148,6 @@
         }
         .sidebar-toggle:hover { background: var(--hover-bg); color: var(--text-color); }
 
-        /* NAV ITEMS */
         .nav-item {
             position: relative; display: flex; align-items: center; height: var(--row-height);
             padding: 0 16px; margin: 2px 0; border-radius: var(--radius-md); gap: 14px;
@@ -171,7 +163,6 @@
         }
         .nav-item.dropdown-open .nav-chevron { transform: rotate(90deg); }
 
-        /* SUBMENU */
         .nav-submenu {
             display: none; margin: 2px 0 4px 20px; padding-left: 16px;
             border-left: 2px solid var(--border-subtle); flex-direction: column;
@@ -186,7 +177,6 @@
         .nav-submenu-item:hover { background: var(--hover-bg); color: var(--brand-primary); }
         .nav-submenu-item.active { background: var(--active-bg); color: var(--brand-primary); font-weight: 700; }
 
-        /* ACCOUNT */
         .d-account-section {
             margin-top: auto; padding: 24px 16px; border-top: 1px solid var(--border-subtle); cursor: pointer;
         }
@@ -203,7 +193,6 @@
         }
         .d-content { flex: 1; padding: 16px; overflow-y: auto; }
 
-        /* COLLAPSED SIDEBAR */
         .d-sidebar.collapsed { width: var(--sidebar-collapsed-width); }
         .d-sidebar.collapsed .brand-logo,
         .d-sidebar.collapsed .account-text,
@@ -230,7 +219,6 @@
             border-color: transparent var(--tooltip-bg) transparent transparent;
         }
 
-        /* MOBILE HEADER & OVERLAY */
         .m-header { display: none; }
         .m-header {
             height: 72px; background: #fff; border-bottom: 1px solid var(--border-subtle);
@@ -263,7 +251,6 @@
         .m-drawer-nav { padding: 20px 12px; flex: 1; }
         .m-account-section { padding: 20px; border-top: 1px solid var(--border-subtle); background: #fff; }
 
-        /* PROFILE POPUP */
         .profile-popup {
             position: fixed; background: #fff; border-radius: 12px; box-shadow: var(--shadow-premium);
             border: 1px solid #e5e7eb; width: 260px; z-index: 3000; opacity: 0; pointer-events: none;
@@ -275,50 +262,40 @@
         .popup-list a { display: flex; align-items: center; gap: 12px; padding: 12px; text-decoration: none; color: var(--text-color); border-radius: 8px; cursor: pointer; }
         .popup-list a:hover { background: #f3f4f6; }
 
-        /* ========== GLOBAL BUTTONS ========== */
         .primary-btn {
-            display: inline-flex; align-items: center; justify-content: center;
-            gap: 10px; padding: 14px 24px; border-radius: var(--radius-md); border: none;
-            font-weight: 600; font-size: 16px; color: #ffffff; background: var(--brand-primary);
-            transition: background 0.2s, transform 0.2s; cursor: pointer; letter-spacing: 0.2px;
-            white-space: nowrap; font-family: inherit;
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 14px 24px; border-radius: var(--radius-md); border: none; font-weight: 600;
+            font-size: 16px; color: #ffffff; background: var(--brand-primary);
+            transition: background 0.2s, transform 0.2s; cursor: pointer;
+            letter-spacing: 0.2px; white-space: nowrap; font-family: inherit;
         }
         .primary-btn:hover { background: #5228d3; transform: translateY(-1px); }
         .primary-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
         .btn-secondary {
-            display: inline-flex; align-items: center; justify-content: center;
-            gap: 8px; padding: 12px 20px; border-radius: var(--radius-md);
-            border: 1px solid var(--border-subtle); background: #ffffff; font-size: 15px;
-            font-weight: 600; color: var(--brand-primary); transition: background 0.2s, transform 0.2s;
-            cursor: pointer; letter-spacing: 0.2px; font-family: inherit;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 12px 20px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);
+            background: #ffffff; font-size: 15px; font-weight: 600; color: var(--brand-primary);
+            transition: background 0.2s, transform 0.2s; cursor: pointer;
+            letter-spacing: 0.2px; font-family: inherit;
         }
         .btn-secondary:hover { background: #f2efff; transform: translateY(-1px); }
         .btn-secondary:disabled { opacity: 0.6; cursor: not-allowed; }
         .danger-btn {
-            display: inline-flex; align-items: center; justify-content: center;
-            gap: 10px; padding: 14px 24px; border-radius: var(--radius-md); border: none;
-            font-weight: 600; font-size: 16px; color: #ffffff; background: var(--danger-color);
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 14px 24px; border-radius: var(--radius-md); border: none; font-weight: 600;
+            font-size: 16px; color: #ffffff; background: var(--danger-color);
             transition: background 0.2s, transform 0.2s; cursor: pointer; font-family: inherit;
         }
         .danger-btn:hover { background: #dc2626; transform: translateY(-1px); }
         .danger-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
-        /* ========== PAGE CONTENT STYLES ========== */
         .content-inner {
-            --brand-primary: #643DE4;
-            --danger-color: #ef4444;
-            --success-color: #10B981;
-            --warning-color: #f59e0b;
-            --switch-on: #643DE4;
-            --switch-off: #9CA3AF;
-            --hover-bg: #f3f4f6;
-            --border-subtle: #e5e7eb;
-            --radius-md: 10px;
-            --radius-lg: 14px;
-            max-width: 1110px; margin: 0 auto;
-            padding: 16px 16px 24px; width: 100%;
-            font-family: 'IBM Plex Sans', Roboto, sans-serif;
-            font-weight: 500; font-size: 14px; line-height: 20px; color: var(--text-color);
+            --brand-primary: #643DE4; --danger-color: #ef4444; --success-color: #10B981;
+            --warning-color: #f59e0b; --switch-on: #643DE4; --switch-off: #9CA3AF;
+            --hover-bg: #f3f4f6; --border-subtle: #e5e7eb; --radius-md: 10px; --radius-lg: 14px;
+            max-width: 1110px; margin: 0 auto; padding: 16px 16px 24px; width: 100%;
+            font-family: 'IBM Plex Sans', Roboto, sans-serif; font-weight: 500; font-size: 14px;
+            line-height: 20px; color: var(--text-color);
         }
         .content-inner .page-title { font-weight: 700; line-height: 1.2; color: rgb(29, 30, 32); font-size: 22px; }
         .content-inner .page-title-group { display: flex; flex-direction: column; gap: 4px; }
@@ -328,7 +305,6 @@
         .content-inner .header-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
         .content-inner .card { background: #ffffff; border-radius: var(--radius-lg); border: 1px solid var(--border-subtle); overflow: hidden; width: 100%; }
 
-        /* Toggle switch */
         .content-inner .toggle-switch { width: 44px; height: 24px; position: relative; display: inline-block; }
         .content-inner .toggle-switch input { display: none; }
         .content-inner .toggle-slider { position: absolute; inset: 0; background-color: var(--switch-off); border-radius: 24px; transition: .4s; cursor: pointer; }
@@ -336,12 +312,10 @@
         .content-inner .toggle-switch input:checked + .toggle-slider { background-color: var(--switch-on); }
         .content-inner .toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); }
 
-        /* Kebab button */
         .content-inner .kebab { width: 44px; height: 44px; border-radius: var(--radius-md); display: flex; justify-content: center; align-items: center; border: 1px solid var(--border-subtle); background: #ffffff; cursor: pointer; transition: background 0.15s, border-color 0.15s; }
         .content-inner .kebab img { width: 22px; height: 22px; }
         .content-inner .kebab:hover { background: #f9fafb; border-color: #d1d5db; }
 
-        /* Desktop table */
         .content-inner .desktop-view { display: block; }
         .content-inner .table-wrapper { width: 100%; overflow-x: auto; overflow: visible !important; }
         .content-inner table { width: 100%; border-collapse: collapse; z-index: 1; position: relative; }
@@ -356,101 +330,57 @@
         .content-inner .actions-cell { display: flex; gap: 8px; align-items: center; }
         .content-inner .action-btn img { width: 18px; height: 18px; vertical-align: middle; }
 
-        /* ===== MOBILE CARDS ===== */
         .content-inner .mobile-view { display: none; }
-
-        /* Prevent text selection & image copy on long press everywhere in mobile cards */
-        .mobile-card-list {
-            -webkit-user-select: none;
-            user-select: none;
-            -webkit-touch-callout: none;
-        }
-        .mobile-card-list * {
-            -webkit-user-select: none;
-            user-select: none;
-            -webkit-touch-callout: none;
-        }
-        .mobile-card-list img {
-            pointer-events: none;
-            -webkit-user-drag: none;
-            user-drag: none;
-        }
-
         .content-inner .mobile-category-cards {
-            background: #ffffff;
-            border-radius: 16px;
-            border: 1px solid var(--border-subtle);
-            padding: 14px 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-            width: 100%;
-            margin-bottom: 14px;
-            cursor: grab;
-            touch-action: none;
-            position: relative;
-            transition: box-shadow 0.2s, transform 0.2s, opacity 0.2s, border-color 0.2s;
-            will-change: transform;
+            background: #ffffff; border-radius: 16px; border: 1px solid var(--border-subtle);
+            padding: 14px 16px; display: flex; align-items: center; gap: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04); width: 100%; margin-bottom: 14px;
+            /* NO transition here — drag handles it */
+            cursor: default;
+            /* Prevent text/image selection during drag */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            touch-action: pan-y; /* allow vertical scroll by default, overridden during drag */
         }
-        .content-inner .mobile-category-cards.dragging {
-            opacity: 0.55;
-            border: 2px dashed var(--brand-primary);
-            box-shadow: none;
-        }
-        .content-inner .mobile-category-cards.drag-over {
-            border-color: var(--brand-primary);
-            background: #f4f0fa;
-        }
-        /* The floating clone card while dragging */
+        .content-inner .mobile-category-cards img { width: 56px; height: 56px; border-radius: var(--radius-lg); object-fit: cover; flex-shrink: 0; -webkit-user-drag: none; user-drag: none; pointer-events: none; }
+        .content-inner .mobile-card-content { flex: 1; display: flex; flex-direction: column; gap: 5px; pointer-events: none; }
+        .content-inner .mobile-card-title { font-size: 17px; font-weight: 700; color: var(--text-color); }
+        .content-inner .mobile-card-sub { font-size: 14px; font-weight: 600; color: var(--brand-primary); }
+        .content-inner .mobile-card-actions { display: flex; gap: 12px; align-items: center; margin-left: auto; pointer-events: auto; }
+        .content-inner .product-card-menu-btn { width: 44px; height: 44px; border-radius: 10px; border: 1px solid var(--border-subtle); background: #fff; display: flex; justify-content: center; align-items: center; cursor: pointer; }
+        .content-inner .product-card-menu-btn img { width: 22px; height: 22px; pointer-events: none; -webkit-user-drag: none; }
+
+        /* Drag ghost / clone */
         .drag-ghost {
             position: fixed;
             pointer-events: none;
             z-index: 9999;
+            opacity: 0.92;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.18);
             border-radius: 16px;
-            border: 2px solid var(--brand-primary);
-            background: #ffffff;
-            box-shadow: 0 16px 40px rgba(100,61,228,0.22), 0 4px 12px rgba(0,0,0,0.10);
-            padding: 14px 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transform: scale(1.04) rotate(-1.5deg);
-            transition: none;
-            will-change: transform;
-            opacity: 0.97;
+            transform: scale(1.03);
+            transition: box-shadow 0.15s;
+            background: #fff;
+            border: 1.5px solid #643DE4;
         }
-        .drag-ghost img { width: 56px; height: 56px; border-radius: 14px; object-fit: cover; flex-shrink: 0; pointer-events: none; }
-        .drag-ghost .ghost-name { font-size: 17px; font-weight: 700; color: var(--text-color); }
-        .drag-ghost .ghost-price { font-size: 14px; font-weight: 600; color: var(--brand-primary); }
-
-        /* Drag handle icon */
-        .drag-handle {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 44px;
-            flex-shrink: 0;
-            cursor: grab;
-            color: #c4c4c4;
-            touch-action: none;
+        /* Placeholder slot while dragging */
+        .drag-placeholder {
+            background: #f4f0fa;
+            border: 2px dashed #643DE4;
+            border-radius: 16px;
+            margin-bottom: 14px;
+            transition: height 0.15s;
         }
-        .drag-handle svg { display: block; }
+        /* Card being dragged (original stays hidden) */
+        .dragging-source {
+            opacity: 0 !important;
+        }
 
-        .content-inner .mobile-category-cards img { width: 56px; height: 56px; border-radius: var(--radius-lg); object-fit: cover; flex-shrink: 0; }
-        .content-inner .mobile-card-content { flex: 1; display: flex; flex-direction: column; gap: 5px; min-width: 0; }
-        .content-inner .mobile-card-title { font-size: 17px; font-weight: 700; color: var(--text-color); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .content-inner .mobile-card-sub { font-size: 14px; font-weight: 600; color: var(--brand-primary); }
-        .content-inner .mobile-card-actions { display: flex; gap: 12px; align-items: center; margin-left: auto; }
-        .content-inner .product-card-menu-btn { width: 44px; height: 44px; border-radius: 10px; border: 1px solid var(--border-subtle); background: #fff; display: flex; justify-content: center; align-items: center; cursor: pointer; }
-        .content-inner .product-card-menu-btn img { width: 22px; height: 22px; }
-
-        /* ========== MODALS & DROPDOWN ========== */
         .modal-overlay {
-            position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(4px); z-index: 2000; display: none;
-            align-items: center; justify-content: center;
+            position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px);
+            z-index: 2000; display: none; align-items: center; justify-content: center;
         }
         .modal-content {
             width: 100%; max-width: 520px; background: white; border-radius: var(--radius-lg);
@@ -463,12 +393,13 @@
         .modal-footer { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
 
         @keyframes modalPop { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        @keyframes slideUpModal { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
         .dropdown-menu {
             position: fixed; background: #ffffff; border: 1px solid var(--border-subtle);
             border-radius: 14px; box-shadow: 0 12px 32px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.06);
-            min-width: 200px; z-index: 10002; display: none; flex-direction: column;
-            padding: 8px; animation: fadeInUp 0.2s ease-out;
+            min-width: 200px; z-index: 10002; display: none; flex-direction: column; padding: 8px;
+            animation: fadeInUp 0.2s ease-out;
         }
         .dropdown-menu.show { display: flex; }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
@@ -494,7 +425,6 @@
         @keyframes spin { to { transform: rotate(360deg); } }
         .spinner-text { font-weight: 600; color: var(--text-color); }
 
-        /* ========== RESPONSIVE ========== */
         @media (max-width: 768px) {
             .d-sidebar { display: none; }
             .d-topbar { display: none; }
@@ -513,7 +443,6 @@
 </head>
 <body>
 
-    <!-- ========== MOBILE HEADER ========== -->
     <header class="m-header" id="mobile-header">
         <button class="m-menu-btn" id="m-open-drawer">
             <div class="m-menu-lines"><span></span></div>
@@ -524,38 +453,59 @@
         <div style="width:40px;"></div>
     </header>
 
-    <!-- ========== MOBILE DRAWER OVERLAY ========== -->
     <div class="m-overlay" id="m-overlay">
         <div class="m-drawer">
             <div class="m-drawer-header">
-                <span class="brand-logo"><img src="./assets/logo.png" alt="Happy NonVeg Pickles"></span>
+                <span class="brand-logo">
+                    <img src="./assets/logo.png" alt="Happy NonVeg Pickles">
+                </span>
                 <button class="m-drawer-close" id="m-close-drawer">
                     <div class="m-drawer-close-icon"></div>
                 </button>
             </div>
             <nav class="m-drawer-nav">
                 <a href="dashboard.html" class="nav-item">
-                    <span class="icon icon-custom icon-dashboard"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>
+                    <span class="icon icon-custom icon-dashboard">
+                        <span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span>
+                    </span>
                     <span class="nav-label">Dashboard</span>
                 </a>
                 <a href="manage-categories.html" class="nav-item active">
-                    <span class="icon icon-custom icon-inventory"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>
+                    <span class="icon icon-custom icon-inventory">
+                        <span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span>
+                    </span>
                     <span class="nav-label">Inventory</span>
                 </a>
                 <a href="coupons.html" class="nav-item">
-                    <span class="icon icon-custom icon-coupons"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>
+                    <span class="icon icon-custom icon-coupons">
+                        <span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span>
+                    </span>
                     <span class="nav-label">Manage Coupons</span>
                 </a>
                 <div class="nav-item" id="m-site-toggle">
-                    <span class="icon icon-custom icon-site"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>
+                    <span class="icon icon-custom icon-site">
+                        <span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span>
+                    </span>
                     <span class="nav-label">Customize Site</span>
                     <svg class="nav-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
                 </div>
                 <div class="nav-submenu" id="m-site-submenu">
-                    <a href="manage_herosection.html" class="nav-submenu-item"><span class="icon icon-custom icon-herosection"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>Hero Section</a>
-                    <a href="manage-sections.html" class="nav-submenu-item"><span class="icon icon-custom icon-sections"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>Sections</a>
-                    <a href="manage-popup.html" class="nav-submenu-item"><span class="icon icon-custom icon-popup"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>Popup</a>
-                    <a href="manage-combo.html" class="nav-submenu-item"><span class="icon icon-custom icon-combo"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>Combo Offer</a>
+                    <a href="manage_herosection.html" class="nav-submenu-item">
+                        <span class="icon icon-custom icon-herosection"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>
+                        Hero Section
+                    </a>
+                    <a href="manage-sections.html" class="nav-submenu-item">
+                        <span class="icon icon-custom icon-sections"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>
+                        Sections
+                    </a>
+                    <a href="manage-popup.html" class="nav-submenu-item">
+                        <span class="icon icon-custom icon-popup"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>
+                        Popup
+                    </a>
+                    <a href="manage-combo.html" class="nav-submenu-item">
+                        <span class="icon icon-custom icon-combo"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>
+                        Combo Offer
+                    </a>
                 </div>
             </nav>
             <div class="m-account-section" id="profile-trigger-mobile">
@@ -570,12 +520,15 @@
         </div>
     </div>
 
-    <!-- ========== DESKTOP LAYOUT ========== -->
     <div class="page-desktop">
         <aside class="d-sidebar" id="sidebar">
             <div class="d-sidebar-header">
-                <a href="#" class="brand-logo"><img src="./assets/logo.png" alt="Happy NonVeg Pickles"></a>
-                <span class="mini-logo"><img src="./assets/logo-small.png" alt="H"></span>
+                <a href="#" class="brand-logo">
+                    <img src="./assets/logo.png" alt="Happy NonVeg Pickles">
+                </a>
+                <span class="mini-logo">
+                    <img src="./assets/logo-small.png" alt="H">
+                </span>
                 <button class="sidebar-toggle" id="sidebar-toggle-btn">
                     <img class="btn-close-svg" src="./assets/panel_close.svg" alt="Close sidebar" width="24" height="24">
                     <img class="btn-open-svg" src="./assets/panel_open.svg" alt="Open sidebar" width="24" height="24">
@@ -584,27 +537,47 @@
             <div class="d-sidebar-inner">
                 <nav>
                     <a href="dashboard.html" class="nav-item">
-                        <span class="icon icon-custom icon-dashboard"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>
+                        <span class="icon icon-custom icon-dashboard">
+                            <span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span>
+                        </span>
                         <span class="nav-label">Dashboard</span>
                     </a>
                     <a href="manage-categories.html" class="nav-item active">
-                        <span class="icon icon-custom icon-inventory"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>
+                        <span class="icon icon-custom icon-inventory">
+                            <span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span>
+                        </span>
                         <span class="nav-label">Inventory</span>
                     </a>
                     <a href="coupons.html" class="nav-item">
-                        <span class="icon icon-custom icon-coupons"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>
+                        <span class="icon icon-custom icon-coupons">
+                            <span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span>
+                        </span>
                         <span class="nav-label">Manage Coupons</span>
                     </a>
                     <div class="nav-item" id="d-site-toggle">
-                        <span class="icon icon-custom icon-site"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>
+                        <span class="icon icon-custom icon-site">
+                            <span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span>
+                        </span>
                         <span class="nav-label">Customize Site</span>
                         <svg class="nav-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
                     </div>
                     <div class="nav-submenu" id="d-site-submenu">
-                        <a href="manage_herosection.html" class="nav-submenu-item"><span class="icon icon-custom icon-herosection"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>Hero Section</a>
-                        <a href="manage-sections.html" class="nav-submenu-item"><span class="icon icon-custom icon-sections"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>Sections</a>
-                        <a href="manage-popup.html" class="nav-submenu-item"><span class="icon icon-custom icon-popup"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>Popup</a>
-                        <a href="manage-combo.html" class="nav-submenu-item"><span class="icon icon-custom icon-combo"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>Combo Offer</a>
+                        <a href="manage_herosection.html" class="nav-submenu-item">
+                            <span class="icon icon-custom icon-herosection"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>
+                            Hero Section
+                        </a>
+                        <a href="manage-sections.html" class="nav-submenu-item">
+                            <span class="icon icon-custom icon-sections"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>
+                            Sections
+                        </a>
+                        <a href="manage-popup.html" class="nav-submenu-item">
+                            <span class="icon icon-custom icon-popup"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>
+                            Popup
+                        </a>
+                        <a href="manage-combo.html" class="nav-submenu-item">
+                            <span class="icon icon-custom icon-combo"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>
+                            Combo Offer
+                        </a>
                     </div>
                 </nav>
                 <div class="d-account-section" id="profile-trigger-desktop">
@@ -644,7 +617,6 @@
         </div>
     </div>
 
-    <!-- ========== PROFILE POPUP ========== -->
     <div class="profile-popup" id="profile-popup">
         <div class="popup-header">
             <img class="account-avatar" src="" alt="User">
@@ -658,7 +630,6 @@
         </ul>
     </div>
 
-    <!-- ========== MODALS & SPINNER ========== -->
     <div class="spinner-overlay" id="spinnerOverlay">
         <div class="spinner"></div>
         <div class="spinner-text" id="spinnerText">Saving…</div>
@@ -678,7 +649,6 @@
 
     <div id="menus-container"></div>
 
-    <!-- ========== JAVASCRIPT ========== -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -699,19 +669,18 @@
         const db = getFirestore(firebaseApp);
         const ALLOWED_ADMIN = "harshavardhanjw@gmail.com";
 
-        // SVG preload
-        ['./assets/dashboard.svg','./assets/hover_dashboard.svg','./assets/fill_dashboard.svg',
-         './assets/inventory.svg','./assets/hover_inventory.svg','./assets/fill_inventory.svg',
-         './assets/coupons.svg','./assets/hover_coupons.svg','./assets/fill_coupons.svg',
-         './assets/site.svg','./assets/hover_site.svg','./assets/fill_site.svg',
-         './assets/herosection.svg','./assets/hover_herosection.svg','./assets/fill_herosection.svg',
-         './assets/sections.svg','./assets/hover_sections.svg','./assets/fill_sections.svg',
-         './assets/popup.svg','./assets/hover_popup.svg','./assets/fill_popup.svg',
-         './assets/combo.svg','./assets/hover_combo.svg','./assets/fill_combo.svg',
-         './assets/panel_close.svg','./assets/panel_open.svg'
+        [
+            './assets/dashboard.svg','./assets/hover_dashboard.svg','./assets/fill_dashboard.svg',
+            './assets/inventory.svg','./assets/hover_inventory.svg','./assets/fill_inventory.svg',
+            './assets/coupons.svg','./assets/hover_coupons.svg','./assets/fill_coupons.svg',
+            './assets/site.svg','./assets/hover_site.svg','./assets/fill_site.svg',
+            './assets/herosection.svg','./assets/hover_herosection.svg','./assets/fill_herosection.svg',
+            './assets/sections.svg','./assets/hover_sections.svg','./assets/fill_sections.svg',
+            './assets/popup.svg','./assets/hover_popup.svg','./assets/fill_popup.svg',
+            './assets/combo.svg','./assets/hover_combo.svg','./assets/fill_combo.svg',
+            './assets/panel_close.svg','./assets/panel_open.svg'
         ].forEach(src => { const i = new Image(); i.src = src; });
 
-        // AUTH
         onAuthStateChanged(auth, (user) => {
             if (!user || user.email !== ALLOWED_ADMIN) {
                 if (user) { signOut(auth).then(() => window.location.href = './'); }
@@ -733,15 +702,15 @@
             signOut(auth).then(() => window.location.href = './');
         });
 
-        // SIDEBAR
         const sidebar = document.getElementById('sidebar');
         document.getElementById('sidebar-toggle-btn').addEventListener('click', () => sidebar.classList.toggle('collapsed'));
 
         function clearNavActive(nav) {
             nav.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
         }
+
         function setupDropdown(toggleId, submenuId) {
-            const toggle = document.getElementById(toggleId);
+            const toggle  = document.getElementById(toggleId);
             const submenu = document.getElementById(submenuId);
             if (!toggle || !submenu) return;
             toggle.addEventListener('click', () => {
@@ -755,7 +724,7 @@
                 toggle.classList.toggle('dropdown-open', !isOpen);
             });
             submenu.querySelectorAll('.nav-submenu-item').forEach(item => {
-                item.addEventListener('click', function(e) {
+                item.addEventListener('click', function (e) {
                     e.stopPropagation();
                     const parentNav = toggle.closest('nav') || toggle.parentElement;
                     clearNavActive(parentNav);
@@ -787,23 +756,250 @@
         document.addEventListener('click', () => pPopup.classList.remove('active'));
 
         document.querySelectorAll('.nav-item:not(#d-site-toggle):not(#m-site-toggle)').forEach(item => {
-            item.addEventListener('click', function() {
+            item.addEventListener('click', function () {
                 const parentNav = this.closest('nav');
                 if (parentNav) clearNavActive(parentNav);
                 this.classList.add('active');
-                ['d-site-toggle','m-site-toggle'].forEach(id => {
-                    document.getElementById(id)?.classList.remove('active', 'dropdown-open');
+                ['d-site-toggle', 'm-site-toggle'].forEach(id => {
+                    const t = document.getElementById(id);
+                    t?.classList.remove('active', 'dropdown-open');
                 });
-                ['d-site-submenu','m-site-submenu'].forEach(id => {
+                ['d-site-submenu', 'm-site-submenu'].forEach(id => {
                     const s = document.getElementById(id);
-                    if (s) { s.classList.remove('open'); s.querySelectorAll('.nav-submenu-item').forEach(i => i.classList.remove('active')); }
+                    if (s) {
+                        s.classList.remove('open');
+                        s.querySelectorAll('.nav-submenu-item').forEach(i => i.classList.remove('active'));
+                    }
                 });
             });
         });
 
-        // ===== PRODUCT LOGIC =====
+        // ========== PRODUCT LOGIC ==========
         const urlParams = new URLSearchParams(window.location.search);
         const categoryId = urlParams.get('categoryId');
+
+        // ========== TOUCH DRAG & DROP ==========
+        const dragState = {
+            active: false,
+            sourceEl: null,
+            ghost: null,
+            placeholder: null,
+            startY: 0,
+            currentY: 0,
+            ghostOffsetY: 0,
+            longPressTimer: null,
+            listEl: null,
+            scrollEl: null,
+            autoScrollRAF: null
+        };
+
+        const LONG_PRESS_MS = 400;
+        const DRAG_THRESHOLD = 6; // px to move before cancelling long press
+
+        function getDragList() {
+            return document.querySelector('.mobile-drag-list');
+        }
+
+        function getScrollContainer() {
+            return document.querySelector('.d-content') || document.body;
+        }
+
+        function buildGhost(sourceEl) {
+            const rect = sourceEl.getBoundingClientRect();
+            const ghost = sourceEl.cloneNode(true);
+            ghost.classList.add('drag-ghost');
+            ghost.style.width = rect.width + 'px';
+            ghost.style.height = rect.height + 'px';
+            ghost.style.left = rect.left + 'px';
+            ghost.style.top = rect.top + 'px';
+            ghost.style.margin = '0';
+            document.body.appendChild(ghost);
+            return ghost;
+        }
+
+        function buildPlaceholder(height) {
+            const ph = document.createElement('div');
+            ph.className = 'drag-placeholder';
+            ph.style.height = height + 'px';
+            return ph;
+        }
+
+        function getCardAtY(y, excludeEl) {
+            const list = getDragList();
+            if (!list) return null;
+            const cards = [...list.querySelectorAll('.mobile-category-cards')].filter(c => c !== excludeEl);
+            for (const card of cards) {
+                const rect = card.getBoundingClientRect();
+                if (y >= rect.top && y <= rect.bottom) return card;
+            }
+            return null;
+        }
+
+        function onTouchStart(e) {
+            // Only react to the card itself, not the action buttons
+            const card = e.currentTarget;
+            if (e.target.closest('.mobile-card-actions')) return;
+
+            const touch = e.touches[0];
+            dragState.startY = touch.clientY;
+
+            dragState.longPressTimer = setTimeout(() => {
+                startDrag(card, touch.clientY);
+            }, LONG_PRESS_MS);
+        }
+
+        function onTouchMove(e) {
+            const touch = e.touches[0];
+            const dy = Math.abs(touch.clientY - dragState.startY);
+
+            // Cancel long press if user scrolls before it fires
+            if (!dragState.active && dy > DRAG_THRESHOLD) {
+                clearTimeout(dragState.longPressTimer);
+                dragState.longPressTimer = null;
+                return;
+            }
+
+            if (!dragState.active) return;
+
+            e.preventDefault(); // block page scroll while dragging
+
+            dragState.currentY = touch.clientY;
+            const newTop = dragState.currentY - dragState.ghostOffsetY;
+            dragState.ghost.style.top = newTop + 'px';
+
+            // Reorder placeholder
+            reorderPlaceholder(dragState.currentY);
+
+            // Auto-scroll
+            autoScroll(dragState.currentY);
+        }
+
+        function onTouchEnd(e) {
+            clearTimeout(dragState.longPressTimer);
+            dragState.longPressTimer = null;
+
+            if (!dragState.active) return;
+
+            finishDrag();
+        }
+
+        function startDrag(card, clientY) {
+            dragState.active = true;
+            dragState.sourceEl = card;
+            dragState.listEl = getDragList();
+            dragState.scrollEl = getScrollContainer();
+
+            // Vibrate for feedback
+            if (navigator.vibrate) navigator.vibrate(40);
+
+            const rect = card.getBoundingClientRect();
+            dragState.ghostOffsetY = clientY - rect.top;
+
+            dragState.ghost = buildGhost(card);
+            dragState.placeholder = buildPlaceholder(rect.height);
+            card.classList.add('dragging-source');
+
+            // Insert placeholder after source
+            card.parentNode.insertBefore(dragState.placeholder, card.nextSibling);
+
+            // Prevent page scroll
+            document.body.style.overflow = 'hidden';
+        }
+
+        function reorderPlaceholder(clientY) {
+            const list = dragState.listEl;
+            if (!list) return;
+            const cards = [...list.querySelectorAll('.mobile-category-cards')].filter(c => c !== dragState.sourceEl);
+            let inserted = false;
+            for (const card of cards) {
+                const rect = card.getBoundingClientRect();
+                const midY = rect.top + rect.height / 2;
+                if (clientY < midY) {
+                    list.insertBefore(dragState.placeholder, card);
+                    inserted = true;
+                    break;
+                }
+            }
+            if (!inserted) {
+                list.appendChild(dragState.placeholder);
+            }
+        }
+
+        function autoScroll(clientY) {
+            const scrollEl = dragState.scrollEl;
+            if (!scrollEl) return;
+            cancelAnimationFrame(dragState.autoScrollRAF);
+
+            const rect = scrollEl.getBoundingClientRect();
+            const edgeSize = 80;
+            const maxSpeed = 12;
+            let speed = 0;
+
+            if (clientY < rect.top + edgeSize) {
+                speed = -maxSpeed * (1 - (clientY - rect.top) / edgeSize);
+            } else if (clientY > rect.bottom - edgeSize) {
+                speed = maxSpeed * (1 - (rect.bottom - clientY) / edgeSize);
+            }
+
+            if (speed !== 0) {
+                const doScroll = () => {
+                    scrollEl.scrollTop += speed;
+                    dragState.autoScrollRAF = requestAnimationFrame(doScroll);
+                };
+                dragState.autoScrollRAF = requestAnimationFrame(doScroll);
+            }
+        }
+
+        function finishDrag() {
+            cancelAnimationFrame(dragState.autoScrollRAF);
+            document.body.style.overflow = '';
+
+            const { sourceEl, ghost, placeholder, listEl } = dragState;
+
+            // Snap ghost to placeholder position for smooth finish
+            if (placeholder && ghost) {
+                const phRect = placeholder.getBoundingClientRect();
+                ghost.style.transition = 'top 0.18s cubic-bezier(0.4,0,0.2,1), left 0.18s';
+                ghost.style.top = phRect.top + 'px';
+            }
+
+            setTimeout(() => {
+                // Place sourceEl where placeholder is
+                if (placeholder && placeholder.parentNode) {
+                    placeholder.parentNode.insertBefore(sourceEl, placeholder);
+                    placeholder.parentNode.removeChild(placeholder);
+                }
+                if (ghost && ghost.parentNode) ghost.parentNode.removeChild(ghost);
+                sourceEl.classList.remove('dragging-source');
+
+                // Sync window.app.products order from DOM
+                if (listEl) {
+                    const newOrder = [...listEl.querySelectorAll('.mobile-category-cards')]
+                        .map(el => el.dataset.productId)
+                        .filter(Boolean);
+                    window.app.products.sort((a, b) => {
+                        const ai = newOrder.indexOf(a.id);
+                        const bi = newOrder.indexOf(b.id);
+                        return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
+                    });
+                }
+
+                dragState.active = false;
+                dragState.sourceEl = null;
+                dragState.ghost = null;
+                dragState.placeholder = null;
+                dragState.listEl = null;
+            }, 180);
+        }
+
+        function attachDragListeners(card) {
+            card.addEventListener('touchstart', onTouchStart, { passive: true });
+            card.addEventListener('touchmove', onTouchMove, { passive: false });
+            card.addEventListener('touchend', onTouchEnd, { passive: true });
+            card.addEventListener('touchcancel', onTouchEnd, { passive: true });
+            // Prevent browser image/text drag on the card itself
+            card.addEventListener('dragstart', e => e.preventDefault());
+        }
 
         window.app = {
             products: [],
@@ -811,12 +1007,13 @@
             pendingDeleteId: null,
             isLoading: false,
 
-            init() {
+            init: () => {
                 if (!categoryId) {
                     alert("No category selected!");
                     window.location.href = 'manage-categories.html';
                     return;
                 }
+
                 const categoryRef = doc(db, 'categories', categoryId);
                 onSnapshot(categoryRef, (docSnap) => {
                     if (docSnap.exists()) {
@@ -834,16 +1031,20 @@
                             if (timeB !== timeA) return timeB - timeA;
                             return a.id.localeCompare(b.id);
                         });
+
                         window.app.render();
                     } else {
                         document.getElementById('page-title').innerText = "Category not found";
-                        document.getElementById('data-container').innerHTML = `<div style="text-align:center;color:var(--danger-color);padding:48px;">This category does not exist.</div>`;
+                        document.getElementById('data-container').innerHTML = `<div class="empty-state" style="text-align:center; color: var(--danger-color); padding: 48px;">This category does not exist.</div>`;
                     }
                 });
 
                 document.querySelectorAll('.modal-overlay').forEach(overlay => {
-                    overlay.addEventListener('click', (e) => { if (e.target === overlay) window.app.cancelDelete(); });
+                    overlay.addEventListener('click', (e) => {
+                        if (e.target === overlay) window.app.cancelDelete();
+                    });
                 });
+
                 document.getElementById('addProductBtn').addEventListener('click', () => window.app.addProduct());
                 document.getElementById('deleteCancelBtn').addEventListener('click', () => window.app.cancelDelete());
                 document.getElementById('deleteConfirmBtn').addEventListener('click', () => window.app.confirmDelete());
@@ -858,110 +1059,98 @@
                 }, true);
             },
 
-            showSpinner(text = 'Saving…') {
+            showSpinner: (text = 'Saving…') => {
                 document.getElementById('spinnerText').textContent = text;
                 document.getElementById('spinnerOverlay').classList.add('active');
                 window.app.isLoading = true;
                 document.querySelectorAll('.primary-btn, .btn-secondary, .danger-btn').forEach(btn => btn.disabled = true);
             },
-            hideSpinner() {
+            hideSpinner: () => {
                 document.getElementById('spinnerOverlay').classList.remove('active');
                 window.app.isLoading = false;
                 document.querySelectorAll('.primary-btn, .btn-secondary, .danger-btn').forEach(btn => btn.disabled = false);
             },
 
-            getPrice(prod) {
-                if (prod.minPrice !== undefined && prod.maxPrice !== undefined) {
-                    return prod.minPrice === prod.maxPrice ? `₹${prod.minPrice}` : `₹${prod.minPrice} – ₹${prod.maxPrice}`;
-                } else if (prod.variants && prod.variants.length > 0) {
-                    const prices = prod.variants.map(v => parseFloat(v.price)).filter(p => !isNaN(p));
-                    if (prices.length > 0) {
-                        const minP = Math.min(...prices), maxP = Math.max(...prices);
-                        return minP === maxP ? `₹${minP}` : `₹${minP} – ₹${maxP}`;
-                    }
-                } else if (prod.price) {
-                    return `₹${prod.price}`;
-                }
-                return 'N/A';
-            },
-
-            render() {
+            render: () => {
                 const container = document.getElementById('data-container');
                 const menusContainer = document.getElementById('menus-container');
 
                 if (window.app.products.length === 0) {
-                    container.innerHTML = `<div style="text-align:center;color:var(--text-sub);padding:48px;">No products found.</div>`;
+                    container.innerHTML = `<div class="empty-state" style="text-align:center; color: var(--text-sub); padding: 48px;">No products found.</div>`;
                     menusContainer.innerHTML = '';
                     return;
                 }
 
                 let desktopHTML = `<div class="desktop-view card"><div class="table-wrapper"><table>
                     <thead><tr>
-                        <th style="width:70px;">Image</th>
+                        <th style="width: 70px;">Image</th>
                         <th>Product Name</th>
                         <th>Price</th>
                         <th>Visibility</th>
-                        <th style="width:220px;">Actions</th>
+                        <th style="width: 220px;">Actions</th>
                     </tr></thead><tbody>`;
 
-                let mobileHTML = `<div class="mobile-view"><div class="mobile-card-list" id="mobile-card-list">`;
+                // Mobile list wrapper with class for drag targeting
+                let mobileHTML = `<div class="mobile-view"><div class="mobile-drag-list">`;
                 let popupsHTML = ``;
 
                 window.app.products.forEach(prod => {
-                    const priceText = window.app.getPrice(prod);
+                    let priceText = 'N/A';
+                    if (prod.minPrice !== undefined && prod.maxPrice !== undefined) {
+                        priceText = prod.minPrice === prod.maxPrice ? `₹${prod.minPrice}` : `₹${prod.minPrice} – ₹${prod.maxPrice}`;
+                    } else if (prod.variants && prod.variants.length > 0) {
+                        const prices = prod.variants.map(v => parseFloat(v.price)).filter(p => !isNaN(p));
+                        if (prices.length > 0) {
+                            const minP = Math.min(...prices);
+                            const maxP = Math.max(...prices);
+                            priceText = minP === maxP ? `₹${minP}` : `₹${minP} – ₹${maxP}`;
+                        }
+                    } else if (prod.price) {
+                        priceText = `₹${prod.price}`;
+                    }
+
                     const isAvailable = prod.isavailable !== false;
                     const imgUrl = prod.image || 'https://placehold.co/150x150/f3f4f6/6b7280?text=Pickle';
                     const hiddenClass = !isAvailable ? 'item-hidden' : '';
 
-                    // DESKTOP ROW
                     desktopHTML += `
                         <tr class="${hiddenClass}">
                             <td><img src="${imgUrl}" class="product-thumb" alt="${prod.name}"></td>
-                            <td style="font-weight:600;">${prod.name}</td>
-                            <td style="font-weight:600;">${priceText}</td>
+                            <td style="font-weight: 600;">${prod.name}</td>
+                            <td style="font-weight: 600;">${priceText}</td>
                             <td>
                                 <label class="toggle-switch">
-                                    <input type="checkbox" ${isAvailable ? 'checked' : ''} onchange="app.toggleAvailability(event,'${prod.id}',${isAvailable})">
+                                    <input type="checkbox" ${isAvailable ? 'checked' : ''} onchange="app.toggleAvailability(event, '${prod.id}', ${isAvailable})">
                                     <span class="toggle-slider"></span>
                                 </label>
                             </td>
                             <td>
                                 <div class="actions-cell">
                                     <button class="btn-secondary action-btn" onclick="app.editProductDirect('${prod.id}')">
-                                        <img src="./assets/edit_blue.svg" alt="Edit"> Edit
+                                        <img src="./assets/edit_blue.svg" alt="Edit" /> Edit
                                     </button>
                                     <button class="danger-btn action-btn" onclick="app.deleteProductDirect('${prod.id}')">
-                                        <img src="./assets/delete_white.svg" alt="Delete"> Delete
+                                        <img src="./assets/delete_white.svg" alt="Delete" /> Delete
                                     </button>
                                 </div>
                             </td>
                         </tr>`;
 
-                    // MOBILE CARD — drag handle on left, content in middle, toggle+menu on right
+                    // data-product-id used by drag reorder sync
                     mobileHTML += `
-                        <div class="mobile-category-cards ${hiddenClass}" data-id="${prod.id}">
-                            <div class="drag-handle" title="Hold to reorder">
-                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="6" cy="4" r="1.5" fill="#c4c4c4"/>
-                                    <circle cx="12" cy="4" r="1.5" fill="#c4c4c4"/>
-                                    <circle cx="6" cy="9" r="1.5" fill="#c4c4c4"/>
-                                    <circle cx="12" cy="9" r="1.5" fill="#c4c4c4"/>
-                                    <circle cx="6" cy="14" r="1.5" fill="#c4c4c4"/>
-                                    <circle cx="12" cy="14" r="1.5" fill="#c4c4c4"/>
-                                </svg>
-                            </div>
-                            <img src="${imgUrl}" alt="${prod.name}">
+                        <div class="mobile-category-cards ${hiddenClass}" data-product-id="${prod.id}">
+                            <img src="${imgUrl}" alt="${prod.name}" draggable="false">
                             <div class="mobile-card-content">
                                 <div class="mobile-card-title">${prod.name}</div>
                                 <div class="mobile-card-sub">${priceText}</div>
                             </div>
                             <div class="mobile-card-actions" onclick="event.stopPropagation()">
                                 <label class="toggle-switch">
-                                    <input type="checkbox" ${isAvailable ? 'checked' : ''} onchange="app.toggleAvailability(event,'${prod.id}',${isAvailable})">
+                                    <input type="checkbox" ${isAvailable ? 'checked' : ''} onchange="app.toggleAvailability(event, '${prod.id}', ${isAvailable})">
                                     <span class="toggle-slider"></span>
                                 </label>
-                                <button class="kebab product-card-menu-btn" onclick="app.toggleMenu(event,'menu-${prod.id}')">
-                                    <img src="./assets/dots.svg" alt="Menu">
+                                <button class="kebab product-card-menu-btn" onclick="app.toggleMenu(event, 'menu-${prod.id}')">
+                                    <img src="./assets/dots.svg" alt="Menu" draggable="false" />
                                 </button>
                             </div>
                         </div>`;
@@ -969,10 +1158,10 @@
                     popupsHTML += `
                         <div class="dropdown-menu" id="menu-${prod.id}">
                             <button class="dropdown-item" onclick="app.editProductDirect('${prod.id}')">
-                                <img src="./assets/edit.svg" alt="Edit"> Edit Pickle
+                                <img src="./assets/edit.svg" alt="Edit" /> Edit Pickle
                             </button>
                             <button class="dropdown-item text-danger" onclick="app.deleteProductDirect('${prod.id}')">
-                                <img src="./assets/delete.svg" alt="Delete"> Delete Pickle
+                                <img src="./assets/delete.svg" alt="Delete" /> Delete Pickle
                             </button>
                         </div>`;
                 });
@@ -983,210 +1172,21 @@
                 container.innerHTML = desktopHTML + mobileHTML;
                 menusContainer.innerHTML = popupsHTML;
 
-                // Init touch drag-and-drop after rendering
-                window.app.initMobileDrag();
-            },
-
-            // ===== SMOOTH MOBILE DRAG-AND-DROP =====
-            initMobileDrag() {
-                const list = document.getElementById('mobile-card-list');
-                if (!list) return;
-
-                let ghost = null;           // floating clone
-                let dragEl = null;          // original card being dragged
-                let dragIndex = -1;
-                let startY = 0;
-                let offsetY = 0;            // touch point within the card
-                let currentOverEl = null;
-                let longPressTimer = null;
-                let isDragging = false;
-                const LONG_PRESS_MS = 300;
-
-                function getCards() {
-                    return Array.from(list.querySelectorAll('.mobile-category-cards'));
-                }
-
-                function createGhost(card) {
-                    const g = document.createElement('div');
-                    g.className = 'drag-ghost';
-                    const img = card.querySelector('img');
-                    const title = card.querySelector('.mobile-card-title');
-                    const price = card.querySelector('.mobile-card-sub');
-                    g.innerHTML = `
-                        <img src="${img ? img.src : ''}" alt="">
-                        <div>
-                            <div class="ghost-name">${title ? title.textContent : ''}</div>
-                            <div class="ghost-price">${price ? price.textContent : ''}</div>
-                        </div>`;
-                    g.style.width = card.offsetWidth + 'px';
-                    document.body.appendChild(g);
-                    return g;
-                }
-
-                function positionGhost(clientY) {
-                    if (!ghost) return;
-                    const top = clientY - offsetY;
-                    const left = dragEl.getBoundingClientRect().left;
-                    ghost.style.top = top + 'px';
-                    ghost.style.left = left + 'px';
-                }
-
-                function getCardAt(clientY) {
-                    const cards = getCards();
-                    for (const card of cards) {
-                        if (card === dragEl) continue;
-                        const rect = card.getBoundingClientRect();
-                        if (clientY >= rect.top && clientY <= rect.bottom) return card;
-                    }
-                    return null;
-                }
-
-                function startDrag(card, touch) {
-                    isDragging = true;
-                    dragEl = card;
-                    dragIndex = getCards().indexOf(card);
-                    const rect = card.getBoundingClientRect();
-                    offsetY = touch.clientY - rect.top;
-                    startY = touch.clientY;
-
-                    // Disable page scroll while dragging
-                    document.body.style.overflow = 'hidden';
-
-                    ghost = createGhost(card);
-                    positionGhost(touch.clientY);
-                    card.classList.add('dragging');
-
-                    // Haptic feedback if available
-                    if (navigator.vibrate) navigator.vibrate(30);
-                }
-
-                function moveDrag(touch) {
-                    if (!isDragging || !ghost || !dragEl) return;
-                    positionGhost(touch.clientY);
-
-                    // Find which card we're hovering over
-                    const overEl = getCardAt(touch.clientY);
-                    if (overEl && overEl !== currentOverEl) {
-                        if (currentOverEl) currentOverEl.classList.remove('drag-over');
-                        currentOverEl = overEl;
-                        overEl.classList.add('drag-over');
-
-                        // Reorder DOM instantly for visual feedback
-                        const cards = getCards();
-                        const overIndex = cards.indexOf(overEl);
-                        const dragCurrentIndex = cards.indexOf(dragEl);
-
-                        if (dragCurrentIndex < overIndex) {
-                            list.insertBefore(dragEl, overEl.nextSibling);
-                        } else {
-                            list.insertBefore(dragEl, overEl);
-                        }
-                    } else if (!overEl && currentOverEl) {
-                        currentOverEl.classList.remove('drag-over');
-                        currentOverEl = null;
-                    }
-                }
-
-                function endDrag() {
-                    if (!isDragging) return;
-                    isDragging = false;
-                    document.body.style.overflow = '';
-
-                    if (ghost) { ghost.remove(); ghost = null; }
-                    if (dragEl) { dragEl.classList.remove('dragging'); }
-                    if (currentOverEl) { currentOverEl.classList.remove('drag-over'); currentOverEl = null; }
-
-                    // Sync new order back to app.products
-                    const newOrder = getCards().map(card => card.dataset.id);
-                    const productMap = {};
-                    window.app.products.forEach(p => productMap[p.id] = p);
-                    window.app.products = newOrder.map(id => productMap[id]).filter(Boolean);
-
-                    dragEl = null;
-                }
-
-                // Attach listeners to each card's drag handle
-                function attachHandlers(card) {
-                    const handle = card.querySelector('.drag-handle');
-                    if (!handle) return;
-
-                    // Prevent long-press text selection / callout on handle
-                    handle.addEventListener('contextmenu', e => e.preventDefault());
-
-                    handle.addEventListener('touchstart', (e) => {
-                        e.stopPropagation();
-                        const touch = e.touches[0];
-                        longPressTimer = setTimeout(() => {
-                            startDrag(card, touch);
-                        }, LONG_PRESS_MS);
-                    }, { passive: true });
-
-                    handle.addEventListener('touchmove', (e) => {
-                        if (!isDragging) {
-                            clearTimeout(longPressTimer);
-                            return;
-                        }
-                        e.preventDefault();
-                        moveDrag(e.touches[0]);
-                    }, { passive: false });
-
-                    handle.addEventListener('touchend', () => {
-                        clearTimeout(longPressTimer);
-                        endDrag();
-                    });
-
-                    handle.addEventListener('touchcancel', () => {
-                        clearTimeout(longPressTimer);
-                        if (isDragging) endDrag();
-                    });
-                }
-
-                // Also handle the rest of the card (not interactive zones) for direct drag
-                function attachCardHandlers(card) {
-                    card.addEventListener('contextmenu', e => e.preventDefault());
-
-                    card.addEventListener('touchstart', (e) => {
-                        // Only start drag if touch is NOT on toggle, menu btn, or handle (handle has its own)
-                        if (e.target.closest('.mobile-card-actions') || e.target.closest('.drag-handle')) return;
-                        const touch = e.touches[0];
-                        longPressTimer = setTimeout(() => {
-                            startDrag(card, touch);
-                        }, LONG_PRESS_MS);
-                    }, { passive: true });
-
-                    card.addEventListener('touchmove', (e) => {
-                        if (!isDragging) {
-                            clearTimeout(longPressTimer);
-                            return;
-                        }
-                        e.preventDefault();
-                        moveDrag(e.touches[0]);
-                    }, { passive: false });
-
-                    card.addEventListener('touchend', () => {
-                        clearTimeout(longPressTimer);
-                        if (isDragging) endDrag();
-                    });
-
-                    card.addEventListener('touchcancel', () => {
-                        clearTimeout(longPressTimer);
-                        if (isDragging) endDrag();
-                    });
-                }
-
-                getCards().forEach(card => {
-                    attachHandlers(card);
-                    attachCardHandlers(card);
+                // Attach drag listeners to all mobile cards
+                document.querySelectorAll('.mobile-drag-list .mobile-category-cards').forEach(card => {
+                    attachDragListeners(card);
                 });
             },
 
-            editProductDirect(id) { window.location.href = `product.html?id=${id}&categoryId=${categoryId}`; },
-            deleteProductDirect(id) {
+            editProductDirect: (id) => {
+                window.location.href = `product.html?id=${id}&categoryId=${categoryId}`;
+            },
+            deleteProductDirect: (id) => {
                 document.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
                 window.app.pendingDeleteId = id;
                 document.getElementById('delete-modal').style.display = 'flex';
             },
-            toggleMenu(event, menuId) {
+            toggleMenu: (event, menuId) => {
                 event.stopPropagation();
                 const button = event.currentTarget;
                 const targetMenu = document.getElementById(menuId);
@@ -1199,17 +1199,21 @@
                     const menuRect = targetMenu.getBoundingClientRect();
                     let topPosition = btnRect.bottom + 8;
                     let leftPosition = btnRect.right - menuRect.width;
-                    if (topPosition + menuRect.height > window.innerHeight) topPosition = btnRect.top - menuRect.height - 8;
+                    if (topPosition + menuRect.height > window.innerHeight) {
+                        topPosition = btnRect.top - menuRect.height - 8;
+                    }
                     targetMenu.style.top = topPosition + 'px';
                     targetMenu.style.left = leftPosition + 'px';
                 }
             },
-            addProduct() { window.location.href = `product.html?categoryId=${categoryId}`; },
-            cancelDelete() {
+            addProduct: () => {
+                window.location.href = `product.html?categoryId=${categoryId}`;
+            },
+            cancelDelete: () => {
                 window.app.pendingDeleteId = null;
                 document.getElementById('delete-modal').style.display = 'none';
             },
-            async confirmDelete() {
+            confirmDelete: async () => {
                 if (!window.app.pendingDeleteId || window.app.isLoading) return;
                 const productId = window.app.pendingDeleteId;
                 window.app.showSpinner('Deleting product…');
@@ -1228,7 +1232,7 @@
                     window.app.hideSpinner();
                 }
             },
-            async toggleAvailability(event, productId, currentState) {
+            toggleAvailability: async (event, productId, currentState) => {
                 event.stopPropagation();
                 if (window.app.isLoading) return;
                 try {
