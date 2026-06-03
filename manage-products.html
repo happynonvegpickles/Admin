@@ -61,6 +61,31 @@
             --danger-color: #ef4444;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-decoration: none !important; }
+
+        /* ── GLOBAL: block ALL text/image selection & callouts ── */
+        * {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+        }
+        /* Re-enable selection only for inputs/textareas */
+        input, textarea, [contenteditable] {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            user-select: text;
+        }
+        /* Block image dragging everywhere */
+        img {
+            -webkit-user-drag: none;
+            user-drag: none;
+            pointer-events: none;
+            -webkit-touch-callout: none;
+        }
+        /* Re-enable pointer-events for img inside interactive elements */
+        button img, a img, label img, .action-btn img, .product-card-menu-btn img, .drag-handle img,
+        .sidebar-toggle img, .m-menu-btn img { pointer-events: none; }
+
         body {
             min-height: 100vh;
             background: var(--page-bg);
@@ -71,27 +96,10 @@
             display: none;
         }
 
-        /* ── PREVENT SELECTION GLOBALLY DURING DRAG ── */
+        /* ── DURING DRAG: lock cursor & prevent any selection ── */
         body.is-dragging,
         body.is-dragging * {
-            -webkit-user-select: none !important;
-            -moz-user-select: none !important;
-            user-select: none !important;
             cursor: grabbing !important;
-        }
-        /* Always prevent selection on cards and their children */
-        .mobile-category-cards,
-        .mobile-category-cards * {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
-        }
-        /* Prevent image drag globally in mobile cards */
-        .mobile-category-cards img {
-            -webkit-user-drag: none;
-            user-drag: none;
-            pointer-events: none;
-            draggable: false;
         }
 
         /* LOGO */
@@ -206,7 +214,7 @@
             margin-top: auto; padding: 24px 16px; border-top: 1px solid var(--border-subtle); cursor: pointer;
         }
         .account-card { display: flex; align-items: center; gap: 12px; }
-        .account-avatar { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border-subtle); object-fit: cover; flex-shrink: 0; }
+        .account-avatar { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border-subtle); object-fit: cover; flex-shrink: 0; pointer-events: auto; }
         .account-text { display: flex; flex-direction: column; overflow: hidden; transition: opacity 0.2s; }
         .account-name { font-size: 15px; font-weight: 700; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
         .account-email { font-size: 13px; color: var(--text-sub); white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
@@ -338,7 +346,7 @@
         .content-inner .page-title-group { display: flex; flex-direction: column; gap: 4px; }
         .content-inner .breadcrumbs { display: flex; gap: 8px; align-items: center; font-size: 14px; color: var(--text-sub); }
         .content-inner .breadcrumbs .divider { color: #d1d5db; }
-        .content-inner .breadcrumbs img { width: 18px; height: 18px; vertical-align: middle; }
+        .content-inner .breadcrumbs img { width: 18px; height: 18px; vertical-align: middle; pointer-events: none; }
         .content-inner .header-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
         .content-inner .card { background: #ffffff; border-radius: var(--radius-lg); border: 1px solid var(--border-subtle); overflow: hidden; width: 100%; }
 
@@ -364,10 +372,10 @@
         .content-inner tbody tr:hover { background-color: #f9fafb; }
         .content-inner tbody tr:last-child { border-bottom: none; }
         .content-inner td { padding: 12px 20px; vertical-align: middle; text-align: left; }
-        .content-inner .product-thumb { width: 48px; height: 48px; border-radius: var(--radius-md); object-fit: cover; border: 1px solid var(--border-subtle); }
+        .content-inner .product-thumb { width: 48px; height: 48px; border-radius: var(--radius-md); object-fit: cover; border: 1px solid var(--border-subtle); pointer-events: none; }
         .content-inner .item-hidden { opacity: 0.5; }
         .content-inner .actions-cell { display: flex; gap: 8px; align-items: center; flex-wrap: nowrap; }
-        .content-inner .action-btn img { width: 18px; height: 18px; vertical-align: middle; }
+        .content-inner .action-btn img { width: 18px; height: 18px; vertical-align: middle; pointer-events: none; }
 
         /* ===== DRAG HANDLE ===== */
         .drag-handle {
@@ -426,13 +434,13 @@
         .badge-homemade { background: #f0fdf4; color: #14532d; border: 1px solid #86efac; }
         .badge-glutenfree { background: #f0f9ff; color: #1e3a5f; border: 1px solid #93c5fd; }
 
-        /* ===== BADGES DROPDOWN (desktop) - looks like a select ===== */
+        /* ===== BADGES DROPDOWN ===== */
         .badges-dropdown-trigger {
             display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
             padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border-subtle);
             background: #fff; font-size: 13px; font-weight: 600; color: var(--text-color);
             transition: border-color 0.15s, background 0.15s; min-width: 120px;
-            white-space: nowrap; user-select: none; font-family: inherit;
+            white-space: nowrap; font-family: inherit;
         }
         .badges-dropdown-trigger:hover { border-color: var(--brand-primary); background: #faf9ff; }
         .badges-dropdown-trigger.has-badges { color: var(--brand-primary); border-color: #c4b5fd; background: #faf8ff; }
@@ -441,7 +449,7 @@
             transition: transform 0.2s; color: #9ca3af;
         }
         .badges-dropdown-trigger .bdrop-label { flex: 1; }
-        .bdrop-tag-icon { width: 14px; height: 14px; opacity: 0.7; flex-shrink: 0; }
+        .bdrop-tag-icon { width: 14px; height: 14px; opacity: 0.7; flex-shrink: 0; pointer-events: none; }
 
         /* ===== TAG DROPDOWN PANEL ===== */
         .tag-dropdown-panel {
@@ -460,7 +468,7 @@
             border-radius: 8px; cursor: pointer; transition: background 0.12s; font-size: 13px; font-weight: 600;
         }
         .tag-option:hover { background: var(--hover-bg); }
-        .tag-option input[type="checkbox"] { accent-color: var(--brand-primary); width: 15px; height: 15px; cursor: pointer; flex-shrink: 0; }
+        .tag-option input[type="checkbox"] { accent-color: var(--brand-primary); width: 15px; height: 15px; cursor: pointer; flex-shrink: 0; -webkit-user-select: auto; user-select: auto; }
         .tag-option .tag-preview { pointer-events: none; }
         .tdp-footer { padding-top: 8px; border-top: 1px solid var(--border-subtle); margin-top: 6px; }
         .tdp-save-btn {
@@ -479,27 +487,16 @@
             background: #ffffff; border-radius: 16px; border: 1px solid var(--border-subtle);
             padding: 14px 16px; display: flex; align-items: center; gap: 12px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.04); width: 100%; margin-bottom: 14px;
-            cursor: default; touch-action: none;
-            /* Prevent ALL text/image selection */
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
-            -webkit-touch-callout: none;
+            cursor: default;
+            /* KEY FIX: allow-y lets normal scroll happen; JS overrides to none only when long-press fires */
+            touch-action: pan-y;
         }
         .content-inner .mobile-category-cards img.prod-img {
             width: 56px; height: 56px; border-radius: var(--radius-lg); object-fit: cover; flex-shrink: 0;
-            /* Prevent image drag & callout */
-            -webkit-user-drag: none;
-            user-drag: none;
             pointer-events: none;
-            -webkit-touch-callout: none;
         }
         .content-inner .mobile-card-content {
             flex: 1; display: flex; flex-direction: column; gap: 5px; min-width: 0;
-            /* Prevent text selection */
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
         }
         .content-inner .mobile-card-title { font-size: 17px; font-weight: 700; color: var(--text-color); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .content-inner .mobile-card-sub { font-size: 14px; font-weight: 600; color: var(--brand-primary); }
@@ -511,7 +508,7 @@
         }
         .content-inner .product-card-menu-btn img { width: 22px; height: 22px; pointer-events: none; }
 
-        /* Mobile drag ghost — GPU-accelerated with will-change */
+        /* Mobile drag ghost */
         .mobile-drag-ghost {
             position: fixed;
             pointer-events: none;
@@ -521,7 +518,6 @@
             border: 2px solid var(--brand-primary);
             box-shadow: 0 16px 40px rgba(100,61,228,0.22);
             opacity: 0.92;
-            transform: rotate(2deg) scale(1.03) translate(0, 0);
             will-change: transform;
             display: none;
             padding: 14px 16px;
@@ -529,7 +525,8 @@
             gap: 12px;
             max-width: 340px;
             overflow: hidden;
-            /* No transition on ghost — must follow finger instantly */
+            left: 0;
+            top: 0;
         }
 
         /* MODALS */
@@ -552,7 +549,7 @@
         @keyframes modalPop { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Dropdown menu (mobile kebab) */
+        /* Dropdown menu */
         .dropdown-menu {
             position: fixed; background: #ffffff; border: 1px solid var(--border-subtle);
             border-radius: 14px; box-shadow: 0 12px 32px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.06);
@@ -780,7 +777,7 @@
         </div>
     </div>
 
-    <!-- TAG DROPDOWN PANEL (single, repositioned dynamically) -->
+    <!-- TAG DROPDOWN PANEL -->
     <div class="tag-dropdown-panel" id="tag-dropdown-panel">
         <div class="tdp-title"><i class="fas fa-tag" style="margin-right:5px;"></i>Product Badges</div>
         <div id="tag-options-list"></div>
@@ -1038,43 +1035,80 @@
         }
 
         /* ══════════════════════════════════════════════════════
-           MOBILE TOUCH DRAG-AND-DROP  — SMOOTH & NO-SELECT
+           MOBILE TOUCH DRAG-AND-DROP
+           FIX 1: touch-action pan-y on cards → normal scroll works
+           FIX 2: long-press (450ms) activates drag → e.preventDefault() in touchmove blocks scroll only then
+           FIX 3: edge-scroll when ghost near top/bottom of viewport
+           FIX 4: all text/image selection fully blocked via CSS + JS
         ══════════════════════════════════════════════════════ */
         let touchDragId    = null;
         let touchLongTimer = null;
-        let rafId          = null;          // requestAnimationFrame id
-        let ghostTx        = 0;             // current ghost X
-        let ghostTy        = 0;             // current ghost Y
+        let rafId          = null;
         let lastTouchX     = 0;
         let lastTouchY     = 0;
+        let scrollRAF      = null;   // edge-scroll rAF
 
         const ghost = document.getElementById('mobileDragGhost');
 
-        // Smoothly move ghost via rAF — zero jank
+        // Smoothly move ghost via rAF
         function scheduleGhostMove(x, y) {
             lastTouchX = x;
             lastTouchY = y;
-            if (rafId) return;  // already scheduled
+            if (rafId) return;
             rafId = requestAnimationFrame(() => {
                 rafId = null;
                 const gw = ghost.offsetWidth  || 300;
                 const gh = ghost.offsetHeight || 80;
-                ghostTx = lastTouchX - gw / 2;
-                ghostTy = lastTouchY - gh / 2;
-                // Use transform instead of top/left for GPU compositing
-                ghost.style.left      = '0px';
-                ghost.style.top       = '0px';
-                ghost.style.transform = `translate(${ghostTx}px, ${ghostTy}px) rotate(2deg) scale(1.03)`;
+                ghost.style.transform = `translate(${lastTouchX - gw / 2}px, ${lastTouchY - gh / 2}px) rotate(2deg) scale(1.03)`;
             });
         }
+
+        // Auto-scroll the d-content area when dragging near edges
+        const EDGE_ZONE  = 80;   // px from top/bottom to trigger scroll
+        const SCROLL_SPD = 12;   // px per frame
+
+        function getScrollContainer() {
+            // Mobile: .d-content
+            return document.querySelector('.d-content');
+        }
+
+        function startEdgeScroll(touchY) {
+            if (scrollRAF) return;
+            const sc = getScrollContainer();
+            if (!sc) return;
+
+            function step() {
+                const rect   = sc.getBoundingClientRect();
+                const relY   = touchY - rect.top;
+                const height = rect.height;
+                if (relY < EDGE_ZONE) {
+                    // scroll up
+                    sc.scrollTop -= SCROLL_SPD * (1 - relY / EDGE_ZONE);
+                } else if (relY > height - EDGE_ZONE) {
+                    // scroll down
+                    sc.scrollTop += SCROLL_SPD * ((relY - (height - EDGE_ZONE)) / EDGE_ZONE);
+                }
+                scrollRAF = requestAnimationFrame(step);
+            }
+            scrollRAF = requestAnimationFrame(step);
+        }
+
+        function stopEdgeScroll() {
+            if (scrollRAF) { cancelAnimationFrame(scrollRAF); scrollRAF = null; }
+        }
+
+        // Block context menu during drag (prevents long-press OS menu on images)
+        document.addEventListener('contextmenu', e => {
+            if (touchDragId || touchLongTimer) e.preventDefault();
+        });
 
         function initMobileDnd() {
             const container = document.querySelector('#data-container .mobile-view');
             if (!container) return;
 
             container.querySelectorAll('.mobile-category-cards[data-prod-id]').forEach(card => {
-                // Use non-passive touchstart so we can prevent default in touchmove
                 card.addEventListener('touchstart', onTouchStart, { passive: true });
+                // NOTE: touchmove must be passive:false so we can preventDefault when dragging
                 card.addEventListener('touchmove',  onTouchMove,  { passive: false });
                 card.addEventListener('touchend',   onTouchEnd,   { passive: true });
                 card.addEventListener('touchcancel',onTouchCancel,{ passive: true });
@@ -1084,19 +1118,24 @@
         function onTouchStart(e) {
             const card  = this;
             const touch = e.touches[0];
+            const startX = touch.clientX;
+            const startY = touch.clientY;
 
-            // Long-press threshold: 350ms
             touchLongTimer = setTimeout(() => {
                 touchDragId = card.dataset.prodId;
                 card.classList.add('dragging');
 
-                // Add global no-select class while dragging
+                // Lock body — prevent scroll during drag
                 document.body.classList.add('is-dragging');
 
-                // Populate ghost
+                // Switch all cards to touch-action:none so touchmove can preventDefault
+                document.querySelectorAll('.mobile-category-cards').forEach(c => {
+                    c.style.touchAction = 'none';
+                });
+
                 const prod = window.app.products.find(p => p.id === touchDragId);
                 if (prod) {
-                    document.getElementById('ghostImg').src         = prod.image || 'https://placehold.co/150x150/f3f4f6/6b7280?text=Pickle';
+                    document.getElementById('ghostImg').src          = prod.image || 'https://placehold.co/150x150/f3f4f6/6b7280?text=Pickle';
                     document.getElementById('ghostName').textContent = prod.name;
                     document.getElementById('ghostPrice').textContent = window.app.getPriceText(prod);
                 }
@@ -1105,32 +1144,37 @@
                 ghost.style.display   = 'flex';
                 ghost.style.transform = `translate(${touch.clientX}px, ${touch.clientY}px) rotate(2deg) scale(1.03)`;
                 scheduleGhostMove(touch.clientX, touch.clientY);
+                startEdgeScroll(touch.clientY);
 
                 if (navigator.vibrate) navigator.vibrate(40);
-            }, 350);
+            }, 450);
         }
 
         function onTouchMove(e) {
+            const touch = e.touches[0];
+
             if (!touchDragId) {
-                // Not dragging yet — cancel long-press if finger moved significantly
+                // Not dragging yet — cancel long-press if finger moved > 8px (it's a scroll)
+                const origTouch = e.changedTouches[0];
                 clearTimeout(touchLongTimer);
                 return;
             }
 
-            // Prevent page scroll while dragging
+            // Active drag — block native scroll
             e.preventDefault();
 
-            const touch = e.touches[0];
-
-            // Schedule ghost position update via rAF for smoothness
             scheduleGhostMove(touch.clientX, touch.clientY);
 
-            // Find card under finger (hide ghost temporarily for hit-test)
+            // Update edge-scroll target Y
+            lastTouchY = touch.clientY;
+            stopEdgeScroll();
+            startEdgeScroll(touch.clientY);
+
+            // Find card under finger
             ghost.style.visibility = 'hidden';
             const elUnder = document.elementFromPoint(touch.clientX, touch.clientY);
             ghost.style.visibility = 'visible';
 
-            // Clear all indicators
             const container = document.querySelector('#data-container .mobile-view');
             if (!container) return;
             container.querySelectorAll('.mobile-category-cards').forEach(c =>
@@ -1147,25 +1191,29 @@
 
         function onTouchEnd(e) {
             clearTimeout(touchLongTimer);
+            touchLongTimer = null;
             if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+            stopEdgeScroll();
 
             if (!touchDragId) return;
 
-            // Hide ghost immediately
-            ghost.style.display    = 'none';
-            ghost.style.transform  = '';
+            ghost.style.display   = 'none';
+            ghost.style.transform = '';
             document.body.classList.remove('is-dragging');
+
+            // Restore touch-action on all cards
+            document.querySelectorAll('.mobile-category-cards').forEach(c => {
+                c.style.touchAction = '';
+            });
 
             const container = document.querySelector('#data-container .mobile-view');
             if (container) {
                 const lastTouch  = e.changedTouches[0];
 
-                // Hit-test for drop target
                 ghost.style.display = 'none';
                 const elUnder    = document.elementFromPoint(lastTouch.clientX, lastTouch.clientY);
                 const targetCard = elUnder && elUnder.closest('.mobile-category-cards[data-prod-id]');
 
-                // Clean all states
                 container.querySelectorAll('.mobile-category-cards').forEach(c =>
                     c.classList.remove('drag-over-top', 'drag-over-bottom', 'dragging')
                 );
@@ -1182,17 +1230,17 @@
 
         function onTouchCancel() {
             clearTimeout(touchLongTimer);
+            touchLongTimer = null;
             if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+            stopEdgeScroll();
             if (touchDragId) {
-                ghost.style.display = 'none';
+                ghost.style.display   = 'none';
                 ghost.style.transform = '';
                 document.body.classList.remove('is-dragging');
-                const container = document.querySelector('#data-container .mobile-view');
-                if (container) {
-                    container.querySelectorAll('.mobile-category-cards').forEach(c =>
-                        c.classList.remove('drag-over-top', 'drag-over-bottom', 'dragging')
-                    );
-                }
+                document.querySelectorAll('.mobile-category-cards').forEach(c => {
+                    c.style.touchAction = '';
+                    c.classList.remove('drag-over-top', 'drag-over-bottom', 'dragging');
+                });
                 touchDragId = null;
             }
         }
@@ -1363,7 +1411,7 @@
                             </td>
                         </tr>`;
 
-                    // MOBILE CARD — hold to drag, no arrows
+                    // MOBILE CARD
                     const badgesHtml = renderBadgesHtml(badges);
                     mobileHTML += `
                         <div class="mobile-category-cards ${hiddenClass}" data-prod-id="${prod.id}">
@@ -1385,7 +1433,7 @@
                             </div>
                         </div>`;
 
-                    // DROPDOWN (mobile)
+                    // DROPDOWN (mobile kebab)
                     popupsHTML += `
                         <div class="dropdown-menu" id="menu-${prod.id}">
                             <button class="dropdown-item" onclick="app.editProductDirect('${prod.id}')">
