@@ -3,106 +3,523 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login</title>
+    <title>Admin Login - Happy NonVeg Pickles</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
     <style>
+        :root {
+            --primary: #111827;
+            --accent: #d97706;
+            --accent-hover: #b45309;
+            --pure-white: #FFFFFF;
+            --light-gray: #F3F4F6;
+            --text-color: #111827;
+            --text-light: #6B7280;
+            --border-gray: #E5E7EB;
+            --color-danger: #EF4444;
+            --color-success: #10B981;
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; overflow: hidden; }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
+            font-family: 'IBM Plex Sans', sans-serif;
+            background-color: #fdf4e7;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            color: var(--text-color);
         }
-        .container {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
+
+        .page-container {
+            width: 100%; height: 100%; max-height: 960px;
+            background-color: var(--pure-white); border-radius: 0;
+            overflow: hidden; display: flex; flex-direction: column;
         }
-        h2 { color: #333; margin-bottom: 20px; }
-        button {
-            background-color: #4285F4;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-            margin-top: 15px;
+
+        .form-panel-wrapper {
+            flex-grow: 1; position: relative; display: flex;
+            flex-direction: column; overflow-y: auto; padding: 2rem;
+            align-items: center; justify-content: center;
         }
-        button:hover { background-color: #357ae8; }
-        .error { color: #d9534f; font-weight: bold; margin-top: 15px; }
-        .info { color: #666; font-size: 14px; }
+
+        .info-panel { display: none; }
+
+        /* Mobile brand header */
+        .mobile-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .brand-icon-wrap {
+            width: 64px; height: 64px;
+            background: #fef3c7;
+            border-radius: 18px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 0.6rem;
+        }
+        .brand-name-mobile {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: -0.3px;
+        }
+        .brand-sub-mobile {
+            font-size: 0.78rem;
+            color: var(--text-light);
+            margin-top: 2px;
+        }
+
+        /* Form content */
+        .form-content { width: 100%; max-width: 400px; }
+        .form-header h2 {
+            font-size: 1.75rem; font-weight: 700;
+            text-align: center; margin-bottom: 0.4rem;
+            color: var(--primary);
+        }
+        .form-header p {
+            text-align: center; color: var(--text-light);
+            margin-bottom: 2rem; font-size: 0.875rem;
+        }
+
+        .admin-badge {
+            background: #fef3c7; color: #92400e;
+            padding: 0.25rem 0.85rem;
+            border-radius: 99px; font-size: 0.7rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.05em;
+            display: inline-block; margin-bottom: 0.6rem;
+        }
+
+        /* Inputs */
+        .input-group { margin-bottom: 1.2rem; }
+        .input-group label {
+            display: block; font-size: 0.8rem; font-weight: 600;
+            margin-bottom: 0.45rem; color: var(--text-light);
+            text-transform: uppercase; letter-spacing: 0.04em;
+        }
+        .input-wrapper { position: relative; }
+        .input-wrapper i {
+            position: absolute; left: 1rem; top: 50%;
+            transform: translateY(-50%); font-size: 1.2rem;
+            color: var(--text-light); pointer-events: none;
+        }
+        .input-wrapper .toggle-password {
+            position: absolute; right: 1rem; left: auto;
+            cursor: pointer; pointer-events: all;
+        }
+        .input-group input {
+            width: 100%; padding: 0.85rem 1rem 0.85rem 3rem;
+            border: 1.5px solid var(--border-gray);
+            background-color: var(--light-gray);
+            border-radius: 12px; font-size: 0.95rem;
+            font-family: 'IBM Plex Sans', sans-serif;
+            transition: all 0.25s ease; color: var(--text-color);
+        }
+        .input-group input:focus {
+            outline: none; border-color: var(--accent);
+            background-color: var(--pure-white);
+            box-shadow: 0 0 0 4px rgba(217,119,6,0.1);
+        }
+        .input-group input::placeholder { color: #adb5bd; }
+
+        /* Submit button */
+        .btn-submit {
+            width: 100%; padding: 0.95rem; font-size: 0.95rem; font-weight: 700;
+            color: var(--pure-white); background-color: var(--accent);
+            border: none; border-radius: 12px; cursor: pointer; margin-top: 0.5rem;
+            transition: all 0.25s; display: flex; align-items: center;
+            justify-content: center; gap: 0.5rem; letter-spacing: 0.02em;
+        }
+        .btn-submit:hover { background-color: var(--accent-hover); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(180,83,9,0.25); }
+        .btn-submit:active { transform: translateY(0); }
+        .btn-submit:disabled { background-color: #9CA3AF; cursor: not-allowed; transform: none; box-shadow: none; }
+
+        /* Forgot link */
+        .forgot-link { text-align: center; margin-top: 1.1rem; }
+        .forgot-link a {
+            color: var(--accent); font-size: 0.875rem; font-weight: 500;
+            text-decoration: none; cursor: pointer; transition: color 0.2s;
+        }
+        .forgot-link a:hover { text-decoration: underline; color: var(--accent-hover); }
+
+        /* Divider */
+        .divider {
+            display: flex; align-items: center; text-align: center;
+            color: var(--text-light); margin: 1.6rem 0; font-size: 0.75rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.06em;
+        }
+        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--border-gray); }
+        .divider:not(:empty)::before { margin-right: .75em; }
+        .divider:not(:empty)::after { margin-left: .75em; }
+
+        /* Google button */
+        .btn-google {
+            width: 100%; padding: 0.85rem 1rem; font-size: 0.9rem; font-weight: 600;
+            color: var(--text-color); background-color: var(--pure-white);
+            border: 1.5px solid var(--border-gray); border-radius: 12px;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: all 0.25s; gap: 0.6rem;
+        }
+        .btn-google:hover { background-color: var(--light-gray); border-color: #d1d5db; }
+        .google-icon { width: 20px; height: 20px; flex-shrink: 0; }
+
+        /* Security note */
+        .security-note {
+            display: flex; align-items: center; justify-content: center;
+            gap: 0.4rem; margin-top: 1.5rem;
+            font-size: 0.75rem; color: var(--text-light);
+        }
+        .security-note i { font-size: 0.9rem; color: var(--color-success); }
+
+        /* Loader */
+        #loader {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255,255,255,0.85); justify-content: center; align-items: center;
+            z-index: 9999; backdrop-filter: blur(4px);
+        }
+        .spinner {
+            width: 48px; height: 48px;
+            border: 4px solid rgba(217,119,6,0.2);
+            border-bottom-color: var(--accent);
+            border-radius: 50%; animation: rotation 0.9s linear infinite;
+        }
+        .btn-spinner {
+            display: none; width: 18px; height: 18px;
+            border: 2px solid rgba(255,255,255,0.35);
+            border-top-color: #fff;
+            border-radius: 50%; animation: rotation 0.9s linear infinite;
+        }
+
+        /* Toast */
+        #toast {
+            position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%);
+            padding: 0.9rem 1.4rem; border-radius: 12px; color: white; font-weight: 500;
+            box-shadow: var(--shadow-lg);
+            transition: bottom 0.45s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            z-index: 1001; display: flex; align-items: center; gap: 0.6rem;
+            white-space: nowrap; font-size: 0.9rem;
+        }
+        #toast.show { bottom: 28px; }
+        #toast.success { background-color: var(--color-success); }
+        #toast.error { background-color: var(--color-danger); }
+        #toast.info { background-color: #d97706; }
+
+        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Desktop layout */
+        @media (min-width: 992px) {
+            html, body { height: auto; overflow: auto; }
+            body { padding: 2rem; min-height: 100vh; }
+            .page-container {
+                flex-direction: row; max-width: 1080px; height: 720px;
+                border-radius: 2rem;
+                box-shadow: 0 25px 60px -10px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.04);
+            }
+            .info-panel {
+                display: flex; flex-direction: column;
+                justify-content: center; align-items: center;
+                flex-basis: 48%;
+                background: linear-gradient(145deg, #fffbf0 0%, #fef3c7 50%, #fde68a 100%);
+                border-right: 1px solid #fcd34d;
+                padding: 4rem; color: var(--primary);
+                position: relative; overflow: hidden;
+            }
+            .info-panel::before {
+                content: '';
+                position: absolute; top: -80px; right: -80px;
+                width: 300px; height: 300px;
+                background: rgba(253,230,138,0.5);
+                border-radius: 50%;
+            }
+            .info-panel::after {
+                content: '';
+                position: absolute; bottom: -60px; left: -60px;
+                width: 220px; height: 220px;
+                background: rgba(253,230,138,0.4);
+                border-radius: 50%;
+            }
+            .brand-logo-desktop {
+                position: relative; z-index: 1;
+                display: flex; flex-direction: column; align-items: center; text-align: center;
+            }
+            .logo-icon-lg {
+                width: 96px; height: 96px;
+                background: var(--pure-white);
+                border-radius: 28px;
+                display: flex; align-items: center; justify-content: center;
+                font-size: 3rem; margin-bottom: 1.5rem;
+                box-shadow: 0 8px 24px rgba(180,83,9,0.15);
+            }
+            .brand-title {
+                font-size: 1.75rem; font-weight: 700;
+                color: #78350f; margin-bottom: 0.4rem; line-height: 1.2;
+            }
+            .brand-tagline {
+                font-size: 0.9rem; color: #92400e; font-weight: 500;
+                margin-bottom: 2.5rem;
+            }
+            .info-features {
+                list-style: none; text-align: left; width: 100%;
+                display: flex; flex-direction: column; gap: 0.85rem;
+            }
+            .info-features li {
+                display: flex; align-items: center; gap: 0.75rem;
+                font-size: 0.875rem; color: #78350f; font-weight: 500;
+            }
+            .info-features li i {
+                width: 32px; height: 32px; background: var(--pure-white);
+                border-radius: 8px; display: flex; align-items: center;
+                justify-content: center; font-size: 1rem; color: var(--accent);
+                flex-shrink: 0;
+            }
+            .form-panel-wrapper { flex-basis: 52%; padding: 3.5rem; }
+            .mobile-brand { display: none; }
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>Admin Portal</h2>
-    <p class="info">Please log in with the authorized Google account to proceed.</p>
-    <button id="login-btn">Sign in with Google</button>
-    <p id="error-msg" class="error"></p>
-</div>
+    <div id="loader"><div class="spinner"></div></div>
 
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    <div class="page-container">
 
-    // Firebase Configuration
-    const firebaseConfig = {
-        apiKey: "AIzaSyCZbCr-Zt5KQblRQ8Pk58KuinCVP-TlXGo",
-        authDomain: "happynonvegpickles-f2636.firebaseapp.com",
-        projectId: "happynonvegpickles-f2636",
-        storageBucket: "happynonvegpickles-f2636.firebasestorage.app",
-        messagingSenderId: "802823212924",
-        appId: "1:802823212924:web:d82c92737ffa950798def9",
-        measurementId: "G-18GP45EWTT"
-    };
+        <!-- Desktop Left Panel -->
+        <div class="info-panel">
+            <div class="brand-logo-desktop">
+                <div class="logo-icon-lg">🌶️</div>
+                <div class="brand-title">Happy NonVeg<br>Pickles</div>
+                <div class="brand-tagline">Authentic Flavours, Every Jar</div>
 
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const provider = new GoogleAuthProvider();
+                <ul class="info-features">
+                    <li>
+                        <i class='bx bxs-package'></i>
+                        Manage orders & inventory
+                    </li>
+                    <li>
+                        <i class='bx bxs-user-detail'></i>
+                        Customer & sales insights
+                    </li>
+                    <li>
+                        <i class='bx bxs-chart'></i>
+                        Real-time analytics dashboard
+                    </li>
+                    <li>
+                        <i class='bx bxs-shield-alt-2'></i>
+                        Secure admin access only
+                    </li>
+                </ul>
+            </div>
+        </div>
 
-    const ALLOWED_ADMIN = "harshavardhanjw@gmail.com";
-    const loginBtn = document.getElementById('login-btn');
-    const errorMsg = document.getElementById('error-msg');
+        <!-- Right Form Panel -->
+        <div class="form-panel-wrapper">
 
-    // Trigger Google Login Popup
-    loginBtn.addEventListener('click', () => {
-        errorMsg.textContent = ""; 
-        signInWithPopup(auth, provider)
-            .then((result) => {
-                if (result.user.email !== ALLOWED_ADMIN) {
-                    signOut(auth).then(() => {
-                        errorMsg.textContent = "Access Denied: Unauthorized email.";
-                    });
-                }
-            })
-            .catch((error) => {
-                errorMsg.textContent = "Authentication Error: " + error.message;
-            });
-    });
+            <!-- Mobile brand header -->
+            <div class="mobile-brand">
+                <div class="brand-icon-wrap">🌶️</div>
+                <div class="brand-name-mobile">Happy NonVeg Pickles</div>
+                <div class="brand-sub-mobile">Admin Portal</div>
+            </div>
 
-    // Monitor Authentication State
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            if (user.email === ALLOWED_ADMIN) {
-                // Redirect straight to navbar.html if authorized
-                window.location.href = "dashboard.html";
+            <div class="form-content">
+                <div class="form-header">
+                    <div style="text-align:center"><span class="admin-badge">🔐 Admin Portal</span></div>
+                    <h2>Welcome Back</h2>
+                    <p>Sign in to manage your pickle empire.</p>
+                </div>
+
+                <!-- Email/Password Form -->
+                <form id="login-form">
+                    <div class="input-group">
+                        <label for="email">Email Address</label>
+                        <div class="input-wrapper">
+                            <i class='bx bxs-envelope'></i>
+                            <input type="email" id="email" placeholder="admin@happynonvegpickles.com" required autocomplete="email">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <div class="input-wrapper">
+                            <i class='bx bxs-lock-alt'></i>
+                            <input type="password" id="password" placeholder="Enter your password" required autocomplete="current-password">
+                            <i class='bx bx-hide toggle-password' id="toggle-password" title="Show/hide password"></i>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit" id="email-submit-btn">
+                        <span class="btn-text">Sign In</span>
+                        <span class="btn-spinner"></span>
+                    </button>
+
+                    <div class="forgot-link">
+                        <a href="#" id="forgot-password-btn">Forgot your password?</a>
+                    </div>
+                </form>
+
+                <div class="divider">or continue with</div>
+
+                <button type="button" class="btn-google" id="google-login-btn">
+                    <svg class="google-icon" viewBox="0 0 48 48">
+                        <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/>
+                        <path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"/>
+                        <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.222,0-9.519-3.108-11.127-7.481l-6.522,5.025C9.505,39.556,16.227,44,24,44z"/>
+                        <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571l6.19,5.238C42.022,36.218,44,30.561,44,24C44,22.659,43.862,21.35,43.611,20.083z"/>
+                    </svg>
+                    Sign in with Google
+                </button>
+
+                <div class="security-note">
+                    <i class='bx bxs-lock-alt'></i>
+                    Secured with Firebase Authentication
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast"></div>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCdeonH3VytC21F3X6x0rCVCn2xXrGPoug",
+            authDomain: "vastramaya---magic.firebaseapp.com",
+            projectId: "vastramaya---magic",
+            storageBucket: "vastramaya---magic.firebasestorage.app",
+            messagingSenderId: "543460072082",
+            appId: "1:543460072082:web:f3d1140e8f81ad338ae44b",
+            measurementId: "G-E39VNDCFVE"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const ADMIN_EMAIL = "vastramayamagic@gmail.com";
+
+        const loginForm    = document.getElementById('login-form');
+        const googleBtn    = document.getElementById('google-login-btn');
+        const togglePwd    = document.getElementById('toggle-password');
+        const passwordInput= document.getElementById('password');
+        const loader       = document.getElementById('loader');
+        const forgotBtn    = document.getElementById('forgot-password-btn');
+
+        /* ── password visibility toggle ── */
+        togglePwd.addEventListener('click', function () {
+            const isHidden = passwordInput.getAttribute('type') === 'password';
+            passwordInput.setAttribute('type', isHidden ? 'text' : 'password');
+            this.classList.toggle('bx-hide', !isHidden);
+            this.classList.toggle('bx-show',  isHidden);
+        });
+
+        /* ── email / password sign-in ── */
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email    = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const btn      = document.getElementById('email-submit-btn');
+            setButtonLoading(btn, true);
+
+            try {
+                const cred = await firebase.auth().signInWithEmailAndPassword(email, password);
+                await handleAdminAuth(cred.user);
+            } catch (err) {
+                showToast(getErrorMsg(err.code), 'error');
+                setButtonLoading(btn, false);
+            }
+        });
+
+        /* ── google sign-in ── */
+        googleBtn.addEventListener('click', async () => {
+            loader.style.display = 'flex';
+            try {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                const result   = await firebase.auth().signInWithPopup(provider);
+                await handleAdminAuth(result.user);
+            } catch (err) {
+                showToast(getErrorMsg(err.code), 'error');
+                loader.style.display = 'none';
+            }
+        });
+
+        /* ── forgot password ── */
+        forgotBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value.trim();
+            if (!email) {
+                showToast('Please enter your email address first.', 'error');
+                document.getElementById('email').focus();
+                return;
+            }
+            loader.style.display = 'flex';
+            try {
+                await firebase.auth().sendPasswordResetEmail(email);
+                showToast('Reset link sent to ' + email, 'info');
+            } catch (err) {
+                showToast(getErrorMsg(err.code), 'error');
+            } finally {
+                loader.style.display = 'none';
+            }
+        });
+
+        /* ── admin auth handler ── */
+        async function handleAdminAuth(user) {
+            if (user.email === ADMIN_EMAIL) {
+                showToast('Welcome back, Admin! 🌶️', 'success');
+                sessionStorage.setItem('adminAuthenticated', 'true');
+                sessionStorage.setItem('adminEmail', user.email);
+                sessionStorage.setItem('adminName', user.displayName || 'Admin');
+                setTimeout(() => { window.location.href = 'admin-dashboard.html'; }, 1000);
             } else {
-                // Instantly log out unauthorized users
-                signOut(auth);
+                await firebase.auth().signOut();
+                showToast('Access Denied: Unauthorized account', 'error');
+                const btn = document.getElementById('email-submit-btn');
+                setButtonLoading(btn, false);
+                loader.style.display = 'none';
             }
         }
-    });
-</script>
 
+        /* ── auto-redirect if already authenticated ── */
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user && user.email === ADMIN_EMAIL) {
+                window.location.href = 'admin-dashboard.html';
+            }
+        });
+
+        /* ── helpers ── */
+        function setButtonLoading(btn, loading) {
+            btn.disabled = loading;
+            btn.querySelector('.btn-text').style.display   = loading ? 'none'         : 'inline';
+            btn.querySelector('.btn-spinner').style.display = loading ? 'inline-block' : 'none';
+        }
+
+        function showToast(message, type) {
+            const toast = document.getElementById('toast');
+            const icon  = type === 'success' ? 'bx-check-circle'
+                        : type === 'info'    ? 'bx-info-circle'
+                        :                      'bx-error-circle';
+            toast.innerHTML = `<i class='bx ${icon}'></i><span>${message}</span>`;
+            toast.className = `show ${type}`;
+            setTimeout(() => { toast.className = ''; }, 3500);
+        }
+
+        function getErrorMsg(code) {
+            const map = {
+                'auth/user-not-found':      'No account found with this email.',
+                'auth/wrong-password':      'Incorrect password. Please try again.',
+                'auth/invalid-email':       'Please enter a valid email address.',
+                'auth/invalid-credential':  'Invalid email or password.',
+                'auth/popup-closed-by-user':'Sign-in popup was closed.',
+                'auth/too-many-requests':   'Too many attempts. Please try later.',
+                'auth/network-request-failed': 'Network error. Check your connection.',
+            };
+            return map[code] || 'Authentication failed. Please try again.';
+        }
+    </script>
 </body>
 </html>
