@@ -5,13 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Happy NonVeg Pickles – Combo Offer</title>
 
-    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-    <!-- Preload SVG icons for sidebar -->
     <link rel="preload" as="image" href="./assets/dashboard.svg">
     <link rel="preload" as="image" href="./assets/hover_dashboard.svg">
     <link rel="preload" as="image" href="./assets/fill_dashboard.svg">
@@ -40,10 +38,8 @@
     <link rel="preload" as="image" href="./assets/fill_combo.svg">
 
     <style>
-        /* ========== GLOBAL VARIABLES ========== */
         :root {
             --text-sub: #6b7280;
-            --header-height-desktop: 70px;
             --sidebar-width: 260px;
             --sidebar-collapsed-width: 90px;
             --row-height: 52px;
@@ -64,41 +60,25 @@
             --success-color: #10B981;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-decoration: none !important; }
-        body {
-            min-height: 100vh;
-            background: var(--page-bg);
-            font-family: "DM Sans", Roboto, sans-serif;
-            font-weight: 500;
-            color: var(--text-color);
-            overflow: hidden;
-            display: none; /* hidden until Firebase auth confirms */
-        }
+        body { min-height: 100vh; background: var(--page-bg); font-family: "DM Sans", Roboto, sans-serif; font-weight: 500; color: var(--text-color); overflow: hidden; display: none; }
 
-        /* LOGO */
-        .brand-logo { display: flex; align-items: center; text-decoration: none; transition: all 0.3s; }
+        .brand-logo { display: flex; align-items: center; text-decoration: none; }
         .brand-logo img { height: 45px; width: auto; display: block; }
         .mini-logo { display: none; align-items: center; justify-content: center; }
         .mini-logo img { height: 45px; width: auto; display: block; }
 
-        /* ICON SYSTEM */
         .icon { display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; flex-shrink: 0; }
         .icon-custom { position: relative; width: 24px; height: 24px; }
-        .icon-custom > span {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-size: contain; background-repeat: no-repeat; background-position: center;
-        }
+        .icon-custom > span { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: contain; background-repeat: no-repeat; background-position: center; }
         .icon-custom .icon-normal { display: block; }
         .icon-custom .icon-hover, .icon-custom .icon-active { display: none; }
         .nav-item:hover:not(.active) .icon-custom .icon-normal { display: none; }
         .nav-item:hover:not(.active) .icon-custom .icon-hover { display: block; }
-        .nav-item.active .icon-custom .icon-normal,
-        .nav-item.active .icon-custom .icon-hover { display: none; }
+        .nav-item.active .icon-custom .icon-normal, .nav-item.active .icon-custom .icon-hover { display: none; }
         .nav-item.active .icon-custom .icon-active { display: block; }
-        .nav-item.active.dropdown-open .icon-custom .icon-normal,
-        .nav-item.active.dropdown-open .icon-custom .icon-hover { display: none; }
+        .nav-item.active.dropdown-open .icon-custom .icon-normal, .nav-item.active.dropdown-open .icon-custom .icon-hover { display: none; }
         .nav-item.active.dropdown-open .icon-custom .icon-active { display: block; }
 
-        /* ICON FILE MAPPINGS */
         .icon-dashboard .icon-normal  { background-image: url('./assets/dashboard.svg'); }
         .icon-dashboard .icon-hover   { background-image: url('./assets/hover_dashboard.svg'); }
         .icon-dashboard .icon-active  { background-image: url('./assets/fill_dashboard.svg'); }
@@ -111,8 +91,6 @@
         .icon-site .icon-normal       { background-image: url('./assets/site.svg'); }
         .icon-site .icon-hover        { background-image: url('./assets/hover_site.svg'); }
         .icon-site .icon-active       { background-image: url('./assets/fill_site.svg'); }
-
-        /* SUBMENU ICON MAPPINGS */
         .icon-herosection .icon-normal  { background-image: url('./assets/herosection.svg'); }
         .icon-herosection .icon-hover   { background-image: url('./assets/hover_herosection.svg'); }
         .icon-herosection .icon-active  { background-image: url('./assets/fill_herosection.svg'); }
@@ -126,136 +104,62 @@
         .icon-combo .icon-hover         { background-image: url('./assets/hover_combo.svg'); }
         .icon-combo .icon-active        { background-image: url('./assets/fill_combo.svg'); }
 
-        /* Submenu item icon states */
         .nav-submenu-item .icon-custom .icon-normal { display: block; }
-        .nav-submenu-item .icon-custom .icon-hover,
-        .nav-submenu-item .icon-custom .icon-active { display: none; }
+        .nav-submenu-item .icon-custom .icon-hover, .nav-submenu-item .icon-custom .icon-active { display: none; }
         .nav-submenu-item:hover .icon-custom .icon-normal { display: none; }
         .nav-submenu-item:hover .icon-custom .icon-hover { display: block; }
-        .nav-submenu-item.active .icon-custom .icon-normal,
-        .nav-submenu-item.active .icon-custom .icon-hover { display: none; }
+        .nav-submenu-item.active .icon-custom .icon-normal, .nav-submenu-item.active .icon-custom .icon-hover { display: none; }
         .nav-submenu-item.active .icon-custom .icon-active { display: block; }
 
-        /* DESKTOP LAYOUT */
         .page-desktop { display: flex; height: 100vh; width: 100vw; }
-        .d-sidebar {
-            width: var(--sidebar-width); height: 100%; background: var(--sidebar-bg);
-            border-right: 1px solid var(--border-subtle); display: flex; flex-direction: column;
-            flex-shrink: 0; transition: width 0.3s cubic-bezier(0.4,0,0.2,1); z-index: 100;
-        }
-        .d-sidebar-header {
-            min-height: var(--header-height-desktop); display: flex; align-items: center;
-            justify-content: space-between; padding: 30px 24px; transition: all 0.3s;
-        }
-        .d-sidebar-inner {
-            flex: 1; padding: 10px 16px; display: flex; flex-direction: column;
-            overflow-y: auto; overflow-x: hidden;
-        }
-        .sidebar-toggle {
-            background: none; border: none; cursor: pointer; color: var(--icon-color);
-            display: flex; align-items: center; justify-content: center;
-            padding: 6px; border-radius: 8px; transition: 0.2s;
-        }
+        .d-sidebar { width: var(--sidebar-width); height: 100%; background: var(--sidebar-bg); border-right: 1px solid var(--border-subtle); display: flex; flex-direction: column; flex-shrink: 0; transition: width 0.3s cubic-bezier(0.4,0,0.2,1); z-index: 100; }
+        .d-sidebar-header { min-height: 70px; display: flex; align-items: center; justify-content: space-between; padding: 30px 24px; transition: all 0.3s; }
+        .d-sidebar-inner { flex: 1; padding: 10px 16px; display: flex; flex-direction: column; overflow-y: auto; overflow-x: hidden; }
+        .sidebar-toggle { background: none; border: none; cursor: pointer; color: var(--icon-color); display: flex; align-items: center; justify-content: center; padding: 6px; border-radius: 8px; transition: 0.2s; }
         .sidebar-toggle:hover { background: var(--hover-bg); color: var(--text-color); }
-
-        /* NAV ITEMS */
-        .nav-item {
-            position: relative; display: flex; align-items: center; height: var(--row-height);
-            padding: 0 16px; margin: 2px 0; border-radius: var(--radius-md); gap: 14px;
-            cursor: pointer; color: var(--text-color); text-decoration: none;
-            transition: background 0.2s, color 0.2s; white-space: nowrap; user-select: none;
-        }
+        .nav-item { position: relative; display: flex; align-items: center; height: var(--row-height); padding: 0 16px; margin: 2px 0; border-radius: var(--radius-md); gap: 14px; cursor: pointer; color: var(--text-color); text-decoration: none; transition: background 0.2s, color 0.2s; white-space: nowrap; user-select: none; }
         .nav-item:hover { background: var(--hover-bg); }
         .nav-item.active { background: var(--active-bg); color: var(--brand-primary); font-weight: 700; }
-
-        .nav-chevron {
-            margin-left: auto; width: 16px; height: 16px; stroke: currentColor;
-            flex-shrink: 0; transition: transform 0.25s ease;
-        }
+        .nav-chevron { margin-left: auto; width: 16px; height: 16px; stroke: currentColor; flex-shrink: 0; transition: transform 0.25s ease; }
         .nav-item.dropdown-open .nav-chevron { transform: rotate(90deg); }
-
-        /* SUBMENU */
-        .nav-submenu {
-            display: none; margin: 2px 0 4px 20px; padding-left: 16px;
-            border-left: 2px solid var(--border-subtle); flex-direction: column;
-        }
+        .nav-submenu { display: none; margin: 2px 0 4px 20px; padding-left: 16px; border-left: 2px solid var(--border-subtle); flex-direction: column; }
         .nav-submenu.open { display: flex; }
-        .nav-submenu-item {
-            display: flex; align-items: center; height: 50px; padding: 0 14px;
-            border-radius: 8px; margin: 1px 0; gap: 12px; cursor: pointer;
-            color: var(--text-color); font-size: 15px; font-weight: 600;
-            text-decoration: none; transition: background 0.15s, color 0.15s; white-space: nowrap;
-        }
+        .nav-submenu-item { display: flex; align-items: center; height: 50px; padding: 0 14px; border-radius: 8px; margin: 1px 0; gap: 12px; cursor: pointer; color: var(--text-color); font-size: 15px; font-weight: 600; text-decoration: none; transition: background 0.15s, color 0.15s; white-space: nowrap; }
         .nav-submenu-item:hover { background: var(--hover-bg); color: var(--brand-primary); }
         .nav-submenu-item.active { background: var(--active-bg); color: var(--brand-primary); font-weight: 700; }
-
-        /* ACCOUNT */
-        .d-account-section {
-            margin-top: auto; padding: 24px 16px; border-top: 1px solid var(--border-subtle); cursor: pointer;
-        }
+        .d-account-section { margin-top: auto; padding: 24px 16px; border-top: 1px solid var(--border-subtle); cursor: pointer; }
         .account-card { display: flex; align-items: center; gap: 12px; }
         .account-avatar { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border-subtle); object-fit: cover; flex-shrink: 0; }
-        .account-text { display: flex; flex-direction: column; overflow: hidden; transition: opacity 0.2s; }
+        .account-text { display: flex; flex-direction: column; overflow: hidden; }
         .account-name { font-size: 15px; font-weight: 700; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
-        .account-email { font-size: 13px; color: var(--text-sub); white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
-
+        .account-email { font-size: 13px; color: var(--text-sub); white-content: nowrap; text-overflow: ellipsis; overflow: hidden; }
         .d-main-wrapper { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-        .d-topbar {
-            height: 80px; background: var(--header-bg); border-bottom: 1px solid var(--border-subtle);
-            padding: 0 40px; display: flex; align-items: center; font-weight: 700; font-size: 20px;
-        }
+        .d-topbar { height: 80px; background: var(--header-bg); border-bottom: 1px solid var(--border-subtle); padding: 0 40px; display: flex; align-items: center; font-weight: 700; font-size: 20px; }
         .d-content { flex: 1; padding: 16px; overflow-y: auto; }
 
-        /* COLLAPSED SIDEBAR */
         .d-sidebar.collapsed { width: var(--sidebar-collapsed-width); }
-        .d-sidebar.collapsed .brand-logo,
-        .d-sidebar.collapsed .account-text,
-        .d-sidebar.collapsed .btn-close-svg,
-        .d-sidebar.collapsed .nav-chevron,
-        .d-sidebar.collapsed .nav-submenu { display: none !important; }
+        .d-sidebar.collapsed .brand-logo, .d-sidebar.collapsed .account-text, .d-sidebar.collapsed .btn-close-svg, .d-sidebar.collapsed .nav-chevron, .d-sidebar.collapsed .nav-submenu { display: none !important; }
         .d-sidebar.collapsed .nav-label { display: none; }
-        .d-sidebar.collapsed .mini-logo,
-        .d-sidebar.collapsed .btn-open-svg { display: flex; }
+        .d-sidebar.collapsed .mini-logo, .d-sidebar.collapsed .btn-open-svg { display: flex; }
         .btn-open-svg { display: none; }
         .d-sidebar.collapsed .d-sidebar-header { flex-direction: column; height: auto; padding: 30px 0 20px; gap: 30px; }
         .d-sidebar.collapsed .nav-item { justify-content: center; padding: 0; }
         .d-sidebar.collapsed .d-account-section { display: flex; justify-content: center; padding: 24px 0; }
         .d-sidebar.collapsed .d-sidebar-inner { overflow: visible; }
-        .d-sidebar.collapsed .nav-item:hover .nav-label {
-            display: block; position: absolute; left: 100%; top: 50%; transform: translateY(-50%);
-            background-color: var(--tooltip-bg); color: #fff; padding: 8px 12px; border-radius: 6px;
-            font-size: 13px; font-weight: 500; white-space: nowrap; z-index: 1000; margin-left: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15); pointer-events: none;
-        }
-        .d-sidebar.collapsed .nav-item:hover .nav-label::before {
-            content: ""; position: absolute; left: -6px; top: 50%; transform: translateY(-50%);
-            border-width: 6px 6px 6px 0; border-style: solid;
-            border-color: transparent var(--tooltip-bg) transparent transparent;
-        }
+        .d-sidebar.collapsed .nav-item:hover .nav-label { display: block; position: absolute; left: 100%; top: 50%; transform: translateY(-50%); background-color: var(--tooltip-bg); color: #fff; padding: 8px 12px; border-radius: 6px; font-size: 13px; font-weight: 500; white-space: nowrap; z-index: 1000; margin-left: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); pointer-events: none; }
+        .d-sidebar.collapsed .nav-item:hover .nav-label::before { content: ""; position: absolute; left: -6px; top: 50%; transform: translateY(-50%); border-width: 6px 6px 6px 0; border-style: solid; border-color: transparent var(--tooltip-bg) transparent transparent; }
 
-        /* MOBILE HEADER & OVERLAY (hidden on desktop) */
         .m-header { display: none; }
-        .m-header {
-            height: 72px; background: #fff; border-bottom: 1px solid var(--border-subtle);
-            align-items: center; justify-content: space-between;
-            padding: 0 16px; position: fixed; top: 0; width: 100%; z-index: 1000;
-        }
+        .m-header { height: 72px; background: #fff; border-bottom: 1px solid var(--border-subtle); align-items: center; justify-content: space-between; padding: 0 16px; position: fixed; top: 0; width: 100%; z-index: 1000; }
         .m-menu-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid #e5e7eb; background: #f9fafb; display: flex; align-items: center; justify-content: center; }
         .m-menu-lines { width: 18px; height: 14px; position: relative; }
         .m-menu-lines::before, .m-menu-lines::after, .m-menu-lines span { content: ""; position: absolute; left: 0; right: 0; height: 2px; background: #111827; border-radius: 10px; }
         .m-menu-lines::before { top: 0; }
         .m-menu-lines span { top: 6px; }
         .m-menu-lines::after { bottom: 0; }
-        .m-overlay {
-            position: fixed; inset: 0; background: rgba(15,23,42,0.45); opacity: 0;
-            pointer-events: none; transition: 0.25s; z-index: 2000;
-        }
+        .m-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.45); opacity: 0; pointer-events: none; transition: 0.25s; z-index: 2000; }
         .m-overlay.open { opacity: 1; pointer-events: auto; }
-        .m-drawer {
-            position: absolute; left: 0; top: 0; width: 300px; max-width: 85vw; height: 100%;
-            background: #fff; transform: translateX(-100%); transition: 0.25s;
-            display: flex; flex-direction: column; overflow-y: auto;
-        }
+        .m-drawer { position: absolute; left: 0; top: 0; width: 300px; max-width: 85vw; height: 100%; background: #fff; transform: translateX(-100%); transition: 0.25s; display: flex; flex-direction: column; overflow-y: auto; }
         .m-overlay.open .m-drawer { transform: translateX(0); }
         .m-drawer-header { height: 80px; padding: 0 20px; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
         .m-drawer-close { width: 40px; height: 40px; border-radius: 10px; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: center; background: #f9fafb; }
@@ -266,882 +170,738 @@
         .m-drawer-nav { padding: 20px 12px; flex: 1; }
         .m-account-section { padding: 20px; border-top: 1px solid var(--border-subtle); background: #fff; }
 
-        /* PROFILE POPUP */
-        .profile-popup {
-            position: fixed; background: #fff; border-radius: 12px; box-shadow: var(--shadow-premium);
-            border: 1px solid #e5e7eb; width: 260px; z-index: 3000; opacity: 0; pointer-events: none;
-            transition: 0.2s; overflow: hidden;
-        }
+        .profile-popup { position: fixed; background: #fff; border-radius: 12px; box-shadow: var(--shadow-premium); border: 1px solid #e5e7eb; width: 260px; z-index: 3000; opacity: 0; pointer-events: none; transition: 0.2s; overflow: hidden; }
         .profile-popup.active { opacity: 1; pointer-events: all; }
         .popup-header { padding: 16px; border-bottom: 1px solid #e5e7eb; background: #f9fafb; display: flex; align-items: center; gap: 12px; }
         .popup-list { list-style: none; padding: 8px; }
         .popup-list a { display: flex; align-items: center; gap: 12px; padding: 12px; text-decoration: none; color: var(--text-color); border-radius: 8px; cursor: pointer; }
         .popup-list a:hover { background: #f3f4f6; }
 
-        /* ========== GLOBAL BUTTONS ========== */
-        .primary-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 14px 24px;
-            border-radius: var(--radius-md);
-            border: none;
-            font-weight: 600;
-            font-size: 16px;
-            color: #ffffff;
-            background: var(--brand-primary);
-            transition: background 0.2s, transform 0.2s;
-            cursor: pointer;
-            letter-spacing: 0.2px;
-            white-space: nowrap;
-            font-family: inherit;
-        }
+        /* BUTTONS */
+        .primary-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 24px; border-radius: var(--radius-md); border: none; font-weight: 600; font-size: 16px; color: #fff; background: var(--brand-primary); transition: background 0.2s, transform 0.2s; cursor: pointer; font-family: inherit; }
         .primary-btn:hover { background: #5228d3; transform: translateY(-1px); }
         .primary-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-        .btn-secondary {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px 20px;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border-subtle);
-            background: #ffffff;
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text-color);
-            transition: background 0.2s, transform 0.2s;
-            cursor: pointer;
-            letter-spacing: 0.2px;
-            font-family: inherit;
-        }
+        .btn-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 20px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); background: #fff; font-size: 15px; font-weight: 600; color: var(--text-color); transition: background 0.2s, transform 0.2s; cursor: pointer; font-family: inherit; }
         .btn-secondary:hover { background: #f9fafb; transform: translateY(-1px); }
-        .danger-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 14px 24px;
-            border-radius: var(--radius-md);
-            border: none;
-            font-weight: 600;
-            font-size: 16px;
-            color: #ffffff;
-            background: var(--danger-color);
-            transition: background 0.2s, transform 0.2s;
-            cursor: pointer;
-            font-family: inherit;
-        }
-        .danger-btn:hover { background: #dc2626; transform: translateY(-1px); }
 
-        /* ========== PAGE CONTENT STYLES (scoped to .content-inner) ========== */
-        .content-inner {
-            --brand-primary: #643DE4;
-            --danger-color: #ef4444;
-            --success-color: #10B981;
-            --switch-on: #10B981;
-            --switch-off: #d1d5db;
-            --hover-bg: #f3f4f6;
-            --border-subtle: #e5e7eb;
-            --radius-md: 10px;
-            --radius-lg: 14px;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 16px 16px 24px;
-            width: 100%;
-            font-family: 'IBM Plex Sans', Roboto, sans-serif;
-            font-weight: 500;
-            font-size: 14px;
-            line-height: 20px;
-            color: var(--text-color);
-        }
-        .content-inner .page-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: rgb(29, 30, 32);
-        }
-        .content-inner .breadcrumbs {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            font-size: 13px;
-            color: var(--text-sub);
-            margin-bottom: 8px;
-        }
+        /* PAGE CONTENT */
+        .content-inner { --brand-primary: #643DE4; --danger-color: #ef4444; --success-color: #10B981; --switch-on: #10B981; --switch-off: #d1d5db; --hover-bg: #f3f4f6; --border-subtle: #e5e7eb; --radius-md: 10px; --radius-lg: 14px; max-width: 1000px; margin: 0 auto; padding: 16px 16px 24px; width: 100%; font-family: 'IBM Plex Sans', Roboto, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; color: var(--text-color); }
+        .content-inner .page-title { font-size: 20px; font-weight: 700; color: rgb(29,30,32); }
+        .content-inner .breadcrumbs { display: flex; gap: 8px; align-items: center; font-size: 13px; color: var(--text-sub); margin-bottom: 8px; }
         .content-inner .breadcrumbs .divider { color: #d1d5db; }
         .content-inner .breadcrumbs img { width: 18px; height: 18px; vertical-align: middle; }
-        .content-inner .header-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-        }
-        .content-inner .card {
-            background: #ffffff;
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--border-subtle);
-            margin-bottom: 24px;
-            overflow: hidden;
-        }
-        .content-inner .card-header {
-            padding: 24px 20px;
-            border-bottom: 1px solid var(--border-subtle);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .content-inner .header-section { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+        .content-inner .card { background: #fff; border-radius: var(--radius-lg); border: 1px solid var(--border-subtle); margin-bottom: 24px; overflow: hidden; }
+        .content-inner .card-header { padding: 20px; border-bottom: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
         .content-inner .card-body { padding: 24px 20px; }
-        .content-inner .card-footer {
-            padding: 20px;
-            border-top: 1px solid var(--border-subtle);
-            display: flex;
-            justify-content: flex-end;
-            gap: 12px;
-            background: #fafafa;
-        }
 
-        /* Toggle switch */
+        /* Toggle */
         .content-inner .toggle-wrapper { display: flex; align-items: center; gap: 12px; }
         .content-inner .toggle-switch { width: 44px; height: 24px; position: relative; display: inline-block; }
         .content-inner .toggle-switch input { opacity: 0; width: 0; height: 0; }
-        .content-inner .slider {
-            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: var(--switch-off); transition: .3s; border-radius: 34px;
-        }
-        .content-inner .slider:before {
-            position: absolute; content: ""; height: 18px; width: 18px;
-            left: 3px; bottom: 3px; background-color: white;
-            transition: .3s; border-radius: 50%;
-        }
+        .content-inner .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--switch-off); transition: .3s; border-radius: 34px; }
+        .content-inner .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
         .content-inner .toggle-switch input:checked + .slider { background-color: var(--switch-on); }
         .content-inner .toggle-switch input:checked + .slider:before { transform: translateX(20px); }
 
         /* Forms */
-        .content-inner .form-group { margin-bottom: 20px; }
-        .content-inner .form-label {
-            display: block;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-        .content-inner .required-mark { color: var(--danger-color); }
-        .content-inner .form-input {
-            width: 100%;
-            padding: 0.875rem 1rem;
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-md);
-            background: white;
-            transition: all 0.15s ease;
-            font-size: 0.95rem;
-            color: var(--text-color);
-            font-family: inherit;
-        }
-        .content-inner .form-input:focus {
-            border-color: var(--brand-primary);
-            box-shadow: 0 0 0 3px rgba(100, 61, 228, 0.1);
-            outline: none;
-        }
+        .content-inner .form-group { margin-bottom: 16px; }
+        .content-inner .form-label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+        .content-inner .form-input { width: 100%; padding: 0.875rem 1rem; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); background: white; transition: all 0.15s ease; font-size: 0.95rem; color: var(--text-color); font-family: inherit; }
+        .content-inner .form-input:focus { border-color: var(--brand-primary); box-shadow: 0 0 0 3px rgba(100,61,228,0.1); outline: none; }
 
         /* Pickle grid */
-        .content-inner .filter-row { display: flex; gap: 12px; align-items: flex-end; margin-bottom: 20px; }
-        .content-inner .pickle-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 16px;
-            margin-top: 16px;
-        }
-        .content-inner .pickle-card {
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-md);
-            padding: 12px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-            transition: border 0.2s;
-        }
+        .content-inner .filter-row { display: flex; gap: 12px; align-items: flex-end; margin-bottom: 16px; }
+        .content-inner .pickle-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+        .content-inner .pickle-card { border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 12px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: border 0.2s; }
         .content-inner .pickle-card:hover { border-color: var(--brand-primary); background: #fdfcff; }
         .content-inner .pickle-card.selected { border-color: var(--brand-primary); background: #f2efff; }
-        .content-inner .pickle-card img { width: 40px; height: 40px; border-radius: 6px; object-fit: cover; }
-        .content-inner .pickle-card input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--brand-primary); cursor: pointer; }
+        .content-inner .pickle-card img { width: 40px; height: 40px; border-radius: 6px; object-fit: cover; flex-shrink: 0; }
+        .content-inner .pickle-card input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--brand-primary); cursor: pointer; flex-shrink: 0; }
 
-        /* Image rows */
-        .content-inner .image-row {
-            display: flex;
-            gap: 16px;
-            align-items: center;
-            padding: 12px;
+        /* ========== R2 UPLOAD STYLES (compact for image rows) ========== */
+        /* Each pickle image row */
+        .combo-img-row {
             border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-md);
+            border-radius: 12px;
+            padding: 14px 16px;
             margin-bottom: 12px;
             background: #fafafa;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
-        .content-inner .image-row span {
-            font-weight: 600;
-            width: 200px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        .combo-img-row-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: rgb(29,30,32);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
+        .combo-img-row-title img {
+            width: 32px; height: 32px;
+            border-radius: 6px; object-fit: cover;
+            border: 1px solid var(--border-subtle);
+        }
+        /* Mini upload zone */
+        .mini-upload-zone {
+            border: 2px dashed #d1d5db;
+            border-radius: 10px;
+            padding: 16px 12px;
+            text-align: center;
+            cursor: pointer;
+            background: #fff;
+            transition: all 0.2s;
+        }
+        .mini-upload-zone:hover, .mini-upload-zone.dragover {
+            border-color: var(--brand-primary);
+            background: #f5f0ff;
+        }
+        .mini-upload-zone-inner { display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .mini-upload-zone-inner i { font-size: 16px; color: var(--brand-primary); }
+        .mini-upload-zone-inner span { font-size: 13px; font-weight: 600; color: var(--text-sub); }
+        .mini-upload-zone-inner span b { color: var(--brand-primary); }
 
-        /* ========== RESPONSIVE ========== */
+        /* Mini preview */
+        .mini-img-preview {
+            display: none;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-subtle);
+            background: #f9fafb;
+            position: relative;
+        }
+        .mini-img-preview.visible { display: block; }
+        .mini-img-preview img { width: 100%; height: 110px; object-fit: cover; display: block; }
+        .mini-img-actions {
+            position: absolute; bottom: 6px; right: 6px;
+            display: flex; gap: 6px;
+        }
+        .mini-img-btn {
+            background: rgba(255,255,255,0.93);
+            border: 1px solid var(--border-subtle);
+            border-radius: 6px; padding: 5px 10px;
+            font-size: 11px; font-weight: 700;
+            cursor: pointer; display: flex; align-items: center; gap: 4px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+            transition: background 0.15s;
+        }
+        .mini-img-btn:hover { background: #fff; }
+        .mini-img-btn.danger { color: var(--danger-color); border-color: #fca5a5; }
+
+        /* Mini progress */
+        .mini-progress { display: none; margin-top: 6px; }
+        .mini-progress.visible { display: block; }
+        .mini-progress-track { height: 4px; background: #e5e7eb; border-radius: 2px; overflow: hidden; }
+        .mini-progress-fill { height: 100%; background: linear-gradient(90deg, var(--brand-primary), #8b5cf6); border-radius: 2px; transition: width 0.3s ease; width: 0%; }
+        .mini-progress-text { font-size: 11px; color: var(--text-sub); margin-top: 3px; display: flex; justify-content: space-between; }
+
+        /* Toast */
+        .toast-container { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; align-items: center; gap: 10px; pointer-events: none; }
+        .toast { display: flex; align-items: center; gap: 10px; padding: 13px 20px; border-radius: 12px; font-size: 14px; font-weight: 600; box-shadow: 0 8px 28px rgba(0,0,0,0.14); pointer-events: none; animation: toastIn 0.35s cubic-bezier(0.16,1,0.3,1) forwards; font-family: 'IBM Plex Sans', sans-serif; max-width: 380px; white-space: nowrap; }
+        .toast.success { background: #ecfdf5; color: #065f46; border: 1px solid #6ee7b7; }
+        .toast.error { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
+        .toast.warning { background: #fffbeb; color: #92400e; border: 1px solid #fcd34d; }
+        .toast.info { background: #eff6ff; color: #1e40af; border: 1px solid #93c5fd; }
+        .toast.hide { animation: toastOut 0.3s ease forwards; }
+        @keyframes toastIn { from { opacity: 0; transform: translateY(16px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes toastOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(8px); } }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
         @media (max-width: 768px) {
             .d-sidebar { display: none; }
             .d-topbar { display: none; }
             .d-content { padding: 8px; padding-top: 80px; padding-bottom: 100px; }
-
             .m-header { display: flex; }
-
             .profile-popup { bottom: 100px; left: 50%; transform: translateX(-50%); }
-            .brand-logo img { height: 45px; }
-
             .content-inner { padding: 16px; }
-            .content-inner .header-section { flex-direction: column; align-items: flex-start; gap: 16px; }
+            .content-inner .header-section { flex-direction: column; align-items: flex-start; }
             .content-inner .filter-row { flex-direction: column; align-items: stretch; }
             .content-inner .pickle-grid { grid-template-columns: 1fr; }
-            .content-inner .image-row { flex-direction: column; align-items: stretch; }
-            .content-inner .image-row span { width: 100%; }
+            .primary-btn, .btn-secondary { width: 100%; justify-content: center; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ========== MOBILE HEADER ========== -->
-    <header class="m-header" id="mobile-header">
-        <button class="m-menu-btn" id="m-open-drawer">
-            <div class="m-menu-lines"><span></span></div>
-        </button>
-        <a href="#" class="brand-logo">
-            <img src="./assets/logo.png" alt="Happy NonVeg Pickles">
-        </a>
-        <div style="width:40px;"></div>
-    </header>
+<div class="toast-container" id="toastContainer"></div>
 
-    <!-- ========== MOBILE DRAWER OVERLAY ========== -->
-    <div class="m-overlay" id="m-overlay">
-        <div class="m-drawer">
-            <div class="m-drawer-header">
-                <span class="brand-logo">
-                    <img src="./assets/logo.png" alt="Happy NonVeg Pickles">
-                </span>
-                <button class="m-drawer-close" id="m-close-drawer">
-                    <div class="m-drawer-close-icon"></div>
-                </button>
+<!-- MOBILE HEADER -->
+<header class="m-header" id="mobile-header">
+    <button class="m-menu-btn" id="m-open-drawer"><div class="m-menu-lines"><span></span></div></button>
+    <a href="#" class="brand-logo"><img src="./assets/logo.png" alt="Happy NonVeg Pickles"></a>
+    <div style="width:40px;"></div>
+</header>
+
+<!-- MOBILE DRAWER -->
+<div class="m-overlay" id="m-overlay">
+    <div class="m-drawer">
+        <div class="m-drawer-header">
+            <span class="brand-logo"><img src="./assets/logo.png" alt="Happy NonVeg Pickles"></span>
+            <button class="m-drawer-close" id="m-close-drawer"><div class="m-drawer-close-icon"></div></button>
+        </div>
+        <nav class="m-drawer-nav">
+            <a href="dashboard.html" class="nav-item"><span class="icon icon-custom icon-dashboard"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span><span class="nav-label">Dashboard</span></a>
+            <a href="manage-categories.html" class="nav-item"><span class="icon icon-custom icon-inventory"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span><span class="nav-label">Inventory</span></a>
+            <a href="coupons.html" class="nav-item"><span class="icon icon-custom icon-coupons"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span><span class="nav-label">Manage Coupons</span></a>
+            <div class="nav-item active dropdown-open" id="m-site-toggle"><span class="icon icon-custom icon-site"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span><span class="nav-label">Customize Site</span><svg class="nav-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></div>
+            <div class="nav-submenu open" id="m-site-submenu">
+                <a href="manage_herosection.html" class="nav-submenu-item"><span class="icon icon-custom icon-herosection"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>Hero Section</a>
+                <a href="manage-sections.html" class="nav-submenu-item"><span class="icon icon-custom icon-sections"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>Sections</a>
+                <a href="manage-popup.html" class="nav-submenu-item"><span class="icon icon-custom icon-popup"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>Popup</a>
+                <a href="manage-combo.html" class="nav-submenu-item active"><span class="icon icon-custom icon-combo"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>Combo Offer</a>
             </div>
+        </nav>
+        <div class="m-account-section" id="profile-trigger-mobile">
+            <div class="account-card"><img class="account-avatar" src="" alt="User"><div class="account-text"><div class="account-name">Loading...</div><div class="account-email">loading...</div></div></div>
+        </div>
+    </div>
+</div>
 
-            <nav class="m-drawer-nav">
-                <a href="dashboard.html" class="nav-item">
-                    <span class="icon icon-custom icon-dashboard">
-                        <span class="icon-normal"></span>
-                        <span class="icon-hover"></span>
-                        <span class="icon-active"></span>
-                    </span>
-                    <span class="nav-label">Dashboard</span>
-                </a>
-                <a href="manage-categories.html" class="nav-item">
-                    <span class="icon icon-custom icon-inventory">
-                        <span class="icon-normal"></span>
-                        <span class="icon-hover"></span>
-                        <span class="icon-active"></span>
-                    </span>
-                    <span class="nav-label">Inventory</span>
-                </a>
-                <a href="coupons.html" class="nav-item">
-                    <span class="icon icon-custom icon-coupons">
-                        <span class="icon-normal"></span>
-                        <span class="icon-hover"></span>
-                        <span class="icon-active"></span>
-                    </span>
-                    <span class="nav-label">Manage Coupons</span>
-                </a>
-
-                <!-- CUSTOMIZE SITE ACTIVE & OPEN -->
-                <div class="nav-item active dropdown-open" id="m-site-toggle">
-                    <span class="icon icon-custom icon-site">
-                        <span class="icon-normal"></span>
-                        <span class="icon-hover"></span>
-                        <span class="icon-active"></span>
-                    </span>
-                    <span class="nav-label">Customize Site</span>
-                    <svg class="nav-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="m9 18 6-6-6-6"/>
-                    </svg>
-                </div>
-
-                <div class="nav-submenu open" id="m-site-submenu">
-                    <a href="manage_herosection.html" class="nav-submenu-item">
-                        <span class="icon icon-custom icon-herosection">
-                            <span class="icon-normal"></span>
-                            <span class="icon-hover"></span>
-                            <span class="icon-active"></span>
-                        </span>
-                        Hero Section
-                    </a>
-                    <a href="manage-sections.html" class="nav-submenu-item">
-                        <span class="icon icon-custom icon-sections">
-                            <span class="icon-normal"></span>
-                            <span class="icon-hover"></span>
-                            <span class="icon-active"></span>
-                        </span>
-                        Sections
-                    </a>
-                    <a href="manage-popup.html" class="nav-submenu-item">
-                        <span class="icon icon-custom icon-popup">
-                            <span class="icon-normal"></span>
-                            <span class="icon-hover"></span>
-                            <span class="icon-active"></span>
-                        </span>
-                        Popup
-                    </a>
-                    <a href="manage-combo.html" class="nav-submenu-item active">
-                        <span class="icon icon-custom icon-combo">
-                            <span class="icon-normal"></span>
-                            <span class="icon-hover"></span>
-                            <span class="icon-active"></span>
-                        </span>
-                        Combo Offer
-                    </a>
+<!-- DESKTOP -->
+<div class="page-desktop">
+    <aside class="d-sidebar" id="sidebar">
+        <div class="d-sidebar-header">
+            <a href="#" class="brand-logo"><img src="./assets/logo.png" alt="Happy NonVeg Pickles"></a>
+            <span class="mini-logo"><img src="./assets/logo-small.png" alt="H"></span>
+            <button class="sidebar-toggle" id="sidebar-toggle-btn">
+                <img class="btn-close-svg" src="./assets/panel_close.svg" alt="Close sidebar" width="24" height="24">
+                <img class="btn-open-svg" src="./assets/panel_open.svg" alt="Open sidebar" width="24" height="24">
+            </button>
+        </div>
+        <div class="d-sidebar-inner">
+            <nav>
+                <a href="dashboard.html" class="nav-item"><span class="icon icon-custom icon-dashboard"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span><span class="nav-label">Dashboard</span></a>
+                <a href="manage-categories.html" class="nav-item"><span class="icon icon-custom icon-inventory"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span><span class="nav-label">Inventory</span></a>
+                <a href="coupons.html" class="nav-item"><span class="icon icon-custom icon-coupons"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span><span class="nav-label">Manage Coupons</span></a>
+                <div class="nav-item active dropdown-open" id="d-site-toggle"><span class="icon icon-custom icon-site"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span><span class="nav-label">Customize Site</span><svg class="nav-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></div>
+                <div class="nav-submenu open" id="d-site-submenu">
+                    <a href="manage_herosection.html" class="nav-submenu-item"><span class="icon icon-custom icon-herosection"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>Hero Section</a>
+                    <a href="manage-sections.html" class="nav-submenu-item"><span class="icon icon-custom icon-sections"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>Sections</a>
+                    <a href="manage-popup.html" class="nav-submenu-item"><span class="icon icon-custom icon-popup"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>Popup</a>
+                    <a href="manage-combo.html" class="nav-submenu-item active"><span class="icon icon-custom icon-combo"><span class="icon-normal"></span><span class="icon-hover"></span><span class="icon-active"></span></span>Combo Offer</a>
                 </div>
             </nav>
-
-            <div class="m-account-section" id="profile-trigger-mobile">
-                <div class="account-card">
-                    <img class="account-avatar" src="" alt="User">
-                    <div class="account-text">
-                        <div class="account-name">Loading...</div>
-                        <div class="account-email">loading...</div>
-                    </div>
-                </div>
+            <div class="d-account-section" id="profile-trigger-desktop">
+                <div class="account-card"><img class="account-avatar" src="" alt="User"><div class="account-text"><div class="account-name">Loading...</div><div class="account-email">loading...</div></div></div>
             </div>
         </div>
-    </div>
+    </aside>
 
-    <!-- ========== DESKTOP LAYOUT ========== -->
-    <div class="page-desktop">
-        <aside class="d-sidebar" id="sidebar">
-            <div class="d-sidebar-header">
-                <a href="#" class="brand-logo">
-                    <img src="./assets/logo.png" alt="Happy NonVeg Pickles">
-                </a>
-                <span class="mini-logo">
-                    <img src="./assets/logo-small.png" alt="H">
-                </span>
-                <button class="sidebar-toggle" id="sidebar-toggle-btn">
-                    <img class="btn-close-svg" src="./assets/panel_close.svg" alt="Close sidebar" width="24" height="24">
-                    <img class="btn-open-svg" src="./assets/panel_open.svg" alt="Open sidebar" width="24" height="24">
-                </button>
-            </div>
-
-            <div class="d-sidebar-inner">
-                <nav>
-                    <a href="dashboard.html" class="nav-item">
-                        <span class="icon icon-custom icon-dashboard">
-                            <span class="icon-normal"></span>
-                            <span class="icon-hover"></span>
-                            <span class="icon-active"></span>
-                        </span>
-                        <span class="nav-label">Dashboard</span>
-                    </a>
-                    <a href="manage-categories.html" class="nav-item">
-                        <span class="icon icon-custom icon-inventory">
-                            <span class="icon-normal"></span>
-                            <span class="icon-hover"></span>
-                            <span class="icon-active"></span>
-                        </span>
-                        <span class="nav-label">Inventory</span>
-                    </a>
-                    <a href="coupons.html" class="nav-item">
-                        <span class="icon icon-custom icon-coupons">
-                            <span class="icon-normal"></span>
-                            <span class="icon-hover"></span>
-                            <span class="icon-active"></span>
-                        </span>
-                        <span class="nav-label">Manage Coupons</span>
-                    </a>
-
-                    <!-- CUSTOMIZE SITE ACTIVE & OPEN -->
-                    <div class="nav-item active dropdown-open" id="d-site-toggle">
-                        <span class="icon icon-custom icon-site">
-                            <span class="icon-normal"></span>
-                            <span class="icon-hover"></span>
-                            <span class="icon-active"></span>
-                        </span>
-                        <span class="nav-label">Customize Site</span>
-                        <svg class="nav-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m9 18 6-6-6-6"/>
-                        </svg>
-                    </div>
-
-                    <div class="nav-submenu open" id="d-site-submenu">
-                        <a href="manage_herosection.html" class="nav-submenu-item">
-                            <span class="icon icon-custom icon-herosection">
-                                <span class="icon-normal"></span>
-                                <span class="icon-hover"></span>
-                                <span class="icon-active"></span>
-                            </span>
-                            Hero Section
-                        </a>
-                        <a href="manage-sections.html" class="nav-submenu-item">
-                            <span class="icon icon-custom icon-sections">
-                                <span class="icon-normal"></span>
-                                <span class="icon-hover"></span>
-                                <span class="icon-active"></span>
-                            </span>
-                            Sections
-                        </a>
-                        <a href="manage-popup.html" class="nav-submenu-item">
-                            <span class="icon icon-custom icon-popup">
-                                <span class="icon-normal"></span>
-                                <span class="icon-hover"></span>
-                                <span class="icon-active"></span>
-                            </span>
-                            Popup
-                        </a>
-                        <a href="manage-combo.html" class="nav-submenu-item active">
-                            <span class="icon icon-custom icon-combo">
-                                <span class="icon-normal"></span>
-                                <span class="icon-hover"></span>
-                                <span class="icon-active"></span>
-                            </span>
-                            Combo Offer
-                        </a>
-                    </div>
-                </nav>
-
-                <div class="d-account-section" id="profile-trigger-desktop">
-                    <div class="account-card">
-                        <img class="account-avatar" src="" alt="User">
-                        <div class="account-text">
-                            <div class="account-name">Loading...</div>
-                            <div class="account-email">loading...</div>
+    <div class="d-main-wrapper">
+        <header class="d-topbar">Combo Offer</header>
+        <main class="d-content">
+            <div class="content-inner">
+                <div class="header-section">
+                    <div>
+                        <div class="breadcrumbs">
+                            <img src="./assets/home_icon.svg" alt="Home" />
+                            <span class="divider">/</span>
+                            <span style="color: var(--text-sub);">Customize Site</span>
+                            <span class="divider">/</span>
+                            <span style="color: var(--brand-primary); font-weight: 600;">Combo Offer</span>
                         </div>
+                        <h2 class="page-title" id="page-heading">Create Combo Offer</h2>
                     </div>
-                </div>
-            </div>
-        </aside>
-
-        <div class="d-main-wrapper">
-            <header class="d-topbar">Combo Offer</header>
-            <main class="d-content">
-                <!-- ========== PAGE CONTENT ========== -->
-                <div class="content-inner">
-                    <div class="header-section">
-                        <div>
-                            <div class="breadcrumbs">
-                                <img src="./assets/home_icon.svg" alt="Home" />
-                                <span class="divider">/</span>
-                                <span style="color: var(--text-sub);">Customize Site</span>
-                                <span class="divider">/</span>
-                                <span style="color: var(--brand-primary); font-weight: 600;">Combo Offer</span>
-                            </div>
-                            <h2 class="page-title" id="page-heading">Create Combo Offer</h2>
-                        </div>
-                        <div class="toggle-wrapper">
-                            <span style="font-weight: 600; color: var(--text-color);">Offer Status</span>
-                            <label class="toggle-switch">
-                                <input type="checkbox" id="combo-active" checked>
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Combo Details card removed – Name & Price are fixed -->
-
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 style="font-size: 16px; font-weight: 600;">Select Pickles (Max 8)</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="filter-row">
-                                <div style="flex: 1;">
-                                    <label class="form-label">Filter by Weight Variant</label>
-                                    <input type="text" id="weight-filter" class="form-input" placeholder="e.g. 250g, 500g">
-                                </div>
-                                <button onclick="app.fetchPicklesByWeight()" class="btn-secondary" style="height: 46px;">
-                                    <i class="fas fa-search"></i> Fetch Pickles
-                                </button>
-                            </div>
-                            
-                            <div style="font-size: 13px; color: var(--text-sub); margin-bottom: 8px;">
-                                Selected: <span id="selection-count" style="font-weight: 700; color: var(--brand-primary);">0</span> / 8
-                            </div>
-
-                            <div id="pickle-grid" class="pickle-grid">
-                                <p style="color: var(--text-sub); font-size: 13px; grid-column: 1 / -1;">Enter a weight variant above and click fetch to see available pickles.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card" id="images-card" style="display: none;">
-                        <div class="card-header">
-                            <h3 style="font-size: 16px; font-weight: 600;">Custom Images for Selected Pickles</h3>
-                            <span style="font-size: 12px; color: var(--text-sub);">Assign a specific image for each pickle in this combo</span>
-                        </div>
-                        <div class="card-body" id="custom-images-container"></div>
-                    </div>
-
-                    <div style="display: flex; justify-content: flex-end; gap: 12px; margin-bottom: 40px;">
-                        <button onclick="window.history.back()" class="btn-secondary">Cancel</button>
-                        <button onclick="app.saveCombo()" id="save-btn" class="primary-btn">
-                            <i class="fas fa-save"></i> Save Combo Offer
-                        </button>
-                    </div>
-                </div>
-            </main>
-        </div>
-    </div>
-
-    <!-- ========== PROFILE POPUP ========== -->
-    <div class="profile-popup" id="profile-popup">
-        <div class="popup-header">
-            <img class="account-avatar" src="" alt="User">
-            <div class="account-text">
-                <div class="account-name">Loading...</div>
-                <div class="account-email">loading...</div>
-            </div>
-        </div>
-        <ul class="popup-list">
-            <li><a id="logout-btn" style="color:var(--danger-color)"><span>Logout</span></a></li>
-        </ul>
-    </div>
-
-    <!-- ========== COMBINED JAVASCRIPT ========== -->
-    <script type="module">
-        // ========== FIREBASE INIT ==========
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, getDocs, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyCZbCr-Zt5KQblRQ8Pk58KuinCVP-TlXGo",
-            authDomain: "happynonvegpickles-f2636.firebaseapp.com",
-            projectId: "happynonvegpickles-f2636",
-            storageBucket: "happynonvegpickles-f2636.firebasestorage.app",
-            messagingSenderId: "802823212924",
-            appId: "1:802823212924:web:d82c92737ffa950798def9"
-        };
-        const firebaseApp = initializeApp(firebaseConfig);
-        const auth = getAuth(firebaseApp);
-        const db = getFirestore(firebaseApp);
-        const ALLOWED_ADMIN = "harshavardhanjw@gmail.com";
-
-        // ========== SVG PRELOAD (for sidebar) ==========
-        [
-            './assets/dashboard.svg','./assets/hover_dashboard.svg','./assets/fill_dashboard.svg',
-            './assets/inventory.svg','./assets/hover_inventory.svg','./assets/fill_inventory.svg',
-            './assets/coupons.svg','./assets/hover_coupons.svg','./assets/fill_coupons.svg',
-            './assets/site.svg','./assets/hover_site.svg','./assets/fill_site.svg',
-            './assets/herosection.svg','./assets/hover_herosection.svg','./assets/fill_herosection.svg',
-            './assets/sections.svg','./assets/hover_sections.svg','./assets/fill_sections.svg',
-            './assets/popup.svg','./assets/hover_popup.svg','./assets/fill_popup.svg',
-            './assets/combo.svg','./assets/hover_combo.svg','./assets/fill_combo.svg',
-            './assets/panel_close.svg','./assets/panel_open.svg'
-        ].forEach(src => { const i = new Image(); i.src = src; });
-
-        // ========== AUTH ==========
-        onAuthStateChanged(auth, (user) => {
-            if (!user || user.email !== ALLOWED_ADMIN) {
-                if (user) {
-                    signOut(auth).then(() => window.location.href = './');
-                } else {
-                    window.location.href = './';
-                }
-            } else {
-                document.body.style.display = 'block';
-                const avatars = document.querySelectorAll('.account-avatar');
-                const names = document.querySelectorAll('.account-name');
-                const emails = document.querySelectorAll('.account-email');
-                const defaultAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || 'Admin')}&background=673DE6&color=fff`;
-                avatars.forEach(img => img.src = user.photoURL || defaultAvatar);
-                names.forEach(name => name.textContent = user.displayName || 'Admin');
-                emails.forEach(email => email.textContent = user.email);
-            }
-        });
-
-        document.getElementById('logout-btn').addEventListener('click', (e) => {
-            e.preventDefault();
-            signOut(auth).then(() => window.location.href = './');
-        });
-
-        // ========== DASHBOARD UI ==========
-        const sidebar = document.getElementById('sidebar');
-        document.getElementById('sidebar-toggle-btn').addEventListener('click', () => sidebar.classList.toggle('collapsed'));
-
-        function clearNavActive(nav) {
-            nav.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-        }
-
-        function setupDropdown(toggleId, submenuId) {
-            const toggle  = document.getElementById(toggleId);
-            const submenu = document.getElementById(submenuId);
-            if (!toggle || !submenu) return;
-
-            toggle.addEventListener('click', () => {
-                if (sidebar && sidebar.classList.contains('collapsed')) {
-                    sidebar.classList.remove('collapsed');
-                    setTimeout(() => {
-                        submenu.classList.add('open');
-                        toggle.classList.add('dropdown-open');
-                    }, 300);
-                    return;
-                }
-                const isOpen = submenu.classList.contains('open');
-                submenu.classList.toggle('open', !isOpen);
-                toggle.classList.toggle('dropdown-open', !isOpen);
-            });
-
-            submenu.querySelectorAll('.nav-submenu-item').forEach(item => {
-                item.addEventListener('click', function (e) {
-                    e.stopPropagation();
-                    const parentNav = toggle.closest('nav') || toggle.parentElement;
-                    clearNavActive(parentNav);
-                    submenu.querySelectorAll('.nav-submenu-item').forEach(i => i.classList.remove('active'));
-                    this.classList.add('active');
-                    toggle.classList.add('dropdown-open', 'active');
-                    submenu.classList.add('open');
-                });
-            });
-        }
-        setupDropdown('d-site-toggle', 'd-site-submenu');
-        setupDropdown('m-site-toggle', 'm-site-submenu');
-
-        // Mobile drawer
-        const mOverlay = document.getElementById('m-overlay');
-        document.getElementById('m-open-drawer').onclick = () => mOverlay.classList.add('open');
-        document.getElementById('m-close-drawer').onclick = () => mOverlay.classList.remove('open');
-        mOverlay.onclick = (e) => { if (e.target === mOverlay) mOverlay.classList.remove('open'); };
-
-        // Profile popup
-        const pPopup = document.getElementById('profile-popup');
-        ['profile-trigger-desktop','profile-trigger-mobile'].forEach(id => {
-            const el = document.getElementById(id);
-            if (!el) return;
-            el.onclick = (e) => {
-                e.stopPropagation();
-                if (window.innerWidth > 768) { pPopup.style.left = '16px'; pPopup.style.bottom = '80px'; }
-                pPopup.classList.toggle('active');
-            };
-        });
-        document.addEventListener('click', () => pPopup.classList.remove('active'));
-
-        // Regular nav active state
-        document.querySelectorAll('.nav-item:not(#d-site-toggle):not(#m-site-toggle)').forEach(item => {
-            item.addEventListener('click', function () {
-                const parentNav = this.closest('nav');
-                if (parentNav) clearNavActive(parentNav);
-                this.classList.add('active');
-                ['d-site-toggle', 'm-site-toggle'].forEach(id => {
-                    const t = document.getElementById(id);
-                    t?.classList.remove('active', 'dropdown-open');
-                });
-                ['d-site-submenu', 'm-site-submenu'].forEach(id => {
-                    const s = document.getElementById(id);
-                    if (s) {
-                        s.classList.remove('open');
-                        s.querySelectorAll('.nav-submenu-item').forEach(i => i.classList.remove('active'));
-                    }
-                });
-            });
-        });
-
-        // ========== COMBO OFFER LOGIC ==========
-        let existingComboId = null;
-
-        window.app = {
-            allProducts: [],
-            filteredProducts: [],
-            selectedPickles: [],
-
-            init: async () => {
-                try {
-                    // Load all products
-                    const prodSnap = await getDocs(collection(db, 'products'));
-                    window.app.allProducts = prodSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
-                    // Check for existing combo (only one)
-                    const combosSnap = await getDocs(collection(db, 'combos'));
-                    if (!combosSnap.empty) {
-                        const comboDoc = combosSnap.docs[0];
-                        const combo = comboDoc.data();
-                        existingComboId = comboDoc.id;
-                        
-                        // Populate form
-                        document.getElementById('combo-active').checked = combo.isActive;
-                        document.getElementById('weight-filter').value = combo.weightVariant || '';
-                        document.getElementById('page-heading').innerText = 'Edit Combo Offer';
-
-                        // Automatically fetch pickles for the stored weight variant
-                        window.app.fetchPicklesByWeight(true);   // true = keep existing selections (we'll override after)
-                        
-                        // After fetching, restore selected pickles from saved combo
-                        // (We need to wait for fetchPicklesByWeight to finish – it's synchronous, so we can call immediately after)
-                        window.app.selectedPickles = [];
-                        if (combo.items) {
-                            combo.items.forEach(item => {
-                                // Try to find matching product in filtered list
-                                const matchingProduct = window.app.filteredProducts.find(p => p.id === item.id);
-                                if (matchingProduct) {
-                                    const fallbackImg = matchingProduct.image || '';
-                                    window.app.selectedPickles.push({
-                                        id: item.id,
-                                        name: item.name,
-                                        fallbackImage: fallbackImg,
-                                        customImage: item.image !== fallbackImg ? item.image : ''
-                                    });
-                                } else {
-                                    // Product not found in filtered list – still add with stored image as custom
-                                    window.app.selectedPickles.push({
-                                        id: item.id,
-                                        name: item.name,
-                                        fallbackImage: item.image || '',   // use stored image as fallback
-                                        customImage: item.image || ''
-                                    });
-                                }
-                            });
-                        }
-
-                        // Re-render with restored selections
-                        window.app.renderPickles();
-                        window.app.renderImageInputs();
-                    }
-                } catch (error) {
-                    console.error("Error initializing:", error);
-                    alert("Failed to load data. Please check your connection.");
-                }
-            },
-
-            fetchPicklesByWeight: (keepSelections = false) => {
-                const targetWeight = document.getElementById('weight-filter').value.trim().toLowerCase();
-                if(!targetWeight) return alert("Please enter a weight to filter (e.g. 250g)");
-
-                window.app.filteredProducts = window.app.allProducts.filter(p => {
-                    if(!p.variants) return false;
-                    return p.variants.some(v => v.weight.toLowerCase() === targetWeight);
-                });
-
-                if (!keepSelections) {
-                    window.app.selectedPickles = [];
-                }
-                window.app.renderPickles();
-                window.app.renderImageInputs();
-            },
-
-            renderPickles: () => {
-                const container = document.getElementById('pickle-grid');
-                
-                if(window.app.filteredProducts.length === 0) {
-                    container.innerHTML = `<p style="color: var(--danger-color); font-size: 13px; grid-column: 1 / -1;">No pickles found with this weight variant.</p>`;
-                    return;
-                }
-
-                container.innerHTML = window.app.filteredProducts.map(p => {
-                    const isSelected = window.app.selectedPickles.some(sp => sp.id === p.id);
-                    return `
-                        <label class="pickle-card ${isSelected ? 'selected' : ''}" id="card-${p.id}">
-                            <input type="checkbox" value="${p.id}" ${isSelected ? 'checked' : ''} onchange="app.togglePickle('${p.id}', '${p.name.replace(/'/g, "\\'")}', '${p.image}')">
-                            <img src="${p.image || 'https://placehold.co/40'}" alt="img">
-                            <span style="font-size: 13px; font-weight: 600;">${p.name}</span>
+                    <div class="toggle-wrapper">
+                        <span style="font-weight: 600; color: var(--text-color);">Offer Status</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="combo-active" checked>
+                            <span class="slider"></span>
                         </label>
-                    `;
-                }).join('');
-                
-                document.getElementById('selection-count').innerText = window.app.selectedPickles.length;
-            },
+                    </div>
+                </div>
 
-            togglePickle: (id, name, fallbackImage) => {
-                const checkbox = document.querySelector(`input[value="${id}"]`);
-                const card = document.getElementById(`card-${id}`);
+                <!-- Select Pickles -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 style="font-size: 16px; font-weight: 600;">Select Pickles (Max 8)</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="filter-row">
+                            <div style="flex: 1;">
+                                <label class="form-label">Filter by Weight Variant</label>
+                                <input type="text" id="weight-filter" class="form-input" placeholder="e.g. 250g, 500g">
+                            </div>
+                            <button onclick="app.fetchPicklesByWeight()" class="btn-secondary" style="height: 46px;">
+                                <i class="fas fa-search"></i> Fetch Pickles
+                            </button>
+                        </div>
+                        <div style="font-size: 13px; color: var(--text-sub); margin-bottom: 12px;">
+                            Selected: <span id="selection-count" style="font-weight: 700; color: var(--brand-primary);">0</span> / 8
+                        </div>
+                        <div id="pickle-grid" class="pickle-grid">
+                            <p style="color: var(--text-sub); font-size: 13px; grid-column: 1 / -1;">Enter a weight variant above and click Fetch to see available pickles.</p>
+                        </div>
+                    </div>
+                </div>
 
-                if(checkbox.checked) {
-                    if(window.app.selectedPickles.length >= 8) {
-                        checkbox.checked = false;
-                        alert("You can only select a maximum of 8 pickles for this combo.");
-                        return;
-                    }
-                    window.app.selectedPickles.push({ id, name, fallbackImage, customImage: '' });
-                    card.classList.add('selected');
-                } else {
-                    window.app.selectedPickles = window.app.selectedPickles.filter(p => p.id !== id);
-                    card.classList.remove('selected');
+                <!-- Custom Images -->
+                <div class="card" id="images-card" style="display: none;">
+                    <div class="card-header">
+                        <div>
+                            <h3 style="font-size: 16px; font-weight: 600;">Custom Images for Selected Pickles</h3>
+                            <span style="font-size: 12px; color: var(--text-sub);">Upload a specific image for each pickle in this combo. If left unchanged, the product's default image is used.</span>
+                        </div>
+                    </div>
+                    <div class="card-body" id="custom-images-container"></div>
+                </div>
+
+                <!-- Action buttons -->
+                <div style="display: flex; justify-content: flex-end; gap: 12px; margin-bottom: 40px;">
+                    <button onclick="window.history.back()" class="btn-secondary">Cancel</button>
+                    <button onclick="app.saveCombo()" id="save-btn" class="primary-btn">
+                        <i class="fas fa-save"></i> Save Combo Offer
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- PROFILE POPUP -->
+<div class="profile-popup" id="profile-popup">
+    <div class="popup-header"><img class="account-avatar" src="" alt="User"><div class="account-text"><div class="account-name">Loading...</div><div class="account-email">loading...</div></div></div>
+    <ul class="popup-list"><li><a id="logout-btn" style="color:var(--danger-color)"><span>Logout</span></a></li></ul>
+</div>
+
+<script type="module">
+    import { initializeApp }    from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, collection, getDocs, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCZbCr-Zt5KQblRQ8Pk58KuinCVP-TlXGo",
+        authDomain: "happynonvegpickles-f2636.firebaseapp.com",
+        projectId: "happynonvegpickles-f2636",
+        storageBucket: "happynonvegpickles-f2636.firebasestorage.app",
+        messagingSenderId: "802823212924",
+        appId: "1:802823212924:web:d82c92737ffa950798def9"
+    };
+    const firebaseApp = initializeApp(firebaseConfig);
+    const auth = getAuth(firebaseApp);
+    const db   = getFirestore(firebaseApp);
+    const ALLOWED_ADMIN = "harshavardhanjw@gmail.com";
+
+    // ══════════════════════════════════════════
+    //  SVG PRELOAD
+    // ══════════════════════════════════════════
+    ['dashboard','hover_dashboard','fill_dashboard','inventory','hover_inventory','fill_inventory',
+     'coupons','hover_coupons','fill_coupons','site','hover_site','fill_site',
+     'herosection','hover_herosection','fill_herosection','sections','hover_sections','fill_sections',
+     'popup','hover_popup','fill_popup','combo','hover_combo','fill_combo','panel_close','panel_open'
+    ].forEach(n => { const i = new Image(); i.src = `./assets/${n}.svg`; });
+
+    // ══════════════════════════════════════════
+    //  TOAST
+    // ══════════════════════════════════════════
+    function showToast(msg, type = 'info', duration = 3200) {
+        const container = document.getElementById('toastContainer');
+        const toast = document.createElement('div');
+        const icons = { success:'fa-circle-check', error:'fa-circle-xmark', warning:'fa-triangle-exclamation', info:'fa-circle-info' };
+        toast.className = `toast ${type}`;
+        toast.innerHTML = `<i class="fas ${icons[type]||'fa-circle-info'}"></i> ${msg}`;
+        container.appendChild(toast);
+        setTimeout(() => { toast.classList.add('hide'); toast.addEventListener('animationend', () => toast.remove(), { once: true }); }, duration);
+    }
+
+    // ══════════════════════════════════════════
+    //  CLOUDFLARE R2 UPLOAD HELPER
+    // ══════════════════════════════════════════
+    async function uploadToR2(file, onProgress) {
+        const res = await fetch(
+            `/api/get-presigned-url?fileName=${encodeURIComponent(file.name)}&contentType=${encodeURIComponent(file.type)}&folder=combo`
+        );
+        if (!res.ok) {
+            const err = await res.json().catch(() => ({}));
+            throw new Error(err.message || 'Failed to get upload URL');
+        }
+        const { url: signedUrl, publicUrl } = await res.json();
+        return new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.open('PUT', signedUrl, true);
+            xhr.setRequestHeader('Content-Type', file.type);
+            xhr.upload.onprogress = (e) => {
+                if (e.lengthComputable && onProgress) onProgress(Math.round((e.loaded / e.total) * 100));
+            };
+            xhr.onload = () => {
+                if (xhr.status >= 200 && xhr.status < 300) resolve(publicUrl);
+                else reject(new Error(`Upload failed (HTTP ${xhr.status})`));
+            };
+            xhr.onerror = () => reject(new Error('Network error during upload'));
+            xhr.send(file);
+        });
+    }
+
+    function validateImageFile(file) {
+        const allowed = ['image/png','image/jpeg','image/jpg','image/webp'];
+        if (!allowed.includes(file.type)) return 'Please select a PNG, JPG, or WebP image.';
+        if (file.size > 5 * 1024 * 1024) return 'Image must be under 5MB.';
+        return null;
+    }
+
+    // ══════════════════════════════════════════
+    //  MINI UPLOAD ZONE — creates a self-contained upload widget
+    //  for a single pickle's custom image slot.
+    //  Returns { el, getValue, setValue }
+    // ══════════════════════════════════════════
+    function createMiniUploadZone(pickleId, initialUrl = '') {
+        const uid = `img-${pickleId}`;
+
+        const wrapper = document.createElement('div');
+
+        // Hidden value store
+        const hidden = document.createElement('input');
+        hidden.type = 'hidden';
+        hidden.id = uid + '-hidden';
+        hidden.value = initialUrl;
+
+        // File input
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = 'image/png,image/jpeg,image/jpg,image/webp';
+        fileInput.style.display = 'none';
+
+        // Upload zone
+        const zone = document.createElement('div');
+        zone.className = 'mini-upload-zone';
+        zone.innerHTML = `
+            <div class="mini-upload-zone-inner">
+                <i class="fas fa-cloud-arrow-up"></i>
+                <span><b>Browse</b> or drag · PNG, JPG, WebP · max 5MB</span>
+            </div>`;
+
+        // Progress
+        const prog = document.createElement('div');
+        prog.className = 'mini-progress';
+        prog.innerHTML = `
+            <div class="mini-progress-track"><div class="mini-progress-fill" id="${uid}-fill"></div></div>
+            <div class="mini-progress-text"><span id="${uid}-label">Uploading…</span><span id="${uid}-pct">0%</span></div>`;
+
+        // Preview
+        const preview = document.createElement('div');
+        preview.className = 'mini-img-preview';
+        preview.innerHTML = `
+            <img id="${uid}-img" src="" alt="Custom image">
+            <div class="mini-img-actions">
+                <button type="button" class="mini-img-btn" id="${uid}-change"><i class="fas fa-pen"></i> Change</button>
+                <button type="button" class="mini-img-btn danger" id="${uid}-remove"><i class="fas fa-trash"></i> Remove</button>
+            </div>`;
+
+        wrapper.append(hidden, fileInput, zone, prog, preview);
+
+        // ── Helpers ──
+        function showZone() {
+            zone.style.display = '';
+            preview.classList.remove('visible');
+            prog.classList.remove('visible');
+            hidden.value = '';
+            fileInput.value = '';
+        }
+        function showPreview(url) {
+            preview.querySelector(`#${uid}-img`).src = url;
+            preview.classList.add('visible');
+            zone.style.display = 'none';
+            prog.classList.remove('visible');
+        }
+        function setProgress(pct) {
+            wrapper.querySelector(`#${uid}-fill`).style.width = pct + '%';
+            wrapper.querySelector(`#${uid}-label`).textContent = pct < 100 ? 'Uploading…' : 'Done!';
+            wrapper.querySelector(`#${uid}-pct`).textContent = pct + '%';
+        }
+
+        // Pre-fill if we have a saved URL
+        if (initialUrl) showPreview(initialUrl);
+
+        // ── Event wiring ──
+        async function handleFile(file) {
+            if (!file) return;
+            const err = validateImageFile(file);
+            if (err) { showToast(err, 'error'); return; }
+            zone.style.display = 'none';
+            prog.classList.add('visible');
+            setProgress(0);
+            try {
+                const url = await uploadToR2(file, setProgress);
+                hidden.value = url;
+                // Also update the in-memory selectedPickles so save picks it up
+                const p = window.app.selectedPickles.find(sp => sp.id === pickleId);
+                if (p) p.customImage = url;
+                setTimeout(() => showPreview(url), 300);
+            } catch (e) {
+                showToast('Upload failed: ' + e.message, 'error');
+                showZone();
+            }
+        }
+
+        zone.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', e => handleFile(e.target.files[0]));
+        zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover'); });
+        zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+        zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('dragover'); handleFile(e.dataTransfer.files[0]); });
+
+        // Change / Remove buttons wired after DOM insert (use delegation via ids)
+        preview.querySelector(`#${uid}-change`).addEventListener('click', () => showZone());
+        preview.querySelector(`#${uid}-remove`).addEventListener('click', () => {
+            showZone();
+            const p = window.app.selectedPickles.find(sp => sp.id === pickleId);
+            if (p) p.customImage = '';
+        });
+
+        return {
+            el: wrapper,
+            getValue: () => hidden.value.trim()
+        };
+    }
+
+    // ══════════════════════════════════════════
+    //  AUTH
+    // ══════════════════════════════════════════
+    onAuthStateChanged(auth, user => {
+        if (!user || user.email !== ALLOWED_ADMIN) {
+            if (user) signOut(auth).then(() => window.location.href = './');
+            else window.location.href = './';
+        } else {
+            document.body.style.display = 'block';
+            const av = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName||'Admin')}&background=673DE6&color=fff`;
+            document.querySelectorAll('.account-avatar').forEach(el => el.src = user.photoURL || av);
+            document.querySelectorAll('.account-name').forEach(el => el.textContent = user.displayName || 'Admin');
+            document.querySelectorAll('.account-email').forEach(el => el.textContent = user.email);
+        }
+    });
+    document.getElementById('logout-btn').addEventListener('click', e => { e.preventDefault(); signOut(auth).then(() => window.location.href = './'); });
+
+    // ══════════════════════════════════════════
+    //  SIDEBAR / DRAWER / PROFILE
+    // ══════════════════════════════════════════
+    const sidebar = document.getElementById('sidebar');
+    document.getElementById('sidebar-toggle-btn').addEventListener('click', () => sidebar.classList.toggle('collapsed'));
+
+    function clearNavActive(nav) { nav.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active')); }
+    function setupDropdown(toggleId, submenuId) {
+        const toggle = document.getElementById(toggleId), submenu = document.getElementById(submenuId);
+        if (!toggle || !submenu) return;
+        toggle.addEventListener('click', () => {
+            if (sidebar?.classList.contains('collapsed')) { sidebar.classList.remove('collapsed'); setTimeout(() => { submenu.classList.add('open'); toggle.classList.add('dropdown-open'); }, 300); return; }
+            const isOpen = submenu.classList.contains('open');
+            submenu.classList.toggle('open', !isOpen);
+            toggle.classList.toggle('dropdown-open', !isOpen);
+        });
+        submenu.querySelectorAll('.nav-submenu-item').forEach(item => {
+            item.addEventListener('click', function(e) { e.stopPropagation(); const pn = toggle.closest('nav')||toggle.parentElement; clearNavActive(pn); submenu.querySelectorAll('.nav-submenu-item').forEach(i => i.classList.remove('active')); this.classList.add('active'); toggle.classList.add('dropdown-open','active'); submenu.classList.add('open'); });
+        });
+    }
+    setupDropdown('d-site-toggle','d-site-submenu');
+    setupDropdown('m-site-toggle','m-site-submenu');
+
+    const mOverlay = document.getElementById('m-overlay');
+    document.getElementById('m-open-drawer').onclick = () => mOverlay.classList.add('open');
+    document.getElementById('m-close-drawer').onclick = () => mOverlay.classList.remove('open');
+    mOverlay.onclick = e => { if (e.target === mOverlay) mOverlay.classList.remove('open'); };
+
+    const pPopup = document.getElementById('profile-popup');
+    ['profile-trigger-desktop','profile-trigger-mobile'].forEach(id => {
+        const el = document.getElementById(id); if (!el) return;
+        el.onclick = e => { e.stopPropagation(); if (window.innerWidth > 768) { pPopup.style.left = '16px'; pPopup.style.bottom = '80px'; } pPopup.classList.toggle('active'); };
+    });
+    document.addEventListener('click', () => pPopup.classList.remove('active'));
+
+    // ══════════════════════════════════════════
+    //  APP
+    // ══════════════════════════════════════════
+    let existingComboId = null;
+    // Tracks upload widget references keyed by pickle id
+    const uploadWidgets = {};
+
+    window.app = {
+        allProducts:     [],
+        filteredProducts: [],
+        selectedPickles: [],   // [{ id, name, fallbackImage, customImage }]
+
+        init: async () => {
+            try {
+                const prodSnap = await getDocs(collection(db, 'products'));
+                window.app.allProducts = prodSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+                const combosSnap = await getDocs(collection(db, 'combos'));
+                if (!combosSnap.empty) {
+                    const comboDoc = combosSnap.docs[0];
+                    const combo    = comboDoc.data();
+                    existingComboId = comboDoc.id;
+
+                    document.getElementById('combo-active').checked = combo.isActive !== false;
+                    document.getElementById('weight-filter').value   = combo.weightVariant || '';
+                    document.getElementById('page-heading').textContent = 'Edit Combo Offer';
+
+                    // Filter products so the pickle grid is populated
+                    const targetWeight = (combo.weightVariant || '').trim().toLowerCase();
+                    window.app.filteredProducts = window.app.allProducts.filter(p =>
+                        p.variants?.some(v => v.weight.toLowerCase() === targetWeight)
+                    );
+
+                    // ★ Restore selectedPickles from saved combo data
+                    //    Use the SAVED image (combo item's image) as customImage so it shows on reload.
+                    window.app.selectedPickles = (combo.items || []).map(item => {
+                        const matchProd = window.app.filteredProducts.find(p => p.id === item.id);
+                        const fallback  = matchProd?.image || item.image || '';
+                        // The saved item.image IS the custom image (may equal fallback if no custom was set)
+                        return {
+                            id:            item.id,
+                            name:          item.name,
+                            fallbackImage: fallback,
+                            customImage:   item.image || ''   // ← always restore what was saved
+                        };
+                    });
+
+                    window.app.renderPickles();
+                    window.app.renderImageInputs();
                 }
+            } catch (err) {
+                console.error('Error initializing:', err);
+                showToast('Failed to load data. Please check your connection.', 'error');
+            }
+        },
 
-                document.getElementById('selection-count').innerText = window.app.selectedPickles.length;
-                window.app.renderImageInputs();
-            },
+        fetchPicklesByWeight: (keepSelections = false) => {
+            const target = document.getElementById('weight-filter').value.trim().toLowerCase();
+            if (!target) { showToast('Please enter a weight to filter (e.g. 250g)', 'warning'); return; }
 
-            renderImageInputs: () => {
-                const container = document.getElementById('custom-images-container');
-                const card = document.getElementById('images-card');
+            window.app.filteredProducts = window.app.allProducts.filter(p =>
+                p.variants?.some(v => v.weight.toLowerCase() === target)
+            );
 
-                if(window.app.selectedPickles.length === 0) {
-                    card.style.display = 'none';
+            if (!keepSelections) {
+                window.app.selectedPickles = [];
+                Object.keys(uploadWidgets).forEach(k => delete uploadWidgets[k]);
+            }
+            window.app.renderPickles();
+            window.app.renderImageInputs();
+        },
+
+        renderPickles: () => {
+            const container = document.getElementById('pickle-grid');
+            if (window.app.filteredProducts.length === 0) {
+                container.innerHTML = `<p style="color:var(--danger-color);font-size:13px;grid-column:1/-1;">No pickles found with this weight variant.</p>`;
+                document.getElementById('selection-count').textContent = window.app.selectedPickles.length;
+                return;
+            }
+            container.innerHTML = '';
+            window.app.filteredProducts.forEach(p => {
+                const isSelected = window.app.selectedPickles.some(sp => sp.id === p.id);
+                const label = document.createElement('label');
+                label.className = `pickle-card${isSelected ? ' selected' : ''}`;
+                label.id = `card-${p.id}`;
+                label.innerHTML = `
+                    <input type="checkbox" value="${p.id}" ${isSelected ? 'checked' : ''}>
+                    <img src="${p.image || 'https://placehold.co/40'}" alt="${p.name}">
+                    <span style="font-size:13px;font-weight:600;">${p.name}</span>`;
+                label.querySelector('input').addEventListener('change', (e) => {
+                    window.app.togglePickle(p.id, p.name, p.image || '', e.target.checked);
+                });
+                container.appendChild(label);
+            });
+            document.getElementById('selection-count').textContent = window.app.selectedPickles.length;
+        },
+
+        togglePickle: (id, name, fallbackImage, checked) => {
+            const card = document.getElementById(`card-${id}`);
+            if (checked) {
+                if (window.app.selectedPickles.length >= 8) {
+                    // Revert checkbox
+                    if (card) card.querySelector('input').checked = false;
+                    showToast('Maximum 8 pickles allowed per combo.', 'warning');
                     return;
                 }
-
-                card.style.display = 'block';
-                container.innerHTML = window.app.selectedPickles.map(p => `
-                    <div class="image-row">
-                        <span>${p.name}</span>
-                        <input type="text" class="form-input" placeholder="Paste custom image URL for this combo" 
-                               value="${p.customImage}" onchange="app.updateCustomImage('${p.id}', this.value)">
-                    </div>
-                `).join('');
-            },
-
-            updateCustomImage: (id, url) => {
-                const pickle = window.app.selectedPickles.find(p => p.id === id);
-                if(pickle) pickle.customImage = url;
-            },
-
-            saveCombo: async () => {
-                const isActive = document.getElementById('combo-active').checked;
-                const weight = document.getElementById('weight-filter').value.trim();
-
-                if(window.app.selectedPickles.length === 0) return alert("Please select at least 1 pickle for the combo.");
-
-                const btn = document.getElementById('save-btn');
-                const originalHtml = btn.innerHTML;
-                btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Saving...`;
-                btn.disabled = true;
-
-                const savedPickles = window.app.selectedPickles.map(p => ({
-                    id: p.id,
-                    name: p.name,
-                    image: p.customImage.trim() !== '' ? p.customImage : p.fallbackImage
-                }));
-
-                const comboData = {
-                    weightVariant: weight,
-                    isActive,
-                    items: savedPickles,
-                    updatedAt: Date.now()
-                };
-
-                const comboRef = existingComboId 
-                    ? doc(db, 'combos', existingComboId) 
-                    : doc(collection(db, 'combos'));
-
-                if (!existingComboId) {
-                    comboData.createdAt = Date.now();
-                }
-
-                try {
-                    await setDoc(comboRef, comboData, { merge: true });
-                    alert("Combo offer saved successfully!");
-                    if (!existingComboId) {
-                        window.location.href = 'manage-combo.html';
-                    }
-                } catch (error) {
-                    console.error("Error saving combo:", error);
-                    alert("Failed to save combo offer.");
-                    btn.innerHTML = originalHtml;
-                    btn.disabled = false;
-                }
+                window.app.selectedPickles.push({ id, name, fallbackImage, customImage: '' });
+                card?.classList.add('selected');
+            } else {
+                window.app.selectedPickles = window.app.selectedPickles.filter(p => p.id !== id);
+                delete uploadWidgets[id];
+                card?.classList.remove('selected');
             }
-        };
+            document.getElementById('selection-count').textContent = window.app.selectedPickles.length;
+            window.app.renderImageInputs();
+        },
 
-        window.app.init();
-    </script>
+        renderImageInputs: () => {
+            const container = document.getElementById('custom-images-container');
+            const card      = document.getElementById('images-card');
+
+            if (window.app.selectedPickles.length === 0) {
+                card.style.display = 'none';
+                container.innerHTML = '';
+                return;
+            }
+            card.style.display = 'block';
+            container.innerHTML = '';
+
+            window.app.selectedPickles.forEach(p => {
+                // Row wrapper
+                const row = document.createElement('div');
+                row.className = 'combo-img-row';
+
+                // Title strip
+                const titleBar = document.createElement('div');
+                titleBar.className = 'combo-img-row-title';
+                titleBar.innerHTML = `
+                    <img src="${p.fallbackImage || 'https://placehold.co/32'}" alt="${p.name}">
+                    ${p.name}
+                    <span style="font-size:11px;font-weight:500;color:var(--text-sub);margin-left:4px;">(default image used if none uploaded)</span>`;
+                row.appendChild(titleBar);
+
+                // ★ Create upload widget — pass customImage so saved images are shown on reload
+                const widget = createMiniUploadZone(p.id, p.customImage);
+                uploadWidgets[p.id] = widget;
+                row.appendChild(widget.el);
+
+                container.appendChild(row);
+            });
+        },
+
+        saveCombo: async () => {
+            if (window.app.selectedPickles.length === 0) {
+                showToast('Please select at least 1 pickle for the combo.', 'warning');
+                return;
+            }
+
+            const btn = document.getElementById('save-btn');
+            btn.innerHTML = `<i class="fas fa-spinner" style="animation:spin 0.7s linear infinite;"></i> Saving…`;
+            btn.disabled = true;
+
+            const isActive     = document.getElementById('combo-active').checked;
+            const weightVariant = document.getElementById('weight-filter').value.trim();
+
+            // Build saved items — use the upload widget's current value (R2 URL),
+            // fall back to the in-memory customImage, then fall back to fallbackImage.
+            const savedItems = window.app.selectedPickles.map(p => {
+                const widgetUrl   = uploadWidgets[p.id]?.getValue() || '';
+                const resolvedImg = widgetUrl || p.customImage || p.fallbackImage;
+                return { id: p.id, name: p.name, image: resolvedImg };
+            });
+
+            const comboData = { weightVariant, isActive, items: savedItems, updatedAt: Date.now() };
+            const comboRef  = existingComboId
+                ? doc(db, 'combos', existingComboId)
+                : doc(collection(db, 'combos'));
+            if (!existingComboId) comboData.createdAt = Date.now();
+
+            try {
+                await setDoc(comboRef, comboData, { merge: true });
+                showToast('Combo offer saved successfully!', 'success', 2000);
+                if (!existingComboId) setTimeout(() => window.location.href = 'manage-combo.html', 1800);
+                else existingComboId = existingComboId; // keep id for subsequent saves
+            } catch (err) {
+                console.error('Error saving combo:', err);
+                showToast('Failed to save combo offer.', 'error');
+            } finally {
+                btn.innerHTML = '<i class="fas fa-save"></i> Save Combo Offer';
+                btn.disabled = false;
+            }
+        }
+    };
+
+    window.app.init();
+</script>
 </body>
 </html>
