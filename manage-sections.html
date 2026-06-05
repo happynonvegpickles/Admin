@@ -1274,7 +1274,7 @@
 
             renderPicker: () => {
                 const body = document.getElementById('picker-body');
-                const maxReached = window.app.bestPickles.length >= 6;
+                const maxReached = window.app.bestPickles.length >= 8;
 
                 // Group products by category
                 const categoryMap = new Map();
@@ -1326,8 +1326,8 @@
             },
 
             addFromPicker: (prodId) => {
-                if (window.app.bestPickles.length >= 6) {
-                    alert('Maximum 6 pickles allowed.');
+                if (window.app.bestPickles.length >= 8) {
+                    alert('Maximum 8 pickles allowed.');
                     return;
                 }
                 if (!window.app.bestPickles.includes(prodId)) {
